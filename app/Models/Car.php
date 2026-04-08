@@ -46,4 +46,18 @@ class Car extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function getIsAvailableAttribute()
+    {
+        if ($this->status !== 'approved') {
+            return false;
+        }
+
+        $today = now()->startOfDay();
+        return !$this->bookings()
+            ->whereIn('status', ['pending', 'approved'])
+            ->where('start_date', '<=', $today)
+            ->where('end_date', '>=', $today)
+            ->exists();
+    }
 }

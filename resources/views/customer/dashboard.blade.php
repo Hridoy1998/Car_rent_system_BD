@@ -17,8 +17,8 @@
 
                 <p class="text-gray-400 mb-8">Browse premium cars, check availability, and manage your active bookings all in one place.</p>
                 
-                <a href="/" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-600/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-900 transition-all duration-300 transform hover:-translate-y-1">
-                    Browse Cars
+                <a href="{{ route('customer.bookings.index') }}" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-xl text-white bg-blue-600 hover:bg-blue-700 shadow-xl shadow-blue-600/20 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 focus:ring-offset-gray-900 transition-all duration-300 transform hover:-translate-y-1">
+                    View Bookings
                 </a>
             </div>
         </div>

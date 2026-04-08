@@ -3,33 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Verification;
-use App\Models\User;
+use Illuminate\Http\Request;
 
 class VerificationController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $status = $request->get('status', 'pending');
-        $verifications = Verification::where('status', $status)->with('user')->latest()->paginate(10);
-        return view('admin.verifications.index', compact('verifications', 'status'));
+        $verifications = Verification::with('user')->latest()->paginate(10);
+        return view('admin.verifications.index', compact('verifications'));
     }
 
     public function update(Request $request, Verification $verification)
     {
-        $validated = $request->validate([
-            'status' => 'required|in:approved,rejected'
+        $request->validate([
+            'status' => 'required|in:approved,rejected',
         ]);
 
-        $verification->update(['status' => $validated['status']]);
-        
-        if ($validated['status'] === 'approved') {
-            $verification->user()->update(['is_verified' => true]);
-        } else {
-            $verification->user()->update(['is_verified' => false]);
-        }
+        $verification->update([
+            'status' => $request->status,
+        ]);
 
-        return back()->with('success', "Verification document {$validated['status']}.");
+        return back()->with('success', 'Verification status updated successfully.');
     }
 }

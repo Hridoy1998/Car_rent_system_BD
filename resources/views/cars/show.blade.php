@@ -136,7 +136,12 @@
                         <div class="mb-2">
                             <span class="text-xs font-bold tracking-wider text-indigo-400 uppercase">{{ $car->brand }}</span>
                         </div>
-                        <h1 class="text-3xl font-extrabold text-white mb-2">{{ $car->title }}</h1>
+                        <h1 class="text-3xl font-extrabold text-white mb-2">
+                            @if(!$car->is_available)
+                                <span class="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded mr-2 uppercase tracking-wider align-middle border border-red-500/30">Rented Today</span>
+                            @endif
+                            {{ $car->title }}
+                        </h1>
                         
                         <div class="flex items-center gap-2 mb-6">
                             <div class="flex items-center text-yellow-400">
@@ -161,11 +166,38 @@
                             @endif
                         </div>
 
-                        <button type="button" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-2xl font-bold text-lg shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all">
-                            Book Now (Coming Soon)
-                        </button>
-                        
-                        <p class="text-center text-xs text-gray-500 mt-4">You won't be charged yet. Booking engine rolling out in Phase 2.</p>
+                        <form action="{{ route('customer.bookings.store') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="car_id" value="{{ $car->id }}">
+                            
+                            <div class="flex flex-col gap-4 mb-6">
+                                <div>
+                                    <label class="block text-xs font-bold tracking-wider text-gray-400 uppercase mb-2">Check-in</label>
+                                    <input type="date" name="start_date" required min="{{ date('Y-m-d') }}" class="w-full bg-gray-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all">
+                                    @error('start_date') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold tracking-wider text-gray-400 uppercase mb-2">Check-out</label>
+                                    <input type="date" name="end_date" required min="{{ date('Y-m-d') }}" class="w-full bg-gray-900 border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all">
+                                    @error('end_date') <span class="text-red-400 text-xs mt-1">{{ $message }}</span> @enderror
+                                </div>
+                            </div>
+                            
+                            @error('car_id')
+                                <div class="bg-red-500/10 border border-red-500/30 text-red-400 p-3 rounded-xl mb-4 text-sm">{{ $message }}</div>
+                            @enderror
+
+                            @guest
+                                <a href="{{ route('login') }}" class="block text-center w-full py-4 bg-gray-800 hover:bg-gray-700 text-white rounded-2xl font-bold text-lg transition-all border border-white/10">
+                                    Sign In to Book
+                                </a>
+                            @else
+                                <button type="submit" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-2xl font-bold text-lg shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] transition-all">
+                                    Book This Car
+                                </button>
+                                <p class="text-center text-xs text-gray-500 mt-4">You won't be charged until approved by the owner.</p>
+                            @endguest
+                        </form>
                     </div>
 
                     <!-- Host Info -->

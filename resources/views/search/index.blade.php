@@ -31,11 +31,11 @@
                 <!-- Placeholders for Dates, functional in Phase 2 -->
                 <div class="md:w-48">
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 ml-1">From</label>
-                    <input type="date" name="start_date" disabled value="{{ request('start_date') }}" class="w-full bg-gray-950/50 border border-white/5 rounded-2xl px-4 py-4 text-gray-500 cursor-not-allowed">
+                    <input type="date" name="start_date" value="{{ request('start_date') }}" class="w-full bg-gray-950/50 border border-white/5 rounded-2xl px-4 py-4 text-white focus:ring-2 focus:ring-indigo-500 transition-all">
                 </div>
                 <div class="md:w-48">
                     <label class="block text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 ml-1">Until</label>
-                    <input type="date" name="end_date" disabled value="{{ request('end_date') }}" class="w-full bg-gray-950/50 border border-white/5 rounded-2xl px-4 py-4 text-gray-500 cursor-not-allowed">
+                    <input type="date" name="end_date" value="{{ request('end_date') }}" class="w-full bg-gray-950/50 border border-white/5 rounded-2xl px-4 py-4 text-white focus:ring-2 focus:ring-indigo-500 transition-all">
                 </div>
                 
                 <div class="flex items-end">
@@ -69,7 +69,12 @@
                                     {{ number_format($car->reviews->avg('rating') ?: 5.0, 1) }}
                                 </div>
                             </div>
-                            <h3 class="text-lg font-bold text-white mb-2 line-clamp-1">{{ $car->title }}</h3>
+                            <h3 class="text-lg font-bold text-white mb-2 line-clamp-1">
+                                @if(!$car->is_available)
+                                    <span class="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded mr-1 uppercase tracking-wider align-middle border border-red-500/30">Rented</span>
+                                @endif
+                                {{ $car->title }}
+                            </h3>
                             <div class="flex items-center text-gray-500 text-sm">
                                 <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                                 {{ $car->location }}

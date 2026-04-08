@@ -28,5 +28,15 @@ class Booking extends Model
     {
         return $this->belongsTo(Car::class);
     }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function damageReports()
+    {
+        return $this->hasMany(DamageReport::class);
+    }
 }
 

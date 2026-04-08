@@ -25,11 +25,11 @@
                     <div class="w-full md:w-auto flex-shrink-0 flex gap-2">
                         <div class="px-4 py-3 bg-gray-900/50 rounded-2xl">
                             <label class="block text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">From</label>
-                            <input type="date" disabled class="bg-transparent border-none text-white focus:ring-0 p-0 text-sm cursor-not-allowed">
+                            <input type="date" name="start_date" class="bg-transparent border-none text-white focus:ring-0 p-0 text-sm w-full">
                         </div>
                         <div class="px-4 py-3 bg-gray-900/50 rounded-2xl">
                             <label class="block text-xs text-gray-400 font-medium uppercase tracking-wider mb-1">Until</label>
-                            <input type="date" disabled class="bg-transparent border-none text-white focus:ring-0 p-0 text-sm cursor-not-allowed">
+                            <input type="date" name="end_date" class="bg-transparent border-none text-white focus:ring-0 p-0 text-sm w-full">
                         </div>
                     </div>
                     <button type="submit" class="w-full md:w-auto px-8 py-5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-2xl font-bold text-lg transition-all duration-300 shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)]">
@@ -72,7 +72,12 @@
                         <div>
                             <div class="flex justify-between items-start mb-2">
                                 <a href="{{ route('cars.show', $car) }}">
-                                    <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">{{ $car->title }}</h3>
+                                    <h3 class="text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">
+                                        @if(!$car->is_available)
+                                            <span class="text-xs bg-red-500/20 text-red-400 px-2 py-0.5 rounded mr-2 uppercase tracking-wider align-middle border border-red-500/30">Rented</span>
+                                        @endif
+                                        {{ $car->title }}
+                                    </h3>
                                 </a>
                                 <div class="flex items-center bg-indigo-500/10 px-2 py-1 rounded text-sm text-indigo-400">
                                     <svg class="w-4 h-4 mr-1 pb-0.5 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>

@@ -27,6 +27,8 @@ class HomeController extends Controller
     public function search(Request $request)
     {
         $location = $request->input('location');
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
         
         $query = Car::where('status', 'approved')->with(['images', 'reviews']);
         
@@ -38,7 +40,21 @@ class HomeController extends Controller
             });
         }
         
-        $cars = $query->latest()->paginate(12);
+        if ($startDate && $endDate) {
+            $query->whereDoesntHave('bookings', function ($q) use ($startDate, $endDate) {
+                $q->whereIn('status', ['pending', 'approved'])
+                  ->where(function ($q2) use ($startDate, $endDate) {
+                      $q2->whereBetween('start_date', [$startDate, $endDate])
+                         ->orWhereBetween('end_date', [$startDate, $endDate])
+                         ->orWhere(function ($q3) use ($startDate, $endDate) {
+                             $q3->where('start_date', '<=', $startDate)
+                                ->where('end_date', '>=', $endDate);
+                         });
+                  });
+            });
+        }
+        
+        $cars = $query->latest()->paginate(12)->withQueryString();
         
         return view('search.index', compact('cars', 'location'));
     }

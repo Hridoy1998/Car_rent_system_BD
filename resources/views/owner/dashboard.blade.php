@@ -33,13 +33,13 @@
                 </div>
 
                 <!-- Active Bookings -->
-                <div class="bg-gray-900 border border-white/10 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
+                <a href="{{ route('owner.bookings.index') }}" class="block bg-gray-900 border border-white/10 rounded-2xl p-6 shadow-xl relative overflow-hidden group hover:border-indigo-500/50 transition-all">
                     <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                         <svg class="w-16 h-16 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                     </div>
-                    <p class="text-gray-400 text-sm font-medium mb-1">Active Bookings</p>
+                    <p class="text-gray-400 text-sm font-medium mb-1">Manage Bookings</p>
                     <h3 class="text-3xl font-bold text-white">{{ $activeBookings }}</h3>
-                </div>
+                </a>
 
                 <!-- Total Earnings -->
                 <div class="bg-gray-900 border border-white/10 rounded-2xl p-6 shadow-xl relative overflow-hidden group">
