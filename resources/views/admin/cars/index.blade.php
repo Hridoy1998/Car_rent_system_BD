@@ -45,7 +45,7 @@
                                                 <div class="w-16 h-12 bg-gray-800 rounded mr-4 flex items-center justify-center text-gray-500 border border-white/10">No Img</div>
                                             @endif
                                             <div>
-                                                <div class="font-bold text-white">{{ $car->title }}</div>
+                                                <a href="{{ route('cars.show', $car) }}" class="font-bold text-white hover:text-indigo-400 transition-colors">{{ $car->title }}</a>
                                                 <div class="text-sm text-gray-400">{{ $car->location }}</div>
                                             </div>
                                         </div>
