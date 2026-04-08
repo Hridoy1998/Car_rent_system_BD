@@ -94,10 +94,22 @@
                                                     </form>
                                                 @endif
 
-                                                @if(in_array($booking->status, ['completed', 'approved']))
+                                                                    @if(in_array($booking->status, ['completed', 'approved']))
                                                     <a href="{{ route('invoices.download', $booking) }}" class="text-xs bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-400 px-3 py-1.5 rounded-lg border border-indigo-500/30 transition-colors font-bold uppercase tracking-wider inline-block h-fit mt-[1px]">
                                                         Invoice
                                                     </a>
+                                                @endif
+
+                                                {{-- Pay Now button --}}
+                                                @if($booking->status === 'approved' && $booking->payment_status === 'pending')
+                                                    <form action="{{ route('customer.bookings.pay', $booking) }}" method="POST" onsubmit="return confirm('Confirm payment of ৳{{ number_format($booking->total_price) }}?');">
+                                                        @csrf
+                                                        <button type="submit" class="text-xs bg-green-600 hover:bg-green-500 text-white px-3 py-1.5 rounded-lg font-bold uppercase tracking-wider transition-colors">
+                                                            Pay Now
+                                                        </button>
+                                                    </form>
+                                                @elseif($booking->payment_status === 'paid')
+                                                    <span class="text-xs bg-green-500/10 text-green-400 px-2 py-1 rounded border border-green-500/20 font-bold uppercase">Paid</span>
                                                 @endif
                                             </div>
                                             

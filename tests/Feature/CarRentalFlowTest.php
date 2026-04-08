@@ -1,11 +1,13 @@
 <?php
-use App\Models\User;
-use App\Models\Car;
+
 use App\Models\Booking;
-use App\Models\Verification;
+use App\Models\Car;
+use App\Models\DamageReport;
+use App\Models\Earning;
 use App\Models\Message;
 use App\Models\Review;
-use App\Models\DamageReport;
+use App\Models\User;
+use App\Models\Verification;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,7 +27,7 @@ test('full car rental lifecycle', function () {
             'document_type' => 'NID',
             'document_file' => UploadedFile::fake()->create('nid.jpg', 100, 'image/jpeg'),
         ])->assertSessionHasNoErrors();
-    
+
     $verification = Verification::where('user_id', $customer->id)->first();
     expect($verification)->not->toBeNull()
         ->and($verification->status)->toBe('pending');
@@ -57,7 +59,7 @@ test('full car rental lifecycle', function () {
         ])->assertSessionHasNoErrors();
 
     $car = Car::where('user_id', $owner->id)->first();
-    
+
     // Admin approves car
     $this->actingAs($admin)
         ->put(route('admin.cars.update', $car), [
@@ -67,7 +69,7 @@ test('full car rental lifecycle', function () {
     // 4. Customer Books the car (Phase 2)
     $startDate = now()->addDays(1)->format('Y-m-d');
     $endDate = now()->addDays(3)->format('Y-m-d');
-    
+
     $this->actingAs($customer)
         ->post(route('customer.bookings.store'), [
             'car_id' => $car->id,
@@ -97,6 +99,14 @@ test('full car rental lifecycle', function () {
             'status' => 'approved',
         ])->assertSessionHasNoErrors();
 
+    // 6b. Customer pays (required before completion)
+    $this->actingAs($customer)
+        ->post(route('customer.bookings.pay', $booking))
+        ->assertSessionHasNoErrors();
+
+    $booking->refresh();
+    expect($booking->payment_status)->toBe('paid');
+
     // 7. Owner completes Booking, generating earnings (Workflow 8 & 10)
     $this->actingAs($owner)
         ->put(route('owner.bookings.update', $booking), [
@@ -105,7 +115,7 @@ test('full car rental lifecycle', function () {
 
     $booking->refresh();
     expect($booking->status)->toBe('completed');
-    expect(\App\Models\Earning::where('booking_id', $booking->id)->count())->toBe(1);
+    expect(Earning::where('booking_id', $booking->id)->count())->toBe(1);
 
     // 8. Customer reviews car (Workflow 2)
     $this->actingAs($customer)

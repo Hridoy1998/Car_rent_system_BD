@@ -3,116 +3,106 @@
 namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreCarRequest;
+use App\Http\Requests\UpdateCarRequest;
 use App\Models\Car;
-use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        $cars = auth()->user()->cars()->latest()->get();
+        $cars = auth()->user()->cars()->with('images')->latest()->paginate(10);
+
         return view('owner.cars.index', compact('cars'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('owner.cars.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreCarRequest $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'brand' => 'required|string|max:255',
-            'model' => 'required|string|max:255',
-            'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'type' => 'required|in:SUV,Sedan,Hatchback,Van,Other',
-            'transmission' => 'required|in:Manual,Auto',
-            'fuel_type' => 'required|string|max:255',
-            'price_per_day' => 'required|numeric|min:0',
-            'price_per_month' => 'required|numeric|min:0',
-            'location' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'images.*' => 'image|mimes:jpeg,png,jpg,webp|max:2048'
-        ]);
+        $data = $request->validated();
+        $images = $data['images'] ?? null;
+        unset($data['images']);
 
-        $car = auth()->user()->cars()->create($validated);
+        $car = auth()->user()->cars()->create(array_merge($data, ['status' => 'pending']));
 
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $image) {
+        if ($images) {
+            foreach ($images as $index => $image) {
                 $path = $image->store('cars', 'public');
                 $car->images()->create([
                     'image_path' => $path,
-                    'is_primary' => false, // Will setup primary if it's the first one, let's just default to false for now, or true for the first
+                    'is_primary' => $index === 0,
                 ]);
-            }
-            // Make the first image primary
-            if ($firstImage = $car->images()->first()) {
-                $firstImage->update(['is_primary' => true]);
             }
         }
 
-        return redirect()->route('owner.cars.index')->with('success', 'Car listed successfully and is pending approval.');
+        return redirect()->route('owner.cars.index')
+            ->with('success', 'Car listed successfully! Awaiting admin approval.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Car $car)
     {
-        if ($car->user_id !== auth()->id()) abort(403);
+        $this->authorize('view', $car);
+        $car->load('images', 'reviews.user', 'bookings');
+
         return view('owner.cars.show', compact('car'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Car $car)
     {
-        if ($car->user_id !== auth()->id()) abort(403);
+        $this->authorize('update', $car);
+
         return view('owner.cars.edit', compact('car'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Car $car)
+    public function update(UpdateCarRequest $request, Car $car)
     {
-        if ($car->user_id !== auth()->id()) abort(403);
-        // Add basic update logic
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'brand' => 'required|string|max:255',
-            'model' => 'required|string|max:255',
-            'year' => 'required|integer|min:1900|max:' . (date('Y') + 1),
-            'type' => 'required|in:SUV,Sedan,Hatchback,Van,Other',
-            'transmission' => 'required|in:Manual,Auto',
-            'fuel_type' => 'required|string|max:255',
-            'price_per_day' => 'required|numeric|min:0',
-            'price_per_month' => 'required|numeric|min:0',
-            'location' => 'required|string|max:255',
-            'description' => 'nullable|string',
-        ]);
-        $car->update($validated);
-        return redirect()->route('owner.cars.index')->with('success', 'Car updated successfully.');
+        $this->authorize('update', $car);
+
+        $data = $request->validated();
+        $images = $data['images'] ?? null;
+        unset($data['images']);
+
+        // Owner cannot change status directly
+        if (auth()->user()->role === 'owner') {
+            unset($data['status']);
+        }
+
+        $car->update($data);
+
+        if ($images) {
+            foreach ($images as $index => $image) {
+                $path = $image->store('cars', 'public');
+                $car->images()->create([
+                    'image_path' => $path,
+                    'is_primary' => false,
+                ]);
+            }
+        }
+
+        return redirect()->route('owner.cars.index')
+            ->with('success', 'Car updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Car $car)
     {
-        if ($car->user_id !== auth()->id()) abort(403);
+        $this->authorize('delete', $car);
+
+        // Prevent deletion if there are active bookings
+        $hasActive = $car->bookings()
+            ->whereIn('status', ['pending', 'approved'])
+            ->exists();
+
+        if ($hasActive) {
+            return back()->with('error', 'Cannot delete a car with active bookings.');
+        }
+
         $car->delete();
-        return redirect()->route('owner.cars.index')->with('success', 'Car removed successfully.');
+
+        return redirect()->route('owner.cars.index')
+            ->with('success', 'Car removed successfully.');
     }
 }
