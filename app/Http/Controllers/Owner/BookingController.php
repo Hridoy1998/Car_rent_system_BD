@@ -3,53 +3,60 @@
 namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateBookingRequest;
 use App\Models\Booking;
-use App\Models\Earning;
-use Illuminate\Http\Request;
+use App\Notifications\BookingStatusUpdated;
+use App\Services\EarningService;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+    public function __construct(protected EarningService $earningService) {}
+
     public function index()
     {
-        $bookings = Booking::whereHas('car', function ($q) {
-                $q->where('user_id', auth()->id());
-            })
-            ->with('customer', 'car')
+        $bookings = Booking::whereHas('car', fn ($q) => $q->where('user_id', auth()->id()))
+            ->with(['customer', 'car.images', 'damageReports'])
             ->latest()
             ->paginate(10);
 
         return view('owner.bookings.index', compact('bookings'));
     }
 
-    public function update(Request $request, Booking $booking)
+    public function update(UpdateBookingRequest $request, Booking $booking)
     {
-        // Authorize owner
-        if ($booking->car->user_id !== auth()->id()) {
-            abort(403);
+        $this->authorize('update', $booking);
+
+        $newStatus = $request->validated()['status'];
+
+        // Enforce lifecycle: can only progress forward
+        $allowed = [
+            'pending' => ['approved', 'rejected'],
+            'approved' => ['completed', 'cancelled'],
+        ];
+
+        $currentStatus = $booking->status;
+        if (! isset($allowed[$currentStatus]) || ! in_array($newStatus, $allowed[$currentStatus])) {
+            return back()->with('error', "Cannot transition booking from '{$currentStatus}' to '{$newStatus}'.");
         }
 
-        $validated = $request->validate([
-            'status' => 'required|in:approved,rejected,completed,cancelled',
-        ]);
+        // Prevent completion if payment not received
+        if ($newStatus === 'completed' && $booking->payment_status !== 'paid') {
+            return back()->with('error', 'Cannot complete a booking with unpaid payment. Ask the customer to pay first.');
+        }
 
-        DB::transaction(function () use ($booking, $validated) {
-            $booking->update(['status' => $validated['status']]);
+        DB::transaction(function () use ($booking, $newStatus) {
+            $booking->update(['status' => $newStatus]);
 
-            if ($validated['status'] === 'completed') {
-                $booking->update(['payment_status' => 'paid']);
-                
-                // Workflow 10: Owner Earnings
-                Earning::firstOrCreate(
-                    ['booking_id' => $booking->id],
-                    [
-                        'owner_id' => auth()->id(),
-                        'amount' => $booking->total_price, // 100% of booking price goes to owner
-                    ]
-                );
+            // Settle earnings on completion
+            if ($newStatus === 'completed') {
+                $this->earningService->settleBooking($booking->load('car'));
             }
         });
 
-        return back()->with('success', 'Booking status updated to ' . $validated['status'] . '.');
+        // Notify the customer
+        $booking->customer->notify(new BookingStatusUpdated($booking->load('car')));
+
+        return back()->with('success', "Booking status updated to '{$newStatus}'.");
     }
 }
