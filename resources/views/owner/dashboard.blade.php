@@ -1,190 +1,276 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-bold text-2xl text-white leading-tight">
-            {{ __('Owner Command Center') }}
-        </h2>
+        <div class="flex justify-between items-center">
+            <div>
+                <h2 class="font-black text-3xl text-white tracking-tighter uppercase italic">
+                    {{ __('MARSHAL HUB') }}
+                </h2>
+                <p class="text-[10px] text-emerald-400 font-black uppercase tracking-[0.3em] mt-1 italic">Strategic Fleet Command & Intelligence Oversight</p>
+            </div>
+            <div class="flex items-center space-x-6">
+                <div class="flex flex-col items-end">
+                    <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Revenue Pulse</span>
+                    <div class="flex gap-1 mt-1">
+                        <div class="w-1 h-3 bg-emerald-500 rounded-full animate-bounce"></div>
+                        <div class="w-1 h-3 bg-emerald-500 rounded-full animate-bounce" style="animation-delay: 0.1s"></div>
+                        <div class="w-1 h-3 bg-indigo-500 rounded-full animate-bounce" style="animation-delay: 0.2s"></div>
+                    </div>
+                </div>
+                <div class="h-10 w-px bg-white/5"></div>
+                <div class="flex items-center space-x-3">
+                    <span class="text-white text-[10px] font-black uppercase tracking-widest">Fleet Status:</span>
+                    <span class="px-3 py-1 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest">Operative</span>
+                </div>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12 bg-gray-950 min-h-screen relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-600/10 rounded-full blur-[120px] -z-10"></div>
+        <!-- Strategic Glows -->
+        <div class="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] bg-emerald-600/5 rounded-full blur-[120px] -z-10 animate-pulse"></div>
+        <div class="absolute bottom-[-10%] left-[-5%] w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[120px] -z-10 animate-pulse" style="animation-duration: 4s"></div>
 
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10">
             
-            <!-- Metrics Row -->
+            <!-- Core Strategic Metrics -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Earnings -->
-                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 p-6 rounded-2xl shadow-xl relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg class="w-12 h-12 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                
+                <!-- Liquidity Pulse -->
+                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl transition-all hover:bg-gray-900/60 overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-all"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 text-emerald-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        </div>
+                        <div class="text-right">
+                             <div class="text-[9px] font-black text-emerald-500 uppercase tracking-widest leading-none mb-1">+24h Δ</div>
+                             <div class="text-lg font-black text-white">৳ {{ number_format($stats['revenue_24h']) }}</div>
+                        </div>
                     </div>
-                    <p class="text-sm font-medium text-gray-500 mb-1">Total Earnings</p>
-                    <h3 class="text-3xl font-bold text-white tracking-tight">৳ {{ number_format($stats['total_earnings']) }}</h3>
-                    <div class="mt-4 flex items-center text-xs font-semibold text-emerald-500">
-                        <span class="bg-emerald-500/10 px-2 py-0.5 rounded">All time profit</span>
-                    </div>
-                </div>
-
-                <!-- Active Bookings -->
-                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 p-6 rounded-2xl shadow-xl relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg class="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z"></path></svg>
-                    </div>
-                    <p class="text-sm font-medium text-gray-500 mb-1">Active Roles</p>
-                    <h3 class="text-3xl font-bold text-white tracking-tight">{{ $stats['active_bookings'] }}</h3>
-                    <div class="mt-4 flex items-center text-xs font-semibold text-blue-500">
-                        <span class="bg-blue-500/10 px-2 py-0.5 rounded">Awaiting Action</span>
+                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Total Yield</h4>
+                    <div class="text-3xl font-black text-white tracking-tighter">৳ {{ number_format($stats['total_earnings']) }}</div>
+                    <div class="mt-4 flex items-center justify-between text-[8px] font-black text-gray-600 uppercase tracking-widest">
+                         <span>Net Settlement</span>
+                         <a href="{{ route('owner.finance.index') }}" class="text-emerald-400 hover:text-white transition-colors">Ledger →</a>
                     </div>
                 </div>
 
-                <!-- Approved Cars -->
-                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 p-6 rounded-2xl shadow-xl relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg class="w-12 h-12 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <!-- Mission Control (Active Bookings) -->
+                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl transition-all overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/10 transition-all"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-indigo-500/10 rounded-2xl border border-indigo-500/20 text-indigo-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 00-2 2z"></path></svg>
+                        </div>
+                        <div class="text-right">
+                             <div class="text-[9px] font-black text-indigo-400 uppercase tracking-widest mb-1">Active</div>
+                             <div class="text-lg font-black text-white">{{ $stats['active_bookings'] }} Pipeline</div>
+                        </div>
                     </div>
-                    <p class="text-sm font-medium text-gray-500 mb-1">Live Fleet</p>
-                    <h3 class="text-3xl font-bold text-white tracking-tight">{{ $stats['approved_cars'] }}</h3>
-                    <div class="mt-4 flex items-center text-xs font-semibold text-indigo-500">
-                        <span class="bg-indigo-500/10 px-2 py-0.5 rounded">Visible to public</span>
+                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Strategic Roles</h4>
+                    <div class="text-3xl font-black text-white tracking-tighter">LOGISTICS</div>
+                    <div class="mt-4">
+                        <div class="w-full bg-indigo-500/10 h-1.5 rounded-full overflow-hidden">
+                            <div class="bg-indigo-500 h-full rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] animate-pulse" style="width: 75%"></div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Pending Cars -->
-                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 p-6 rounded-2xl shadow-xl relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 p-3 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg class="w-12 h-12 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                <!-- Fleet Readiness -->
+                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl transition-all overflow-hidden">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-all"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-purple-500/10 rounded-2xl border border-purple-500/20 text-purple-400">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+                        </div>
+                        <div class="text-right">
+                             <div class="text-[9px] font-black text-amber-500 uppercase tracking-widest mb-1">Pending</div>
+                             <div class="text-lg font-black text-white">{{ $stats['pending_cars'] }} Units</div>
+                        </div>
                     </div>
-                    <p class="text-sm font-medium text-gray-500 mb-1">Pending Approval</p>
-                    <h3 class="text-3xl font-bold text-white tracking-tight">{{ $stats['pending_cars'] }}</h3>
-                    <div class="mt-4 flex items-center text-xs font-semibold text-amber-500">
-                        <span class="bg-amber-500/10 px-2 py-0.5 rounded">Awaiting Admin</span>
+                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Asset Inventory</h4>
+                    <div class="text-3xl font-black text-white tracking-tighter">{{ $stats['approved_cars'] }} APPROVED</div>
+                    <div class="mt-4 flex items-center justify-between text-[8px] font-black text-gray-600 uppercase tracking-widest">
+                         <span>Status: Guarded</span>
+                         <a href="{{ route('owner.cars.index') }}" class="text-purple-400">Details →</a>
                     </div>
                 </div>
+
+                <!-- Integrity Breaches -->
+                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl transition-all overflow-hidden {{ $stats['pending_damages'] > 0 ? 'border-red-500/20' : '' }}">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-red-500/5 rounded-full blur-3xl group-hover:bg-red-500/10 transition-all"></div>
+                    <div class="flex justify-between items-start mb-6">
+                        <div class="p-3 bg-red-500/10 rounded-2xl border border-red-500/20 text-red-500">
+                            <svg class="w-6 h-6 {{ $stats['pending_damages'] > 0 ? 'animate-pulse' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
+                        <div class="text-right">
+                             <div class="text-[9px] font-black text-red-500 uppercase tracking-widest mb-1">Disputes</div>
+                             <div class="text-lg font-black text-white">{{ $stats['pending_damages'] }} Signal</div>
+                        </div>
+                    </div>
+                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Asset Integrity</h4>
+                    <div class="text-3xl font-black text-white tracking-tighter">{{ $stats['pending_damages'] > 0 ? 'BREACH' : 'SECURE' }}</div>
+                    <div class="mt-4 text-[8px] font-black text-gray-600 uppercase tracking-widest">
+                         {{ $stats['pending_damages'] > 0 ? 'Immediate resolution required' : 'All assets operational' }}
+                    </div>
+                </div>
+
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Recent Bookings -->
-                <div class="lg:col-span-2 space-y-4">
-                    <div class="flex items-center justify-between px-2">
-                        <h3 class="text-lg font-bold text-white tracking-tight">Recent Rental Requests</h3>
-                        <a href="{{ route('owner.bookings.index') }}" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors">Manage all &rarr;</a>
+            <!-- Intelligence Hub -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                
+                <!-- Action Queue (The Marshaling Protocol) -->
+                <div class="lg:col-span-2 space-y-8">
+                    <div class="flex items-center justify-between px-4">
+                        <h3 class="text-xl font-black text-white italic tracking-tight flex items-center gap-3">
+                            <span class="p-1.5 bg-indigo-500 rounded-lg shadow-[0_0_15px_rgba(99,102,241,0.3)]"></span>
+                            PROTOCOL ACTION QUEUE
+                        </h3>
+                        <a href="{{ route('owner.bookings.index') }}" class="text-[10px] font-black text-indigo-400 bg-indigo-500/5 hover:bg-indigo-500 hover:text-white px-5 py-2.5 rounded-2xl border border-indigo-500/10 transition-all uppercase tracking-widest">View Full Archive →</a>
                     </div>
-                    
-                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
-                        <table class="w-full text-left">
-                            <thead class="bg-white/5">
-                                <tr>
-                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Customer</th>
-                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Vehicle</th>
-                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest">Period</th>
-                                    <th class="px-6 py-4 text-[10px] font-bold text-gray-500 uppercase tracking-widest text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody class="divide-y divide-white/5">
-                                @forelse($recentBookings as $booking)
-                                <tr class="hover:bg-white/[0.02] transition-colors">
-                                    <td class="px-6 py-4">
-                                        <div class="text-sm font-medium text-gray-300">
-                                            <a href="{{ route('profiles.show', $booking->customer) }}" class="hover:text-indigo-400 transition-colors">{{ $booking->customer->name }}</a>
-                                        </div>
-                                        <div class="text-[10px] text-gray-500">#{{ $booking->id }}</div>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <span class="text-sm text-gray-400">{{ $booking->car->title }}</span>
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <div class="text-[10px] text-gray-500">{{ \Carbon\Carbon::parse($booking->start_date)->format('M d') }} - {{ \Carbon\Carbon::parse($booking->end_date)->format('M d') }}</div>
-                                    </td>
-                                    <td class="px-6 py-4 text-right">
-                                        <a href="{{ route('owner.bookings.index') }}" class="px-3 py-1 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 text-[10px] font-bold rounded-lg border border-emerald-500/20 transition-all uppercase">Manage</a>
-                                    </td>
-                                </tr>
-                                @empty
-                                <tr>
-                                    <td colspan="4" class="px-6 py-12 text-center text-gray-500 text-sm italic">No rental requests at the moment.</td>
-                                </tr>
-                                @endforelse
-                            </tbody>
-                        </table>
+
+                    <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="text-[9px] font-black text-gray-600 uppercase tracking-[0.3em] bg-white/[0.01] border-b border-white/5">
+                                        <th class="px-10 py-6">Renter Identity</th>
+                                        <th class="px-10 py-6">Target Asset</th>
+                                        <th class="px-10 py-6">Status Delta</th>
+                                        <th class="px-10 py-6 text-right">Yield</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-white/5">
+                                    @forelse($actionQueue as $booking)
+                                    <tr class="group hover:bg-white/[0.02] transition-colors">
+                                        <td class="px-10 py-8">
+                                            <a href="{{ route('profiles.show', $booking->customer) }}" class="flex items-center gap-4 group/renter">
+                                                <div class="w-10 h-10 rounded-xl bg-gray-800 border border-white/10 flex items-center justify-center text-xs font-black text-indigo-400 group-hover/renter:bg-indigo-600 group-hover/renter:text-white transition-all overflow-hidden shadow-lg">
+                                                    @if($booking->customer->profile_photo)
+                                                        <img src="{{ Storage::url($booking->customer->profile_photo) }}" class="w-full h-full object-cover">
+                                                    @else
+                                                        {{ strtoupper(substr($booking->customer->name, 0, 1)) }}
+                                                    @endif
+                                                </div>
+                                                <div>
+                                                    <div class="text-xs font-black text-gray-200 uppercase tracking-tight group-hover/renter:text-indigo-400 transition-colors">{{ $booking->customer->name }}</div>
+                                                    <div class="text-[9px] text-gray-600 font-bold uppercase italic">Reputation: High</div>
+                                                </div>
+                                            </a>
+                                        </td>
+                                        <td class="px-10 py-8">
+                                            <div class="flex flex-col">
+                                                <span class="text-xs font-bold text-white uppercase tracking-widest">{{ $booking->car->brand }}</span>
+                                                <span class="text-[9px] text-gray-600 font-black uppercase italic">{{ $booking->car->model }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="px-10 py-8">
+                                             @php
+                                                $statusColors = [
+                                                    'pending' => 'bg-amber-500/10 text-amber-500 border-amber-500/20',
+                                                    'approved' => 'bg-blue-500/10 text-blue-500 border-blue-500/20', // Authorized
+                                                    'ongoing' => 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20', // Trip Started
+                                                    'returned' => 'bg-purple-500/10 text-purple-400 border-purple-500/20', // Inspection Needed
+                                                ];
+                                                $color = $statusColors[$booking->status] ?? 'bg-white/5 text-gray-500 border-white/10';
+                                            @endphp
+                                            <div class="flex items-center gap-2">
+                                                <span class="w-1.5 h-1.5 rounded-full {{ explode(' ', $color)[1] }} {{ $booking->status === 'pending' || $booking->status === 'returned' ? 'animate-pulse shadow-[0_0_8px_currentColor]' : '' }}"></span>
+                                                <span class="px-2.5 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest border {{ $color }}">
+                                                    {{ $booking->status === 'approved' ? 'AUTHORIZED' : ($booking->status === 'ongoing' ? 'DEPOLYED' : $booking->status) }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="px-10 py-8 text-right">
+                                            <a href="{{ route('owner.bookings.index') }}" class="inline-flex py-2 px-4 bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/10 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Engage</a>
+                                        </td>
+                                    </tr>
+                                    @empty
+                                    <tr>
+                                        <td colspan="4" class="px-10 py-24 text-center">
+                                            <div class="text-[10px] text-gray-700 font-black uppercase tracking-[0.4em] italic opacity-20">No combat orders in the tactical queue</div>
+                                        </td>
+                                    </tr>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Side Panel: Fleet Overview -->
-                        <!-- Earnings Trend (CSS Graph) -->
-                        <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-6 shadow-2xl overflow-hidden relative">
-                            <div class="flex items-end justify-between h-32 gap-1.5 px-2">
-                                @php $maxEarn = max($stats['monthly_earnings'] ?? [1]) ?: 1; @endphp
-                                @foreach($stats['monthly_earnings'] ?? [] as $month => $sum)
-                                    <div class="flex-1 flex flex-col items-center group relative h-full">
-                                        <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-[8px] text-white px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 font-bold">৳ {{ number_format($sum) }}</div>
-                                        <div class="w-full bg-emerald-500/10 rounded-t-md transition-all duration-700 group-hover:bg-emerald-500/30 relative mt-auto" 
-                                            style="height: {{ ($sum / $maxEarn) * 100 }}%">
-                                        </div>
-                                        <div class="text-[7px] text-gray-700 mt-2 font-black uppercase">{{ \Carbon\Carbon::create()->month($month)->format('M') }}</div>
+                <!-- Strategic Insights (Side Panel) -->
+                <div class="space-y-10">
+                    
+                    <!-- Yield Trajectory -->
+                    <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                         <div class="absolute -right-4 -top-4 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl -z-10 group-hover:bg-emerald-500/10 transition-all"></div>
+                         <h3 class="text-xs font-black text-white uppercase tracking-[0.2em] mb-10 flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
+                            Revenue Delta
+                         </h3>
+                         
+                         <div class="h-40 flex items-end justify-between gap-1.5 px-2">
+                            @php $maxEarn = !empty($stats['monthly_earnings']) ? max($stats['monthly_earnings']) : 1; @endphp
+                            @foreach($stats['monthly_earnings'] ?? [] as $month => $sum)
+                                <div class="flex-1 flex flex-col items-center group/bar relative h-full">
+                                    <div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-950 border border-white/10 text-[8px] font-bold text-white px-2 py-1 rounded-lg opacity-0 group-bar/bar:opacity-100 transition-all scale-75 group-bar/bar:scale-100 whitespace-nowrap z-20 shadow-xl">৳{{ number_format($sum) }}</div>
+                                    <div class="w-full bg-emerald-500/10 rounded-t-lg transition-all duration-700 group-bar/bar:bg-emerald-500 group-bar/bar:shadow-[0_0_15px_rgba(16,185,129,0.4)] relative mt-auto" 
+                                        style="height: {{ ($sum / $maxEarn) * 100 }}%">
                                     </div>
-                                @endforeach
-                                @if(empty($stats['monthly_earnings']))
-                                    <div class="w-full h-full flex flex-col items-center justify-center text-gray-600 text-[10px] italic space-y-2">
-                                        <svg class="w-6 h-6 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                        Awaiting Earnings
-                                    </div>
-                                @endif
-                            </div>
-                            <div class="absolute top-3 right-4 text-[8px] font-black uppercase tracking-widest text-emerald-500/50 grayscale">Revenue Flow</div>
-                        </div>
-
-                        <!-- Damage Reports Alert -->
-                        @if($stats['pending_damages'] > 0)
-                        <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-5 shadow-inner">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center text-red-500">
-                                    <svg class="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    <div class="text-[7px] text-gray-700 mt-2 font-black uppercase">{{ \Carbon\Carbon::create()->month($month)->format('M') }}</div>
                                 </div>
-                                <div>
-                                    <p class="text-sm font-bold text-red-400">{{ $stats['pending_damages'] }} Pending Reports</p>
-                                    <p class="text-[10px] text-red-400/60 uppercase font-black tracking-widest">Action Required</p>
-                                </div>
-                            </div>
+                            @endforeach
+                            @if(empty($stats['monthly_earnings']))
+                                <div class="w-full h-full flex flex-col items-center justify-center text-gray-700 text-[10px] font-black uppercase tracking-[0.2em] italic opacity-20">Awaiting Settlement</div>
+                            @endif
                         </div>
-                        @endif
-
-                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-4 shadow-xl space-y-4">
-                        @forelse($recentCars as $car)
-                        <div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors group">
-                            <div class="flex items-center space-x-3">
-                                <div class="w-12 h-12 rounded-lg bg-gray-800 border border-white/5 overflow-hidden">
-                                     @if($car->images->count() > 0)
-                                        <img src="{{ Storage::url($car->images->first()->image_path) }}" class="w-full h-full object-cover">
-                                    @else
-                                        <div class="w-full h-full flex items-center justify-center text-gray-700 text-xs">NO IMG</div>
-                                    @endif
-                                </div>
-                                <div>
-                                    <p class="text-sm font-semibold text-gray-200">{{ $car->brand }} {{ $car->model }}</p>
-                                    <div class="flex items-center gap-2 mt-0.5">
-                                        <span class="w-1.5 h-1.5 rounded-full {{ $car->status === 'approved' ? 'bg-emerald-500' : 'bg-amber-500' }}"></span>
-                                        <span class="text-[10px] text-gray-500 uppercase font-black tracking-tighter">{{ $car->status }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <a href="{{ route('owner.cars.edit', $car) }}" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-400 hover:text-white transition-all">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                            </a>
-                        </div>
-                        @empty
-                        <div class="text-center py-8">
-                            <p class="text-gray-500 text-sm mb-4">No vehicles listed yet.</p>
-                            <a href="{{ route('owner.cars.create') }}" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl transition-all">Add Your First Car</a>
-                        </div>
-                        @endforelse
                     </div>
 
-                    <!-- Add New Button -->
-                    @if($recentCars->count() > 0)
-                    <a href="{{ route('owner.cars.create') }}" class="flex items-center justify-center gap-3 p-4 bg-white/5 border border-dashed border-white/20 rounded-2xl text-gray-400 hover:text-white hover:border-emerald-500/50 hover:bg-emerald-500/5 transition-all group">
-                        <svg class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                        <span class="font-bold text-sm">Add Another Vehicle</span>
-                    </a>
-                    @endif
+                    <!-- Fleet High-Velocity Overlook -->
+                    <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl space-y-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xs font-black text-white uppercase tracking-[0.2em]">Active Fleet</h3>
+                            <a href="{{ route('owner.cars.index') }}" class="text-[9px] text-gray-500 hover:text-white transition-colors uppercase font-black tracking-widest">Global Fleet →</a>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            @forelse($recentCars as $car)
+                            <div class="flex items-center justify-between p-4 bg-gray-950/50 hover:bg-white/[0.02] border border-white/5 rounded-3xl transition-all group">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gray-900 border border-white/10 overflow-hidden relative shadow-lg">
+                                        @if($car->images->count() > 0)
+                                            <img src="{{ Storage::url($car->images->first()->image_path) }}" class="w-full h-full object-cover">
+                                        @else
+                                            <div class="w-full h-full flex items-center justify-center text-gray-700 text-[8px] font-black uppercase italic">No Visual</div>
+                                        @endif
+                                        @if($car->status === 'pending')
+                                            <div class="absolute inset-0 bg-amber-500/10 backdrop-blur-[2px]"></div>
+                                        @endif
+                                    </div>
+                                    <div>
+                                        <p class="text-[10px] font-black text-gray-200 uppercase tracking-tight group-hover:text-emerald-400 transition-colors">{{ $car->brand }} {{ $car->model }}</p>
+                                        <div class="flex items-center gap-2 mt-1">
+                                            <span class="w-1.5 h-1.5 rounded-full {{ $car->status === 'approved' ? 'bg-emerald-500' : 'bg-amber-500 animate-pulse' }} shadow-[0_0_5px_currentColor]"></span>
+                                            <span class="text-[8px] text-gray-600 font-bold uppercase tracking-widest">{{ $car->status }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="{{ route('owner.cars.edit', $car) }}" class="p-2.5 bg-white/5 hover:bg-white/10 text-gray-600 hover:text-white rounded-xl border border-white/5 transition-all">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                </a>
+                            </div>
+                            @empty
+                            <div class="py-10 text-center text-gray-700 text-[9px] font-black uppercase tracking-[0.3em] italic opacity-20">Awaiting fleet assembly</div>
+                            @endforelse
+                        </div>
+
+                        <a href="{{ route('owner.cars.create') }}" class="flex items-center justify-center gap-3 p-5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-[10px] uppercase tracking-widest rounded-3xl shadow-xl shadow-emerald-500/20 transition-all hover:scale-[1.02]">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
+                            Post New Asset
+                        </a>
+                    </div>
+
                 </div>
             </div>
 

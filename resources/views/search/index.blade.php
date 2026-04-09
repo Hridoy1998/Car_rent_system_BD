@@ -57,8 +57,21 @@
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-gray-600">No Image</div>
                             @endif
-                            <div class="absolute top-4 right-4 bg-gray-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-white font-bold text-sm">
-                                ৳{{ number_format($car->price_per_day, 0) }}<span class="text-gray-400 font-normal text-xs">/d</span>
+                            
+                            <div class="absolute top-4 right-4 z-20 flex gap-2">
+                                @auth
+                                    @if(auth()->user()->isCustomer())
+                                        <form action="{{ route('customer.favorites.toggle', $car) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="p-2 {{ $car->isFavoritedBy(auth()->user()) ? 'bg-indigo-600 text-white' : 'bg-gray-950/80 text-gray-400' }} backdrop-blur-md rounded-xl border border-white/10 transition-all hover:scale-110 active:scale-90 shadow-xl">
+                                                <svg class="w-4 h-4" fill="{{ $car->isFavoritedBy(auth()->user()) ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                                            </button>
+                                        </form>
+                                    @endif
+                                @endauth
+                                <div class="bg-gray-950/80 backdrop-blur-md px-3 py-1 rounded-full border border-white/10 text-white font-bold text-sm">
+                                    ৳{{ number_format($car->price_per_day, 0) }}<span class="text-gray-400 font-normal text-xs">/d</span>
+                                </div>
                             </div>
                         </div>
                         <div class="p-5">

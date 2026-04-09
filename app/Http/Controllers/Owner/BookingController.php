@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Owner;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateBookingRequest;
 use App\Models\Booking;
+use App\Models\DamageReport;
 use App\Notifications\BookingStatusUpdated;
 use App\Services\EarningService;
 use Illuminate\Support\Facades\DB;
@@ -45,24 +46,75 @@ class BookingController extends Controller
 
         $newStatus = $request->validated()['status'];
 
-        // Enforce lifecycle: can only progress forward
+        // Sovereign Fleet Lifecycle: can only progress forward
         $allowed = [
             'pending' => ['approved', 'rejected'],
-            'approved' => ['completed', 'cancelled'],
+            'approved' => ['ongoing', 'cancelled'],
+            'ongoing' => ['returning', 'returned'], // Owner can skip 'returning' if needed
+            'returning' => ['returned'],            // Owner verifies renter's request
+            'returned' => ['completed'],
         ];
 
         $currentStatus = $booking->status;
         if (! isset($allowed[$currentStatus]) || ! in_array($newStatus, $allowed[$currentStatus])) {
-            return back()->with('error', "Cannot transition booking from '{$currentStatus}' to '{$newStatus}'.");
+            return back()->with('error', "Cannot transition booking from '{$currentStatus}' to '{$newStatus}'. Protocol Violation.");
         }
 
-        // Prevent completion if payment not received
-        if ($newStatus === 'completed' && $booking->payment_status !== 'paid') {
-            return back()->with('error', 'Cannot complete a booking with unpaid payment. Ask the customer to pay first.');
+        // Integrity Checks
+        if ($newStatus === 'completed' && $booking->isLocked()) {
+            return back()->with('error', 'Integrity Lock active. Resolve all damage disputes before finalizing mission.');
         }
 
-        DB::transaction(function () use ($booking, $newStatus) {
-            $booking->update(['status' => $newStatus]);
+        if ($newStatus === 'ongoing' && $booking->payment_status !== 'paid') {
+            return back()->with('error', 'Cannot initiate handover for unpaid booking. Verify financial settlement first.');
+        }
+
+        $validated = $request->validated();
+
+        DB::transaction(function () use ($booking, $newStatus, $validated, $request) {
+            $updateData = ['status' => $newStatus];
+
+            if ($newStatus === 'ongoing') {
+                $updateData['checked_in_at'] = now();
+                if (isset($validated['start_odo'])) {
+                    $updateData['start_odo'] = $validated['start_odo'];
+                }
+            } elseif ($newStatus === 'returned') {
+                $updateData['returned_at'] = now();
+                
+                // Final Physical Audit
+                if (isset($validated['end_odo'])) $updateData['end_odo'] = $validated['end_odo'];
+                if (isset($validated['end_fuel'])) $updateData['end_fuel'] = $validated['end_fuel'];
+                if (isset($validated['inspection_notes'])) $updateData['inspection_notes'] = $validated['inspection_notes'];
+                
+                if ($request->hasFile('inspection_image')) {
+                    $path = $request->file('inspection_image')->store('inspections', 'public');
+                    $updateData['inspection_images'] = json_encode([$path]);
+                }
+
+                // Integrated Sovereign Damage Reporting
+                if (isset($validated['damage_description']) && isset($validated['damage_cost'])) {
+                    $damageData = [
+                        'booking_id' => $booking->id,
+                        'description' => $validated['damage_description'],
+                        'cost' => $validated['damage_cost'],
+                        'status' => 'pending',
+                    ];
+
+                    if ($request->hasFile('damage_image')) {
+                        $damageData['image'] = $request->file('damage_image')->store('damages', 'public');
+                    }
+
+                    DamageReport::create($damageData);
+                    $updateData['security_deposit_status'] = 'disputed';
+                }
+            }
+
+            if ($newStatus === 'completed') {
+                $updateData['security_deposit_status'] = 'released';
+            }
+
+            $booking->update($updateData);
 
             // Settle earnings on completion
             if ($newStatus === 'completed') {
@@ -73,6 +125,6 @@ class BookingController extends Controller
         // Notify the customer
         $booking->customer->notify(new BookingStatusUpdated($booking->load('car')));
 
-        return back()->with('success', "Booking status updated to '{$newStatus}'.");
+        return back()->with('success', "Booking status transitioned to '{$newStatus}'.");
     }
 }

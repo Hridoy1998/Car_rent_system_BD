@@ -8,6 +8,15 @@ use Illuminate\Http\Request;
 
 class DamageReportController extends Controller
 {
+    public function index()
+    {
+        $breaches = DamageReport::with(['booking.customer', 'booking.car'])
+            ->latest()
+            ->paginate(15);
+
+        return view('admin.damage-reports.index', compact('breaches'));
+    }
+
     public function resolve(Request $request, DamageReport $damageReport)
     {
         $validated = $request->validate([
@@ -15,12 +24,18 @@ class DamageReportController extends Controller
             'admin_notes' => 'required|string|max:2000',
         ]);
 
-        $damageReport->update([
-            'resolution_cost' => $validated['resolution_cost'],
-            'admin_notes' => $validated['admin_notes'],
-            'status' => 'resolved',
-        ]);
+        \Illuminate\Support\Facades\DB::transaction(function () use ($damageReport, $validated) {
+            $damageReport->update([
+                'resolution_cost' => $validated['resolution_cost'],
+                'admin_notes' => $validated['admin_notes'],
+                'status' => 'resolved',
+            ]);
 
-        return back()->with('success', 'Damage dispute resolved successfully.');
+            if ($validated['resolution_cost'] > 0) {
+                $damageReport->booking->increment('total_price', $validated['resolution_cost']);
+            }
+        });
+
+        return back()->with('success', 'Damage dispute resolved. Financial artifacts adjusted.');
     }
 }

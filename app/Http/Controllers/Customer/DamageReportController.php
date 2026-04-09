@@ -19,16 +19,18 @@ class DamageReportController extends Controller
             'customer_notes' => 'nullable|string|max:1000',
         ]);
 
-        $updateData = ['status' => $validated['status']];
+        $damageReport->update([
+            'status' => $validated['status'],
+            'customer_notes' => $validated['customer_notes'],
+        ]);
 
-        // If we had a customer_notes field in the migration, we'd use it.
-        // For now, let's just update the status as per the plan.
-
-        $damageReport->update($updateData);
-
-        $msg = $validated['status'] === 'acknowledged'
-            ? 'Damage report acknowledged. Thank you.'
-            : 'Damage report disputed. An admin will review the evidence.';
+        if ($validated['status'] === 'acknowledged') {
+            $booking = $damageReport->booking;
+            $booking->increment('total_price', $damageReport->cost);
+            $msg = 'Damage report acknowledged. Fee added to final settlement.';
+        } else {
+            $msg = 'Damage report disputed. Admin mediation initiated.';
+        }
 
         return back()->with('success', $msg);
     }

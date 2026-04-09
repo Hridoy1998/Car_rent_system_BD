@@ -18,12 +18,15 @@ class DashboardController extends Controller
             'approved_cars' => $user->cars()->where('status', 'approved')->count(),
             'pending_cars' => $user->cars()->where('status', 'pending')->count(),
             'active_bookings' => Booking::whereHas('car', fn ($q) => $q->where('user_id', $user->id))
-                ->whereIn('status', ['pending', 'approved'])
+                ->whereIn('status', ['pending', 'approved', 'ongoing', 'returned'])
                 ->count(),
             'total_earnings' => Earning::where('owner_id', $user->id)->sum('amount'),
             'pending_damages' => DamageReport::whereHas('booking.car', fn ($q) => $q->where('user_id', $user->id))
                 ->where('status', 'pending')
                 ->count(),
+            'revenue_24h' => Earning::where('owner_id', $user->id)
+                ->where('created_at', '>=', now()->subDay())
+                ->sum('amount'),
             'monthly_earnings' => Earning::selectRaw('SUM(amount) as sum, MONTH(created_at) as month')
                 ->where('owner_id', $user->id)
                 ->where('created_at', '>=', now()->subMonths(6))
@@ -33,14 +36,15 @@ class DashboardController extends Controller
                 ->toArray(),
         ];
 
-        $recentCars = $user->cars()->with('images')->latest()->take(3)->get();
+        $recentCars = $user->cars()->with('images')->latest()->take(4)->get();
 
-        $recentBookings = Booking::with('customer', 'car')
+        $actionQueue = Booking::with('customer', 'car')
             ->whereHas('car', fn ($q) => $q->where('user_id', $user->id))
+            ->whereIn('status', ['pending', 'approved', 'ongoing', 'returned'])
             ->latest()
-            ->take(5)
+            ->take(6)
             ->get();
 
-        return view('owner.dashboard', compact('stats', 'recentCars', 'recentBookings'));
+        return view('owner.dashboard', compact('stats', 'recentCars', 'actionQueue'));
     }
 }

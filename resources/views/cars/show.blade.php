@@ -33,22 +33,29 @@
                 <div class="lg:col-span-2 space-y-12">
                     
                     <!-- Main Gallery Hub -->
-                    <div class="space-y-4">
+                    @php 
+                        $primaryImg = $car->images->where('is_primary', true)->first()->image_path ?? $car->images->first()->image_path ?? null; 
+                    @endphp
+                    <div class="space-y-4" x-data="{ activeImage: '{{ $primaryImg ? Storage::url($primaryImg) : '' }}' }">
                         <div class="aspect-[16/9] w-full rounded-[2.5rem] overflow-hidden bg-gray-900 border border-white/10 relative shadow-2xl group">
                             @if($car->images->count() > 0)
-                                <img src="{{ Storage::url($car->images->where('is_primary', true)->first()->image_path ?? $car->images->first()->image_path) }}" class="w-full h-full object-cover">
+                                <img :src="activeImage" class="w-full h-full object-cover transition-all duration-500">
                             @else
                                 <div class="w-full h-full flex items-center justify-center text-gray-700">NO VEHICLE IMAGES</div>
                             @endif
                             <div class="absolute top-6 right-6 px-4 py-2 bg-gray-950/80 backdrop-blur-md rounded-2xl text-[10px] font-black text-white uppercase tracking-widest border border-white/10">
-                                1 of {{ $car->images->count() ?: 1 }} Photos
+                                Gallery View
                             </div>
                         </div>
                         
                         @if($car->images->count() > 1)
                         <div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
                             @foreach($car->images as $image)
-                                <div class="w-32 h-20 flex-shrink-0 rounded-2xl overflow-hidden border-2 {{ $loop->first ? 'border-indigo-500 shadow-[0_0_15px_rgba(79,70,229,0.3)]' : 'border-white/5 opacity-50 hover:opacity-100' }} transition-all cursor-pointer">
+                                <div 
+                                    @click="activeImage = '{{ Storage::url($image->image_path) }}'"
+                                    class="w-32 h-20 flex-shrink-0 rounded-2xl overflow-hidden border-2 transition-all cursor-pointer"
+                                    :class="activeImage === '{{ Storage::url($image->image_path) }}' ? 'border-indigo-500 shadow-[0_0_15px_rgba(79,70,229,0.3)]' : 'border-white/5 opacity-50 hover:opacity-100'"
+                                >
                                     <img src="{{ Storage::url($image->image_path) }}" class="w-full h-full object-cover">
                                 </div>
                             @endforeach
@@ -184,7 +191,9 @@
                                 </div>
                                 <div>
                                     <p class="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-1">Meet the Host</p>
-                                    <h4 class="text-xl font-bold text-white">{{ $car->owner->name }}</h4>
+                                    <h4 class="text-xl font-bold text-white">
+                                        <a href="{{ route('profiles.show', $car->owner) }}" class="hover:text-indigo-400 transition-colors">{{ $car->owner->name }}</a>
+                                    </h4>
                                     <p class="text-[10px] text-indigo-400 font-bold uppercase">Top Rated Professional</p>
                                 </div>
                             </div>

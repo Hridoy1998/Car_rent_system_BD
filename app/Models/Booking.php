@@ -17,7 +17,29 @@ class Booking extends Model
         'total_price',
         'status',
         'payment_status',
+        'checked_in_at',
+        'returned_at',
+        'start_odo',
+        'renter_end_odo',
+        'end_odo',
+        'end_fuel',
+        'inspection_notes',
+        'inspection_images',
+        'security_deposit_amount',
+        'security_deposit_status',
+        'dispute_held_at',
     ];
+
+    /**
+     * Integrity Lock Check
+     * Prevents trip completion if unresolved damage disputes exist.
+     */
+    public function isLocked(): bool
+    {
+        return $this->damageReports()
+            ->whereIn('status', ['pending', 'disputed'])
+            ->exists();
+    }
 
     public function customer()
     {

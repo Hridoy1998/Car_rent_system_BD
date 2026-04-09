@@ -65,9 +65,9 @@ class CarController extends Controller
         $images = $data['images'] ?? null;
         unset($data['images']);
 
-        // Owner cannot change status directly
         if (auth()->user()->role === 'owner') {
-            unset($data['status']);
+            $data['status'] = 'pending';
+            $data['last_edit_reason'] = $request->edit_reason;
         }
 
         $car->update($data);
@@ -82,8 +82,11 @@ class CarController extends Controller
             }
         }
 
-        return redirect()->route('owner.cars.index')
-            ->with('success', 'Car updated successfully.');
+        $msg = auth()->user()->role === 'owner'
+            ? 'Strategic update submitted. Awaiting administrative authorization.'
+            : 'Car updated successfully.';
+
+        return redirect()->route('owner.cars.index')->with('success', $msg);
     }
 
     public function destroy(Car $car)

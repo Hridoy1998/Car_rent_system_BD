@@ -181,10 +181,35 @@
                             </div>
                         </div>
 
+                        <!-- Strategic Audit Trail -->
+                        <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden group">
+                             <div class="absolute -right-4 -top-4 w-32 h-32 bg-amber-500/5 rounded-full blur-3xl group-hover:bg-amber-500/10 transition-all"></div>
+                             <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
+                                <span class="w-1 h-6 bg-amber-500 rounded-full"></span>
+                                Change Intelligence
+                            </h3>
+                            <div class="space-y-4">
+                                <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Reason for Strategic Update (Required for Authorization)</label>
+                                <textarea name="edit_reason" required class="w-full bg-gray-950 border border-white/5 rounded-2xl p-6 text-white text-sm focus:ring-indigo-500 min-h-[120px]" placeholder="Briefly describe the parameters modified and the operational rationale..."></textarea>
+                                @if($car->last_edit_reason)
+                                    <div class="mt-4 p-4 bg-white/5 border border-white/5 rounded-2xl">
+                                        <p class="text-[9px] font-black text-gray-600 uppercase tracking-widest mb-2 italic">Prior Audit Statement:</p>
+                                        <p class="text-[11px] text-gray-400 font-medium italic">"{{ $car->last_edit_reason }}"</p>
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
                         <!-- Deployment -->
-                        <div class="pt-12 text-center">
-                             <a href="{{ route('owner.cars.index') }}" class="mr-6 text-xs font-black text-gray-600 uppercase tracking-widest hover:text-white transition-colors">Abort Edit</a>
-                            <button type="submit" class="px-12 py-5 bg-white text-gray-950 font-black rounded-2xl shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:bg-indigo-600 hover:text-white transition-all uppercase tracking-[0.2em] text-sm">Update Parameters</button>
+                        <div class="pt-12 text-center flex flex-col items-center gap-6">
+                            <button type="submit" class="w-full py-6 bg-white text-gray-950 font-black rounded-3xl shadow-[0_0_50px_rgba(255,255,255,0.1)] hover:shadow-indigo-500/20 hover:bg-indigo-600 hover:text-white transition-all uppercase tracking-[0.4em] text-sm group">
+                                SUBMIT FOR AUTHORIZATION
+                                <div class="mt-1 text-[8px] opacity-40 font-bold tracking-widest group-hover:opacity-100 italic">CAR WILL BE HIDDEN UNTIL ADMIN AUDIT</div>
+                            </button>
+                            <a href="{{ route('owner.cars.index') }}" class="text-[10px] font-black text-gray-600 uppercase tracking-widest hover:text-white transition-colors flex items-center gap-2">
+                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7 7-7"></path></svg>
+                                Abort Protocol
+                            </a>
                         </div>
 
                     </div>

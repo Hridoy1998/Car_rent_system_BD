@@ -32,6 +32,7 @@ class Car extends Model
         'fuel_policy',
         'insurance_info',
         'features',
+        'last_edit_reason',
     ];
 
     public function owner()
@@ -54,18 +55,68 @@ class Car extends Model
         return $this->hasMany(Review::class);
     }
 
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function isFavoritedBy(?User $user): bool
+    {
+        if (! $user) {
+            return false;
+        }
+
+        return $this->favorites()->where('user_id', $user->id)->exists();
+    }
+
+    public function scopeAvailable($query, $startDate = null, $endDate = null)
+    {
+        $startDate = $startDate ?? now()->toDateString();
+        $endDate = $endDate ?? now()->addDay()->toDateString();
+
+        return $query->where('status', 'approved')
+            ->whereDoesntHave('bookings', function ($q) use ($startDate, $endDate) {
+                $q->whereNotIn('status', ['cancelled', 'rejected', 'completed'])
+                    ->where(function ($sq) use ($startDate, $endDate) {
+                        // Conventional Date Overlap
+                        $sq->where(function ($ssq) use ($startDate, $endDate) {
+                            $ssq->where('start_date', '<=', $startDate)
+                                ->where('end_date', '>=', $startDate);
+                        })->orWhere(function ($ssq) use ($startDate, $endDate) {
+                            $ssq->where('start_date', '<=', $endDate)
+                                ->where('end_date', '>=', $endDate);
+                        })->orWhere(function ($ssq) use ($startDate, $endDate) {
+                            $ssq->where('start_date', '>=', $startDate)
+                                ->where('end_date', '<=', $endDate);
+                        })->orWhere(function ($ssq) use ($startDate) {
+                            // Operational Hardening: If status is ongoing/returning/returned, 
+                            // it blocks everything from NOW until its end_date.
+                            $ssq->whereIn('status', ['ongoing', 'returning', 'returned'])
+                                ->where('end_date', '>=', $startDate);
+                        });
+                    });
+            });
+    }
+
     public function getIsAvailableAttribute()
     {
         if ($this->status !== 'approved') {
             return false;
         }
 
-        $today = now()->startOfDay();
-
-        return ! $this->bookings()
-            ->whereIn('status', ['pending', 'approved'])
-            ->where('start_date', '<=', $today)
-            ->where('end_date', '>=', $today)
+        $today = now()->startOfDay()->toDateString();
+        $isOccupied = $this->bookings()
+            ->whereNotIn('status', ['cancelled', 'rejected', 'completed'])
+            ->where(function ($q) use ($today) {
+                $q->where(function ($sq) use ($today) {
+                    $sq->where('start_date', '<=', $today)
+                       ->where('end_date', '>=', $today);
+                })->orWhere(function ($sq) {
+                    $sq->whereIn('status', ['ongoing', 'returning', 'returned']);
+                });
+            })
             ->exists();
+
+        return ! $isOccupied;
     }
 }

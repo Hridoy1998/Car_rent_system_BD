@@ -2,16 +2,23 @@
 
 use App\Http\Controllers\Admin\BookingController;
 use App\Http\Controllers\Admin\CarController;
+use App\Http\Controllers\Admin\DamageReportController as AdminDamageReportController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\PromoCodeController;
+use App\Http\Controllers\Admin\FinancialController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SupportController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VerificationController;
+use App\Http\Controllers\Customer\FavoriteController;
 use App\Http\Controllers\Customer\ReviewController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\Owner\DamageReportController;
+use App\Http\Controllers\Owner\FinanceController;
+use App\Http\Controllers\Owner\IntegrityController;
+use App\Http\Controllers\Owner\LogisticsController;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
@@ -48,16 +55,27 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::resource('users', UserController::class)->only(['index', 'update']);
     Route::resource('verifications', VerificationController::class)->only(['index', 'update']);
     Route::resource('bookings', BookingController::class)->only(['index', 'show', 'update']);
-    Route::resource('promo-codes', PromoCodeController::class)->only(['index', 'store', 'destroy']);
-    Route::put('/damage-reports/{damageReport}/resolve', [DamageReportController::class, 'resolve'])->name('damage-reports.resolve');
+    Route::resource('settings', SettingController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::get('/damage-reports', [AdminDamageReportController::class, 'index'])->name('damage-reports.index');
+    Route::put('/damage-reports/{damageReport}/resolve', [AdminDamageReportController::class, 'resolve'])->name('damage-reports.resolve');
+
+    // New Power Modules
+    Route::get('/finance', [FinancialController::class, 'index'])->name('finance.index');
+    Route::get('/support', [SupportController::class, 'index'])->name('support.index');
+    Route::get('/support/{booking}', [SupportController::class, 'show'])->name('support.show');
+    Route::resource('settings', SettingController::class)->only(['index', 'store', 'update', 'destroy']);
 });
 
 // Owner Routes
 Route::middleware(['auth', 'verified', 'role:owner'])->prefix('owner')->name('owner.')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Owner\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/finance', [FinanceController::class, 'index'])->name('finance.index');
+    Route::get('/logistics', [LogisticsController::class, 'index'])->name('logistics.index');
+    Route::get('/integrity', [IntegrityController::class, 'index'])->name('integrity.index');
     Route::resource('cars', App\Http\Controllers\Owner\CarController::class);
     Route::resource('bookings', App\Http\Controllers\Owner\BookingController::class)->only(['index', 'show', 'update']);
     Route::resource('bookings.damage-reports', DamageReportController::class)->only(['store']);
+    Route::post('/bookings/{booking}/review', [App\Http\Controllers\Owner\ReviewController::class, 'store'])->name('bookings.review');
 });
 
 // Customer Routes
@@ -67,6 +85,7 @@ Route::middleware(['auth', 'verified', 'role:customer'])->prefix('customer')->na
     Route::post('/bookings/{booking}/pay', [App\Http\Controllers\Customer\BookingController::class, 'pay'])->name('bookings.pay');
     Route::resource('bookings.reviews', ReviewController::class)->only(['store']);
     Route::resource('verifications', App\Http\Controllers\Customer\VerificationController::class)->only(['index', 'store']);
+    Route::post('/favorites/{car}/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
     Route::put('/damage-reports/{damageReport}/respond', [App\Http\Controllers\Customer\DamageReportController::class, 'update'])->name('damage-reports.respond');
 });
 

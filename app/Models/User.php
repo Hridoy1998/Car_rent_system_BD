@@ -10,6 +10,11 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
     protected $fillable = ['name', 'email', 'password', 'role', 'phone', 'profile_photo', 'bio', 'address', 'is_verified', 'is_blocked'];
 
     protected $hidden = ['password', 'remember_token'];

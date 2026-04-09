@@ -48,9 +48,9 @@ class BookingPolicy
             return true;
         }
 
-        // Customer can only cancel their own booking if it's pending/approved
+        // Customer can only cancel their own booking (if pending/approved) or initiate return (if ongoing)
         if ($user->role === 'customer' && $user->id === $booking->user_id) {
-            return in_array($booking->status, ['pending', 'approved']);
+            return in_array($booking->status, ['pending', 'approved', 'ongoing']);
         }
 
         return false;

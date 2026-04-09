@@ -40,7 +40,7 @@ class BookingService
     public function checkOverlap(int $carId, string $startDate, string $endDate, ?int $ignoreBookingId = null): bool
     {
         return Booking::where('car_id', $carId)
-            ->whereIn('status', ['pending', 'approved'])
+            ->whereNotIn('status', ['cancelled', 'rejected', 'completed'])
             ->when($ignoreBookingId, function ($query) use ($ignoreBookingId) {
                 return $query->where('id', '!=', $ignoreBookingId);
             })

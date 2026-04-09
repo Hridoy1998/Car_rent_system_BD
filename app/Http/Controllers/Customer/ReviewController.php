@@ -20,18 +20,22 @@ class ReviewController extends Controller
             'comment' => 'nullable|string|max:1000',
         ]);
 
-        $exists = Review::where('user_id', auth()->id())->where('car_id', $booking->car_id)->exists();
+        $exists = \App\Models\UserReview::where('reviewer_id', auth()->id())
+            ->where('booking_id', $booking->id)
+            ->exists();
+
         if ($exists) {
-            return back()->with('error', 'You have already reviewed this car.');
+            return back()->with('error', 'Host reputation already logged for this itinerary.');
         }
 
-        Review::create([
-            'user_id' => auth()->id(),
-            'car_id' => $booking->car_id,
+        \App\Models\UserReview::create([
+            'reviewer_id' => auth()->id(),
+            'reviewee_id' => $booking->car->user_id,
+            'booking_id' => $booking->id,
             'rating' => $request->rating,
             'comment' => $request->comment,
         ]);
 
-        return back()->with('success', 'Thank you for your review!');
+        return back()->with('success', 'Host reputation updated. Protocol finalized.');
     }
 }

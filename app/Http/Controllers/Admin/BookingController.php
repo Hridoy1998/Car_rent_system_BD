@@ -9,11 +9,24 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $bookings = Booking::with(['customer', 'car.owner', 'damageReports'])
-            ->latest()
-            ->paginate(15);
+        $query = Booking::with(['customer', 'car.owner', 'damageReports']);
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('id', 'like', "%{$search}%")
+                    ->orWhereHas('customer', fn ($u) => $u->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('car', fn ($c) => $c->where('title', 'like', "%{$search}%"));
+            });
+        }
+
+        if ($request->has('status') && $request->status !== 'all') {
+            $query->where('status', $request->status);
+        }
+
+        $bookings = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.bookings.index', compact('bookings'));
     }
@@ -21,14 +34,16 @@ class BookingController extends Controller
     public function show(Booking $booking)
     {
         $booking->load([
+            'customer.bookings',
             'customer.verifications',
-            'car.owner',
+            'car.owner.earnings',
+            'car.owner.cars',
             'car.images',
             'damageReports',
             'messages.sender',
         ]);
 
-        return view('bookings.show', compact('booking'));
+        return view('admin.bookings.show', compact('booking'));
     }
 
     public function update(Request $request, Booking $booking)

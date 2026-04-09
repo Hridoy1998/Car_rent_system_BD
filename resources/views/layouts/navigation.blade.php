@@ -24,6 +24,16 @@
                             <x-nav-link :href="route('owner.bookings.index')" :active="request()->routeIs('owner.bookings.*')">
                                 {{ __('Workflows') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('owner.logistics.index')" :active="request()->routeIs('owner.logistics.*')">
+                                {{ __('Logistics') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('owner.integrity.index')" :active="request()->routeIs('owner.integrity.*')">
+                                {{ __('Integrity') }}
+                                @php $breachCount = \App\Models\DamageReport::whereHas('booking.car', fn($q) => $q->where('user_id', auth()->id()))->whereIn('status', ['pending', 'disputed'])->count(); @endphp
+                                @if($breachCount > 0)
+                                    <span class="ms-1 px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black rounded-md animate-pulse">{{ $breachCount }}</span>
+                                @endif
+                            </x-nav-link>
                         @elseif(auth()->user()->role === 'admin')
                             <x-nav-link :href="route('admin.cars.index')" :active="request()->routeIs('admin.cars.*')">
                                 {{ __('Fleet Hub') }}
@@ -33,6 +43,22 @@
                             </x-nav-link>
                             <x-nav-link :href="route('admin.bookings.index')" :active="request()->routeIs('admin.bookings.*')">
                                 {{ __('Orders') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.finance.index')" :active="request()->routeIs('admin.finance.*')">
+                                {{ __('Financials') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.damage-reports.index')" :active="request()->routeIs('admin.damage-reports.*')">
+                                {{ __('Integrity Hub') }}
+                                @php $breachCount = \App\Models\DamageReport::where('status', 'disputed')->count(); @endphp
+                                @if($breachCount > 0)
+                                    <span class="ms-1 px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black rounded-md animate-pulse">{{ $breachCount }}</span>
+                                @endif
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.support.index')" :active="request()->routeIs('admin.support.*')">
+                                {{ __('Support') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.settings.index')" :active="request()->routeIs('admin.settings.*')">
+                                {{ __('Registry') }}
                             </x-nav-link>
                         @else
                             {{-- Customer Links --}}

@@ -15,8 +15,23 @@
     </x-slot>
 
     <div class="py-12 bg-gray-950 min-h-screen text-slate-200">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             
+            <!-- Global Search & Filters -->
+            <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-6 rounded-[2rem] shadow-2xl flex flex-col md:flex-row gap-4 items-center justify-between">
+                <form action="{{ route('admin.cars.index') }}" method="GET" class="relative w-full md:w-96">
+                    <input type="hidden" name="status" value="{{ $status ?? 'pending' }}">
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by brand, model, or location..." class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 pl-12 text-sm text-white focus:ring-indigo-500">
+                    <svg class="absolute left-4 top-4 w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </form>
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-2 text-right">
+                         <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                         <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Global Fleet: {{ $cars->total() }} Units</span>
+                    </div>
+                </div>
+            </div>
+
             @if(session('success'))
                 <div class="mb-8 bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 p-4 rounded-2xl font-bold text-sm flex items-center gap-3">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -57,6 +72,15 @@
                                                     <span class="w-1 h-1 bg-gray-800 rounded-full"></span>
                                                     <span class="text-[9px] font-black uppercase tracking-widest text-gray-600">{{ $car->location }}</span>
                                                 </div>
+                                                @if($car->status === 'pending' && $car->last_edit_reason)
+                                                    <div class="mt-3 p-3 bg-amber-500/5 border border-amber-500/20 rounded-xl max-w-xs group-hover:bg-amber-500/10 transition-colors">
+                                                        <div class="text-[8px] font-black text-amber-500 uppercase tracking-widest mb-1 flex items-center gap-1">
+                                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                            Change Intel
+                                                        </div>
+                                                        <p class="text-[10px] text-gray-400 italic font-medium leading-relaxed">"{{ $car->last_edit_reason }}"</p>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </td>

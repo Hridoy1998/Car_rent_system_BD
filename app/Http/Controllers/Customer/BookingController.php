@@ -93,6 +93,8 @@ class BookingController extends Controller
         }
 
         $booking = DB::transaction(function () use ($car, $data, $totalPrice) {
+            $depositAmount = $totalPrice * 0.15; // Sovereign Security Deposit (15%)
+
             return Booking::create([
                 'user_id' => auth()->id(),
                 'car_id' => $car->id,
@@ -101,6 +103,8 @@ class BookingController extends Controller
                 'total_price' => $totalPrice,
                 'status' => 'pending',
                 'payment_status' => 'pending',
+                'security_deposit_amount' => $depositAmount,
+                'security_deposit_status' => 'held',
             ]);
         });
 
@@ -116,31 +120,41 @@ class BookingController extends Controller
 
         $newStatus = $request->validated()['status'];
 
-        // Customer can only cancel
-        if (auth()->user()->role === 'customer' && $newStatus !== 'cancelled') {
-            abort(403, 'Customers can only cancel bookings.');
+        // Customer can only cancel or request return
+        if (auth()->user()->role === 'customer' && ! in_array($newStatus, ['cancelled', 'returning'])) {
+            abort(403, 'Unauthorized status transition.');
         }
 
-        if (! in_array($booking->status, ['pending', 'approved'])) {
-            return back()->with('error', 'This booking cannot be modified in its current state.');
+        if ($newStatus === 'returning' && $booking->status !== 'ongoing') {
+            return back()->with('error', 'Cannot initiate return for inactive trip.');
         }
 
-        DB::transaction(function () use ($booking, $newStatus) {
-            $refundAmount = null;
+        $validated = $request->validated();
+
+        DB::transaction(function () use ($booking, $newStatus, $validated) {
+            $updateData = ['status' => $newStatus];
+
+            if ($newStatus === 'returning') {
+                $updateData['renter_end_odo'] = $validated['renter_end_odo'] ?? null;
+            }
 
             if ($newStatus === 'cancelled' && $booking->payment_status === 'paid') {
                 $refundAmount = $this->bookingService->calculateRefund($booking);
                 $this->paymentService->processRefund($booking, $refundAmount);
-                $booking->update(['status' => 'cancelled', 'payment_status' => 'pending']);
-            } else {
-                $booking->update(['status' => $newStatus]);
+                $updateData['payment_status'] = 'pending';
             }
+
+            $booking->update($updateData);
         });
 
         // Notify customer
         $booking->customer->notify(new BookingStatusUpdated($booking->load('car')));
 
-        return back()->with('success', 'Booking cancelled successfully.');
+        $message = $newStatus === 'returning' 
+            ? 'Return request submitted successfully. Mission awaiting host audit.' 
+            : 'Booking cancelled successfully.';
+
+        return back()->with('success', $message);
     }
 
     public function pay(Booking $booking)

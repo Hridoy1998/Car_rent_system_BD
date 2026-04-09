@@ -9,7 +9,7 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $featuredCars = Car::where('status', 'approved')
+        $featuredCars = Car::available()
             ->with(['images', 'owner', 'reviews'])
             ->latest()
             ->take(6)
@@ -30,27 +30,13 @@ class HomeController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
         
-        $query = Car::where('status', 'approved')->with(['images', 'reviews']);
+        $query = Car::available($startDate, $endDate)->with(['images', 'reviews']);
         
         if ($location) {
             $query->where(function($q) use ($location) {
                 $q->where('location', 'like', "%{$location}%")
                   ->orWhere('brand', 'like', "%{$location}%")
                   ->orWhere('title', 'like', "%{$location}%");
-            });
-        }
-        
-        if ($startDate && $endDate) {
-            $query->whereDoesntHave('bookings', function ($q) use ($startDate, $endDate) {
-                $q->whereIn('status', ['pending', 'approved'])
-                  ->where(function ($q2) use ($startDate, $endDate) {
-                      $q2->whereBetween('start_date', [$startDate, $endDate])
-                         ->orWhereBetween('end_date', [$startDate, $endDate])
-                         ->orWhere(function ($q3) use ($startDate, $endDate) {
-                             $q3->where('start_date', '<=', $startDate)
-                                ->where('end_date', '>=', $endDate);
-                         });
-                  });
             });
         }
         

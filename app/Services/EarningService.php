@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Booking;
 use App\Models\Earning;
+use App\Models\Setting;
 
 class EarningService
 {
@@ -16,12 +17,17 @@ class EarningService
             return;
         }
 
+        // Fetch commission setting (Percentage)
+        $commissionPercent = Setting::where('key', 'platform_commission')->first()->value ?? 10;
+        $platformCut = ($booking->total_price * $commissionPercent) / 100;
+        $hostEarning = $booking->total_price - $platformCut;
+
         // Prevent duplicate earnings for the same booking
         Earning::firstOrCreate(
             ['booking_id' => $booking->id],
             [
                 'owner_id' => $booking->car->user_id,
-                'amount' => $booking->total_price, // Assuming 100% goes to owner for this model
+                'amount' => $hostEarning,
             ]
         );
     }
