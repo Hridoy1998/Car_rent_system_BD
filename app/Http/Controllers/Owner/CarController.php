@@ -39,8 +39,7 @@ class CarController extends Controller
             }
         }
 
-        return redirect()->route('owner.cars.index')
-            ->with('success', 'Car listed successfully! Awaiting admin approval.');
+        return redirect()->route('success.car');
     }
 
     public function show(Car $car)

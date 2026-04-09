@@ -23,6 +23,22 @@ class BookingController extends Controller
         return view('owner.bookings.index', compact('bookings'));
     }
 
+    public function show(Booking $booking)
+    {
+        if ($booking->car->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $booking->load([
+            'customer.verifications',
+            'car.images',
+            'damageReports',
+            'messages.sender',
+        ]);
+
+        return view('bookings.show', compact('booking'));
+    }
+
     public function update(UpdateBookingRequest $request, Booking $booking)
     {
         $this->authorize('update', $booking);

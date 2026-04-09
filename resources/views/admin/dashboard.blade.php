@@ -75,12 +75,33 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Recent Bookings Table -->
-                <div class="lg:col-span-2 space-y-4">
                     <div class="flex items-center justify-between px-2">
                         <h3 class="text-lg font-bold text-white tracking-tight">Recent Activity</h3>
                         <a href="{{ route('admin.bookings.index') }}" class="text-xs font-semibold text-indigo-400 hover:text-indigo-300 transition-colors">See all bookings &rarr;</a>
                     </div>
                     
+                    <!-- Revenue Trend (CSS Graph) -->
+                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-6 shadow-2xl overflow-hidden relative">
+                        <div class="flex items-end justify-between h-40 gap-2">
+                            @php $maxRev = max($stats['monthly_revenue'] ?? [1]) ?: 1; @endphp
+                            @foreach($stats['monthly_revenue'] ?? [] as $month => $sum)
+                                <div class="flex-1 flex flex-col items-center group relative">
+                                    <div class="text-[8px] text-gray-600 mb-2 font-black uppercase">{{ \Carbon\Carbon::create()->month($month)->format('M') }}</div>
+                                    <div class="w-full bg-indigo-500/20 rounded-t-lg transition-all duration-700 group-hover:bg-indigo-500/40 relative" 
+                                         style="height: {{ ($sum / $maxRev) * 100 }}%">
+                                        <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-indigo-600 text-[10px] text-white px-2 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                                            ৳ {{ number_format($sum) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                            @if(empty($stats['monthly_revenue']))
+                                <div class="w-full h-full flex items-center justify-center text-gray-600 text-xs italic">Awaiting financial cycle data...</div>
+                            @endif
+                        </div>
+                        <div class="absolute top-4 right-6 text-[10px] font-black uppercase tracking-widest text-indigo-500/50">Revenue Trends</div>
+                    </div>
+
                     <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-2xl overflow-hidden shadow-2xl">
                         <table class="w-full text-left">
                             <thead class="bg-white/5">
@@ -99,7 +120,7 @@
                                             <div class="w-8 h-8 rounded-full bg-gradient-to-br from-gray-700 to-gray-800 flex items-center justify-center text-[10px] font-bold text-indigo-400 border border-white/5">
                                                 {{ strtoupper(substr($booking->customer->name, 0, 2)) }}
                                             </div>
-                                            <span class="text-sm font-medium text-gray-300">{{ $booking->customer->name }}</span>
+                                            <a href="{{ route('profiles.show', $booking->customer) }}" class="text-sm font-medium text-gray-300 hover:text-indigo-400 transition-colors">{{ $booking->customer->name }}</a>
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">

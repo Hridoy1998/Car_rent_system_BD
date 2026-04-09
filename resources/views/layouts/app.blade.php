@@ -23,7 +23,7 @@
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-transparent mt-4">
+                <header class="bg-transparent pt-20">
                     <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
                         {{ $header }}
                     </div>
@@ -31,7 +31,7 @@
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="{{ isset($header) ? '' : 'pt-20' }}">
                 {{ $slot }}
             </main>
         </div>

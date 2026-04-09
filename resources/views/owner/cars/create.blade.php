@@ -1,184 +1,242 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl leading-tight text-white bg-gray-950">
-            {{ __('List a New Car') }}
+        <h2 class="font-black text-2xl leading-tight text-white mb-2">
+            {{ __('New Vehicle Listing') }}
         </h2>
+        <p class="text-xs text-gray-500 font-bold uppercase tracking-widest">Register your asset in our decentralized fleet</p>
     </x-slot>
 
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
     <div class="py-12 bg-gray-950 min-h-screen text-slate-200">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-gray-900 overflow-hidden shadow-xl sm:rounded-lg border border-white/5 p-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            
+            @if ($errors->any())
+                <div class="mb-8 bg-red-500/10 border border-red-500/50 text-red-500 p-6 rounded-3xl animate-pulse">
+                    <ul class="list-disc pl-5 font-bold text-sm">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-                @if ($errors->any())
-                    <div class="mb-4 bg-red-500/10 border border-red-500/50 text-red-500 p-4 rounded-xl">
-                        <ul class="list-disc pl-5">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+            <form action="{{ route('owner.cars.store') }}" method="POST" enctype="multipart/form-data" class="space-y-12">
+                @csrf
 
-                <form action="{{ route('owner.cars.store') }}" method="POST" enctype="multipart/form-data"
-                    class="space-y-6">
-                    @csrf
-
-                    <!-- Basics -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Listing Title</label>
-                            <input type="text" name="title" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="e.g. 2021 Toyota Corolla LE">
-                        </div>
-
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Location / Pickup Area</label>
-                            <input type="text" name="location" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="e.g. Gulshan 1, Dhaka">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Brand</label>
-                            <input type="text" name="brand" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="Toyota">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Model</label>
-                            <input type="text" name="model" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="Corolla">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Year</label>
-                            <input type="number" name="year" min="1900" max="{{ date('Y') + 1 }}" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="2021">
-                        </div>
-                    </div>
-
-                    <!-- Specs -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Type</label>
-                            <select name="type" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5">
-                                <option value="Sedan">Sedan</option>
-                                <option value="SUV">SUV</option>
-                                <option value="Hatchback">Hatchback</option>
-                                <option value="Van">Van</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Transmission</label>
-                            <select name="transmission" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5">
-                                <option value="Auto">Automatic</option>
-                                <option value="Manual">Manual</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Fuel Type</label>
-                            <input type="text" name="fuel_type" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="Petrol / Hybrid">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">License Plate</label>
-                            <input type="text" name="license_plate" required
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="e.g. DHAKA METRO-KA-12-3456">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Color <span class="text-xs text-gray-500">(Optional)</span></label>
-                            <input type="text" name="color"
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="e.g. Midnight Black">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Seats <span class="text-xs text-gray-500">(Optional)</span></label>
-                            <input type="number" name="seats" min="1" max="20"
-                                class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                                placeholder="5">
-                        </div>
-                    </div>
-
-                    <!-- Pricing -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Price per Day (৳)</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">৳</span>
-                                <input type="number" name="price_per_day" required min="0"
-                                    class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5 pl-8"
-                                    placeholder="3500">
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-medium text-gray-400 mb-1">Price per Month (৳) <span
-                                    class="text-xs text-gray-500">(Optional)</span></label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">৳</span>
-                                <input type="number" name="price_per_month" min="0"
-                                    class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5 pl-8"
-                                    placeholder="80000" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Details -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Description</label>
-                        <textarea name="description" rows="4"
-                            class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5"
-                            placeholder="Detail any specific features, rules, or conditions of the car..."></textarea>
-                    </div>
-
-                    <!-- Images -->
-                    <div>
-                        <label class="block text-sm font-medium text-gray-400 mb-1">Images (Multiple)</label>
-                        <div
-                            class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-white/10 border-dashed rounded-lg bg-gray-950/50 hover:bg-gray-950 transition-colors">
-                            <div class="space-y-1 text-center">
-                                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none"
-                                    viewBox="0 0 48 48" aria-hidden="true">
-                                    <path
-                                        d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                                <div class="flex text-sm text-gray-400 justify-center">
-                                    <label
-                                        class="relative cursor-pointer bg-transparent rounded-md font-medium text-indigo-500 hover:text-indigo-400 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                        <span>Upload files</span>
-                                        <input id="images" name="images[]" type="file" multiple class="sr-only"
-                                            accept="image/*">
-                                    </label>
-                                    <p class="pl-1">or drag and drop</p>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <!-- Left Column: Basics & Specs -->
+                    <div class="space-y-12">
+                        
+                        <!-- Core Identity -->
+                        <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl">
+                            <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
+                                <span class="w-1 h-6 bg-indigo-500 rounded-full"></span>
+                                Vehicle Identity
+                            </h3>
+                            
+                            <div class="space-y-6">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Listing Headline</label>
+                                    <input type="text" name="title" required value="{{ old('title') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500" placeholder="e.g. 2023 Tesla Model 3 Performance">
                                 </div>
-                                <p class="text-xs text-gray-500">PNG, JPG, WEBP up to 2MB per image</p>
+
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Brand</label>
+                                        <input type="text" name="brand" required value="{{ old('brand') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Model</label>
+                                        <input type="text" name="model" required value="{{ old('model') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-2 gap-6">
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Manufacturing Year</label>
+                                        <input type="number" name="year" required value="{{ old('year', date('Y')) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                    </div>
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Body Type</label>
+                                        <select name="type" required class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                            <option value="Sedan">Sedan</option>
+                                            <option value="SUV">SUV</option>
+                                            <option value="Hatchback">Hatchback</option>
+                                            <option value="Van">Van</option>
+                                            <option value="Luxury">Luxury</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Technical Matrix -->
+                        <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl">
+                             <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
+                                <span class="w-1 h-6 bg-purple-500 rounded-full"></span>
+                                Technical Matrix
+                            </h3>
+
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Transmission</label>
+                                    <select name="transmission" required class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                        <option value="Auto">Automatic</option>
+                                        <option value="Manual">Manual</option>
+                                    </select>
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Fuel Paradigm</label>
+                                    <input type="text" name="fuel_type" required value="{{ old('fuel_type') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500" placeholder="Petrol / Electric / Hybrid">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Engine Displacement</label>
+                                    <input type="text" name="engine_capacity" required value="{{ old('engine_capacity') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500" placeholder="e.g. 1500cc / 2.0L">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Capacity (Seats)</label>
+                                    <input type="number" name="seats" required value="{{ old('seats', 5) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Financials & Policy -->
+                         <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl">
+                             <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
+                                <span class="w-1 h-6 bg-emerald-500 rounded-full"></span>
+                                Commercial Protocol
+                            </h3>
+                            <div class="grid grid-cols-2 gap-6 mb-8">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Daily Revenue (৳)</label>
+                                    <input type="number" name="price_per_day" required value="{{ old('price_per_day') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Monthly Bundle (৳)</label>
+                                    <input type="number" name="price_per_month" required value="{{ old('price_per_month') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                </div>
+                            </div>
+                            <div class="space-y-6">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Fuel Policy</label>
+                                    <input type="text" name="fuel_policy" value="{{ old('fuel_policy', 'Full to Full') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                </div>
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Insurance level</label>
+                                    <input type="text" name="insurance_info" value="{{ old('insurance_info', 'Comprehensive Liability') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
-                    <div class="flex justify-end pt-4 border-t border-white/10">
-                        <a href="{{ route('owner.cars.index') }}"
-                            class="px-5 py-2.5 text-sm font-medium text-gray-300 hover:text-white mr-4">Cancel</a>
-                        <button type="submit"
-                            class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-lg font-bold shadow-[0_0_15px_rgba(79,70,229,0.3)] transition-all">List
-                            Car</button>
+                    <!-- Right Column: Location (Map) & Photos -->
+                    <div class="space-y-12">
+                        
+                        <!-- Spatial Awareness (Map Picker) -->
+                        <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl">
+                             <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
+                                <span class="w-1 h-6 bg-pink-500 rounded-full"></span>
+                                Geospatial Deployment
+                            </h3>
+                            
+                            <div class="space-y-6">
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Pickup Territory (City/Area)</label>
+                                    <input type="text" name="location" id="location_input" required value="{{ old('location') }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500" placeholder="e.g. Bashundhara R/A, Dhaka">
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-2">Precise Coordinates (Drag pin on map)</label>
+                                    <div id="map-picker" class="w-full h-[400px] rounded-[2rem] border-4 border-white/5 overflow-hidden z-0"></div>
+                                    <input type="hidden" name="latitude" id="lat_field" value="{{ old('latitude', 23.8103) }}">
+                                    <input type="hidden" name="longitude" id="lng_field" value="{{ old('longitude', 90.4125) }}">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Visual Evidence (Photos) -->
+                        <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-10 rounded-[2.5rem] shadow-2xl overflow-hidden relative group">
+                            <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
+                                <span class="w-1 h-6 bg-orange-500 rounded-full"></span>
+                                Asset Visuals
+                            </h3>
+                            
+                            <div class="space-y-6 text-center">
+                                <div class="border-2 border-dashed border-white/10 rounded-3xl p-12 hover:border-indigo-500/50 transition-all cursor-pointer bg-black/20" onclick="document.getElementById('images').click()">
+                                    <svg class="w-12 h-12 text-gray-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    <p class="text-sm text-gray-400 font-bold mb-1">Click to upload vehicle photos</p>
+                                    <p class="text-[10px] text-gray-600 uppercase tracking-widest">Supports PNG, JPG (Multi-select enabled)</p>
+                                    <input type="file" name="images[]" id="images" multiple class="hidden" accept="image/*" onchange="previewImages(event)">
+                                </div>
+                                <div id="image-previews" class="grid grid-cols-4 gap-4"></div>
+                            </div>
+                        </div>
+
+                        <!-- Deployment -->
+                        <div class="pt-12 text-center">
+                             <a href="{{ route('owner.cars.index') }}" class="mr-6 text-xs font-black text-gray-600 uppercase tracking-widest hover:text-white transition-colors">Abort Mission</a>
+                            <button type="submit" class="px-12 py-5 bg-white text-gray-950 font-black rounded-2xl shadow-[0_0_30px_rgba(255,255,255,0.1)] hover:bg-indigo-600 hover:text-white transition-all uppercase tracking-[0.2em] text-sm">Deploy Listing</button>
+                        </div>
+
                     </div>
 
-                </form>
+                </div>
+            </form>
 
-            </div>
         </div>
     </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        // Map Initialization
+        const defaultLat = document.getElementById('lat_field').value;
+        const defaultLng = document.getElementById('lng_field').value;
+        
+        const map = L.map('map-picker', {
+            center: [defaultLat, defaultLng],
+            zoom: 13,
+            zoomControl: false
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
+
+        const marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+
+        marker.on('dragend', function(e) {
+            const pos = marker.getLatLng();
+            document.getElementById('lat_field').value = pos.lat;
+            document.getElementById('lng_field').value = pos.lng;
+        });
+
+        map.on('click', function(e) {
+            marker.setLatLng(e.latlng);
+            document.getElementById('lat_field').value = e.latlng.lat;
+            document.getElementById('lng_field').value = e.latlng.lng;
+        });
+
+        // Image Preview
+        function previewImages(event) {
+            const container = document.getElementById('image-previews');
+            container.innerHTML = '';
+            const files = event.target.files;
+            
+            for(let i=0; i<files.length; i++) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'aspect-square rounded-xl overflow-hidden border border-white/10';
+                    div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                    container.appendChild(div);
+                }
+                reader.readAsDataURL(files[i]);
+            }
+        }
+    </script>
 </x-app-layout>

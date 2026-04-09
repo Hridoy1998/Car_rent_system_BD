@@ -21,6 +21,12 @@ class DashboardController extends Controller
             'total_bookings' => Booking::count(),
             'active_bookings' => Booking::whereIn('status', ['pending', 'approved'])->count(),
             'total_revenue' => Earning::sum('amount'),
+            'monthly_revenue' => Earning::selectRaw('SUM(amount) as sum, MONTH(created_at) as month')
+                ->where('created_at', '>=', now()->subMonths(6))
+                ->groupBy('month')
+                ->orderBy('month')
+                ->pluck('sum', 'month')
+                ->toArray(),
         ];
 
         $recentBookings = Booking::with(['customer', 'car'])

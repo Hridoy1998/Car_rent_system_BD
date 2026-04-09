@@ -41,9 +41,16 @@
                                                 <div class="text-sm font-bold text-white">{{ $booking->car->title }}</div>
                                             </div>
                                         </td>
-                                        <td class="p-4 text-sm text-gray-300">
-                                            <div>{{ $booking->customer->name }}</div>
-                                            <div class="text-xs text-gray-500">{{ $booking->customer->email }}</div>
+                                        <td class="p-4">
+                                            <a href="{{ route('profiles.show', $booking->customer) }}" class="group flex items-center gap-3">
+                                                <div class="w-8 h-8 rounded-lg bg-indigo-500/10 flex items-center justify-center text-indigo-400 font-black text-xs border border-indigo-500/20 group-hover:bg-indigo-500 group-hover:text-white transition-all">
+                                                    {{ substr($booking->customer->name, 0, 1) }}
+                                                </div>
+                                                <div>
+                                                    <div class="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors">{{ $booking->customer->name }}</div>
+                                                    <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest">View Renter History</div>
+                                                </div>
+                                            </a>
                                         </td>
                                         <td class="p-4 text-sm text-gray-300">
                                             <div>{{ \Carbon\Carbon::parse($booking->start_date)->format('M d') }} - {{ \Carbon\Carbon::parse($booking->end_date)->format('M d, Y') }}</div>

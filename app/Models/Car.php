@@ -28,6 +28,10 @@ class Car extends Model
         'longitude',
         'description',
         'status',
+        'engine_capacity',
+        'fuel_policy',
+        'insurance_info',
+        'features',
     ];
 
     public function owner()
@@ -57,7 +61,8 @@ class Car extends Model
         }
 
         $today = now()->startOfDay();
-        return !$this->bookings()
+
+        return ! $this->bookings()
             ->whereIn('status', ['pending', 'approved'])
             ->where('start_date', '<=', $today)
             ->where('end_date', '>=', $today)

@@ -18,6 +18,19 @@ class BookingController extends Controller
         return view('admin.bookings.index', compact('bookings'));
     }
 
+    public function show(Booking $booking)
+    {
+        $booking->load([
+            'customer.verifications',
+            'car.owner',
+            'car.images',
+            'damageReports',
+            'messages.sender',
+        ]);
+
+        return view('bookings.show', compact('booking'));
+    }
+
     public function update(Request $request, Booking $booking)
     {
         $request->validate([

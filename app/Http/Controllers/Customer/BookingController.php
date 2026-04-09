@@ -33,6 +33,23 @@ class BookingController extends Controller
         return view('customer.bookings.index', compact('bookings'));
     }
 
+    public function show(Booking $booking)
+    {
+        if ($booking->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $booking->load([
+            'car.owner',
+            'car.images',
+            'car.reviews.customer',
+            'damageReports',
+            'messages.sender',
+        ]);
+
+        return view('bookings.show', compact('booking'));
+    }
+
     public function store(StoreBookingRequest $request)
     {
         $data = $request->validated();
@@ -90,8 +107,7 @@ class BookingController extends Controller
         // Notify owner
         $car->owner->notify(new BookingRequested($booking->load('customer', 'car')));
 
-        return redirect()->route('customer.bookings.index')
-            ->with('success', 'Booking request submitted! Awaiting owner approval.');
+        return redirect()->route('success.booking', $booking);
     }
 
     public function update(UpdateBookingRequest $request, Booking $booking)

@@ -66,19 +66,18 @@
                 <p class="mb-4 max-w-sm">The premier peer-to-peer car sharing marketplace in Bangladesh. Rent out your car to earn, or book one for your next trip.</p>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Company</h4>
+                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Marketplace</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-white transition-colors">About</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Trust & Safety</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="{{ route('pages.how-it-works') }}" class="hover:text-white transition-colors">How it works</a></li>
+                    <li><a href="{{ route('pages.safety') }}" class="hover:text-white transition-colors">Trust & Safety</a></li>
+                    <li><a href="{{ route('pages.faq') }}" class="hover:text-white transition-colors">FAQ</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Support</h4>
                 <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Cancelation Policy</a></li>
+                    <li><a href="{{ route('pages.faq') }}" class="hover:text-white transition-colors">Help Center</a></li>
+                    <li><a href="mailto:support@carrent-bd.com" class="hover:text-white transition-colors">Contact Support</a></li>
                 </ul>
             </div>
         </div>

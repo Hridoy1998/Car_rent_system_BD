@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-gray-900/50 backdrop-blur-xl border-b border-white/10">
+<nav x-data="{ open: false }" class="bg-gray-900/80 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -54,7 +54,37 @@
             </div>
 
             <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
+            <div class="hidden sm:flex sm:items-center sm:ms-6 gap-4">
+                
+                <!-- Notifications Bell -->
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" class="text-gray-400 hover:text-white transition-colors relative">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        @if(auth()->user()->unreadNotifications->count() > 0)
+                            <span class="absolute -top-1 -right-1 flex h-4 w-4">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-4 w-4 bg-indigo-500 text-[10px] items-center justify-center font-bold text-white">{{ auth()->user()->unreadNotifications->count() }}</span>
+                            </span>
+                        @endif
+                    </button>
+
+                    <div x-show="open" @click.away="open = false" class="absolute right-0 mt-3 w-80 bg-gray-900 border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden" x-cloak>
+                        <div class="px-4 py-3 bg-white/5 border-b border-white/10 text-xs font-black uppercase tracking-widest text-gray-500">Notifications</div>
+                        <div class="p-2 border-t border-white/5">
+                        <a href="{{ route('notifications.index') }}" class="block w-full py-2 text-center text-[10px] font-black uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors">See all activity</a>
+                    </div>    <div class="max-h-96 overflow-y-auto">
+                            @forelse(auth()->user()->unreadNotifications->take(5) as $notification)
+                                <div class="px-4 py-3 hover:bg-white/5 border-b border-white/5 transition-colors">
+                                    <p class="text-xs text-white">{{ $notification->data['message'] ?? 'New update received' }}</p>
+                                    <p class="text-[10px] text-gray-500 mt-1">{{ $notification->created_at->diffForHumans() }}</p>
+                                </div>
+                            @empty
+                                <div class="px-4 py-8 text-center text-xs text-gray-600 italic">No new notifications</div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-300 hover:text-white focus:outline-none transition ease-in-out duration-150">

@@ -83,7 +83,9 @@
                                 @forelse($recentBookings as $booking)
                                 <tr class="hover:bg-white/[0.02] transition-colors">
                                     <td class="px-6 py-4">
-                                        <div class="text-sm font-medium text-gray-300">{{ $booking->customer->name }}</div>
+                                        <div class="text-sm font-medium text-gray-300">
+                                            <a href="{{ route('profiles.show', $booking->customer) }}" class="hover:text-indigo-400 transition-colors">{{ $booking->customer->name }}</a>
+                                        </div>
                                         <div class="text-[10px] text-gray-500">#{{ $booking->id }}</div>
                                     </td>
                                     <td class="px-6 py-4">
@@ -107,12 +109,44 @@
                 </div>
 
                 <!-- Side Panel: Fleet Overview -->
-                <div class="space-y-6">
-                    <div class="flex items-center justify-between px-2">
-                        <h3 class="text-lg font-bold text-white tracking-tight">Your Fleet</h3>
-                        <a href="{{ route('owner.cars.index') }}" class="text-xs font-semibold text-emerald-400 hover:text-emerald-300 transition-colors">Manage Fleet &rarr;</a>
-                    </div>
-                    
+                        <!-- Earnings Trend (CSS Graph) -->
+                        <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-6 shadow-2xl overflow-hidden relative">
+                            <div class="flex items-end justify-between h-32 gap-1.5 px-2">
+                                @php $maxEarn = max($stats['monthly_earnings'] ?? [1]) ?: 1; @endphp
+                                @foreach($stats['monthly_earnings'] ?? [] as $month => $sum)
+                                    <div class="flex-1 flex flex-col items-center group relative h-full">
+                                        <div class="absolute -top-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-[8px] text-white px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10 font-bold">৳ {{ number_format($sum) }}</div>
+                                        <div class="w-full bg-emerald-500/10 rounded-t-md transition-all duration-700 group-hover:bg-emerald-500/30 relative mt-auto" 
+                                            style="height: {{ ($sum / $maxEarn) * 100 }}%">
+                                        </div>
+                                        <div class="text-[7px] text-gray-700 mt-2 font-black uppercase">{{ \Carbon\Carbon::create()->month($month)->format('M') }}</div>
+                                    </div>
+                                @endforeach
+                                @if(empty($stats['monthly_earnings']))
+                                    <div class="w-full h-full flex flex-col items-center justify-center text-gray-600 text-[10px] italic space-y-2">
+                                        <svg class="w-6 h-6 opacity-20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                        Awaiting Earnings
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="absolute top-3 right-4 text-[8px] font-black uppercase tracking-widest text-emerald-500/50 grayscale">Revenue Flow</div>
+                        </div>
+
+                        <!-- Damage Reports Alert -->
+                        @if($stats['pending_damages'] > 0)
+                        <div class="bg-red-500/10 border border-red-500/20 rounded-2xl p-5 shadow-inner">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center text-red-500">
+                                    <svg class="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-bold text-red-400">{{ $stats['pending_damages'] }} Pending Reports</p>
+                                    <p class="text-[10px] text-red-400/60 uppercase font-black tracking-widest">Action Required</p>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
+
                     <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-2xl p-4 shadow-xl space-y-4">
                         @forelse($recentCars as $car)
                         <div class="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 transition-colors group">
