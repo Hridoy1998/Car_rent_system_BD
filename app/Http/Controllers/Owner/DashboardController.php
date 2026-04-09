@@ -5,17 +5,33 @@ namespace App\Http\Controllers\Owner;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use App\Models\Booking;
+use App\Models\Earning;
+
 class DashboardController extends Controller
 {
     public function index()
     {
-        $totalCars = auth()->user()->cars()->count();
-        $pendingCars = auth()->user()->cars()->where('status', 'pending')->count();
-        $activeBookings = 0; // Placeholder for Phase 2
-        $totalEarnings = 0; // Placeholder for Phase 2
+        $user = auth()->user();
         
-        $recentCars = auth()->user()->cars()->latest()->take(3)->get();
+        $stats = [
+            'total_cars' => $user->cars()->count(),
+            'approved_cars' => $user->cars()->where('status', 'approved')->count(),
+            'pending_cars' => $user->cars()->where('status', 'pending')->count(),
+            'active_bookings' => Booking::whereHas('car', fn($q) => $q->where('user_id', $user->id))
+                ->whereIn('status', ['pending', 'approved'])
+                ->count(),
+            'total_earnings' => Earning::where('owner_id', $user->id)->sum('amount'),
+        ];
+        
+        $recentCars = $user->cars()->with('images')->latest()->take(3)->get();
+        
+        $recentBookings = Booking::with('customer', 'car')
+            ->whereHas('car', fn($q) => $q->where('user_id', $user->id))
+            ->latest()
+            ->take(5)
+            ->get();
 
-        return view('owner.dashboard', compact('totalCars', 'pendingCars', 'activeBookings', 'totalEarnings', 'recentCars'));
+        return view('owner.dashboard', compact('stats', 'recentCars', 'recentBookings'));
     }
 }

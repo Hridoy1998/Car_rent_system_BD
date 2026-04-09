@@ -19,12 +19,35 @@
                     @auth
                         @if(auth()->user()->role === 'owner')
                             <x-nav-link :href="route('owner.cars.index')" :active="request()->routeIs('owner.cars.*')">
-                                {{ __('My Cars') }}
+                                {{ __('Fleet') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('owner.bookings.index')" :active="request()->routeIs('owner.bookings.*')">
+                                {{ __('Workflows') }}
                             </x-nav-link>
                         @elseif(auth()->user()->role === 'admin')
                             <x-nav-link :href="route('admin.cars.index')" :active="request()->routeIs('admin.cars.*')">
-                                {{ __('Approvals') }}
+                                {{ __('Fleet Hub') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('admin.verifications.index')" :active="request()->routeIs('admin.verifications.*')">
+                                {{ __('ID Hub') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('admin.bookings.index')" :active="request()->routeIs('admin.bookings.*')">
+                                {{ __('Orders') }}
+                            </x-nav-link>
+                        @else
+                            {{-- Customer Links --}}
+                            <x-nav-link :href="route('customer.bookings.index')" :active="request()->routeIs('customer.bookings.*')">
+                                {{ __('My Trips') }}
+                            </x-nav-link>
+                            @php
+                                $isVerified = \App\Models\Verification::where('user_id', auth()->id())->where('status', 'approved')->exists();
+                            @endphp
+                            @if(!$isVerified)
+                                <x-nav-link :href="route('customer.verifications.index')" :active="request()->routeIs('customer.verifications.*')" class="text-amber-500 font-bold">
+                                    {{ __('Verify Account') }}
+                                    <span class="ms-1 w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                </x-nav-link>
+                            @endif
                         @endif
                     @endauth
                 </div>
