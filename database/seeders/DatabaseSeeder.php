@@ -15,11 +15,35 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
+        // 1. Create Admin
+        User::factory()->admin()->create([
+            'name' => 'Demo Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
 
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // 2. Create 20 Owners and some cars for them
+        User::factory(20)->owner()->create()->each(function ($user) {
+            \App\Models\Car::factory(rand(1, 3))->create([
+                'user_id' => $user->id,
+                'status' => 'approved', // Seed with some approved cars so they show up on home page
+            ]);
+        });
+
+        // 3. Create 20 Customers
+        User::factory(20)->customer()->create();
+
+        // Specific test owner and customer for easy access
+        User::factory()->owner()->create([
+            'name' => 'Demo Owner',
+            'email' => 'owner@gmail.com',
+            'password' => bcrypt('password'),
+        ]);
+
+        User::factory()->customer()->create([
+            'name' => 'Demo Customer',
+            'email' => 'customer@gmail.com',
+            'password' => bcrypt('password'),
         ]);
     }
 }

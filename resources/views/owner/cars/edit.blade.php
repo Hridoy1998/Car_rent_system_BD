@@ -76,6 +76,21 @@
                         </div>
                     </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">License Plate</label>
+                            <input type="text" name="license_plate" value="{{ old('license_plate', $car->license_plate) }}" required class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Color <span class="text-xs text-gray-500">(Optional)</span></label>
+                            <input type="text" name="color" value="{{ old('color', $car->color) }}" class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-400 mb-1">Seats <span class="text-xs text-gray-500">(Optional)</span></label>
+                            <input type="number" name="seats" value="{{ old('seats', $car->seats) }}" min="1" max="20" class="w-full bg-gray-950 border border-white/10 rounded-lg text-white focus:ring-indigo-500 focus:border-indigo-500 p-2.5">
+                        </div>
+                    </div>
+
                     <!-- Details -->
                     <div>
                         <label class="block text-sm font-medium text-gray-400 mb-1">Description</label>
