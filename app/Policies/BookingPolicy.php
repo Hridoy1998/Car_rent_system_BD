@@ -62,7 +62,7 @@ class BookingPolicy
     public function pay(User $user, Booking $booking): bool
     {
         return $user->id === $booking->user_id
-            && $booking->status === 'approved'
+            && in_array($booking->status, ['pending', 'approved', 'ongoing'])
             && $booking->payment_status === 'pending';
     }
 

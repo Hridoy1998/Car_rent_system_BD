@@ -35,32 +35,30 @@
             <div class="flex justify-between items-center h-24 transition-all duration-500" :class="atTop ? 'h-24' : 'h-20'">
                 <div class="flex-shrink-0 flex items-center gap-3">
                     <a href="{{ route('home') }}" class="flex items-center gap-4 group">
-                        <div class="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                            C
-                        </div>
+                        <x-application-logo class="w-10 h-10 shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform" />
                         <div class="flex flex-col">
-                            <span class="text-xl font-black text-white tracking-widest leading-none">CARRENT</span>
-                            <span class="text-[9px] font-black text-indigo-400 tracking-[0.4em] uppercase mt-1">Sovereign Fleet</span>
+                            <span class="text-xl font-black text-white tracking-widest leading-none">NEON MONOLITH</span>
+                            <span class="text-[9px] font-black text-indigo-400 tracking-[0.4em] uppercase mt-1 italic">Premium Car Sharing</span>
                         </div>
                     </a>
                 </div>
                 
                 <div class="hidden md:flex items-center space-x-10">
-                    <a href="{{ route('search') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">Tactical Search</a>
-                    <a href="{{ route('pages.how-it-works') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">Protocol</a>
-                    <a href="{{ route('pages.safety') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">Security</a>
+                    <a href="{{ route('search') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">Search Cars</a>
+                    <a href="{{ route('pages.how-it-works') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">How it Works</a>
+                    <a href="{{ route('pages.safety') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">Safety</a>
                 </div>
 
                 <div class="flex items-center space-x-6">
                     @auth
                         <div class="flex items-center gap-6">
-                            <a href="{{ route('dashboard') }}" class="text-[10px] font-black text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-2xl shadow-[0_10px_20px_rgba(99,102,241,0.2)] transition-all uppercase tracking-widest">Command Center</a>
+                            <a href="{{ route('dashboard') }}" class="text-[10px] font-black text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-2xl shadow-[0_10px_20px_rgba(99,102,241,0.2)] transition-all uppercase tracking-widest">Dashboard</a>
                             <livewire:notification-bell />
                         </div>
                     @else
-                        <a href="{{ route('login') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-widest transition-colors">Access Logic</a>
+                        <a href="{{ route('login') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-widest transition-colors">Login</a>
                         <a href="{{ route('register') }}" class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition-all duration-300 group">
-                            <span class="text-[10px] font-black text-white uppercase tracking-widest group-hover:text-glow">Initialize Account</span>
+                            <span class="text-[10px] font-black text-white uppercase tracking-widest group-hover:text-glow">Register</span>
                         </a>
                     @endauth
                 </div>
@@ -79,10 +77,10 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-20 mb-20">
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-4 mb-8">
-                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-sm">C</div>
-                    <span class="text-2xl font-black text-white tracking-widest uppercase">CARRENT</span>
+                    <x-application-logo class="w-10 h-10 shadow-lg shadow-indigo-500/20" />
+                    <span class="text-2xl font-black text-white tracking-widest uppercase italic">NEON MONOLITH</span>
                 </div>
-                <p class="mb-8 max-w-sm leading-relaxed text-gray-500 font-medium">The premier peer-to-peer car sharing marketplace in Bangladesh. Engineering unique travel experiences through verified local asset ownership.</p>
+                <p class="mb-8 max-w-sm leading-relaxed text-gray-500 font-medium">The premier peer-to-peer car sharing marketplace in Bangladesh. Secure rentals and professional standards for every journey.</p>
                 <div class="flex gap-6">
                     <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">FB</a>
                     <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">TW</a>
@@ -90,27 +88,27 @@
                 </div>
             </div>
             <div>
-                <h4 class="text-white font-black mb-8 uppercase text-[10px] tracking-[0.3em] italic">System Architecture</h4>
+                <h4 class="text-white font-black mb-8 uppercase text-[10px] tracking-[0.3em] italic">Information</h4>
                 <ul class="space-y-4 text-[11px] font-bold uppercase tracking-widest">
-                    <li><a href="{{ route('pages.how-it-works') }}" class="hover:text-indigo-400 transition-colors">How Protocol Works</a></li>
+                    <li><a href="{{ route('pages.how-it-works') }}" class="hover:text-indigo-400 transition-colors">How it Works</a></li>
                     <li><a href="{{ route('pages.safety') }}" class="hover:text-indigo-400 transition-colors">Security & Trust</a></li>
-                    <li><a href="{{ route('pages.faq') }}" class="hover:text-indigo-400 transition-colors">Knowledge Base</a></li>
+                    <li><a href="{{ route('pages.faq') }}" class="hover:text-indigo-400 transition-colors">Help & FAQ</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-black mb-8 uppercase text-[10px] tracking-[0.3em] italic">Support Modules</h4>
+                <h4 class="text-white font-black mb-8 uppercase text-[10px] tracking-[0.3em] italic">Support</h4>
                 <ul class="space-y-4 text-[11px] font-bold uppercase tracking-widest">
-                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Mediation Hub</a></li>
-                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Contact Terminal</a></li>
-                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Termination Policy</a></li>
+                    <li><a href="{{ route('pages.mediation') }}" class="hover:text-indigo-400 transition-colors">Support Center</a></li>
+                    <li><a href="{{ route('pages.contact') }}" class="hover:text-indigo-400 transition-colors">Contact Us</a></li>
+                    <li><a href="{{ route('pages.termination') }}" class="hover:text-indigo-400 transition-colors">Cancelation Policy</a></li>
                 </ul>
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-700 italic">&copy; {{ date('Y') }} CARRENT BD. OPERATIONAL STATUS: NOMINAL.</p>
+            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-700 italic">&copy; {{ date('Y') }} NEON MONOLITH. PREMIUM CAR SHARING NETWORK.</p>
             <div class="flex gap-8 mt-6 md:mt-0 text-[9px] font-black uppercase tracking-widest">
-                <a href="#" class="text-gray-700 hover:text-white transition-colors">Terms of Engagement</a>
-                <a href="#" class="text-gray-700 hover:text-white transition-colors">Privacy Shield</a>
+                <a href="#" class="text-gray-700 hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="text-gray-700 hover:text-white transition-colors">Privacy Policy</a>
             </div>
         </div>
     </footer>

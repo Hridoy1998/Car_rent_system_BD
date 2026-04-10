@@ -15,6 +15,9 @@
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             
+            @if(session('success'))
+                <div class="bg-emerald-500/10 border border-emerald-500/20 p-6 rounded-3xl text-emerald-400 text-xs font-black uppercase tracking-widest flex items-center gap-4 mb-8">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                     {{ session('success') }}
                 </div>
             @endif

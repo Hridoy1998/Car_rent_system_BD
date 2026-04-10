@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Car;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -15,38 +16,43 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Create Admin
+        // 1. Create Sovereign Admin (1)
         User::factory()->admin()->create([
-            'name' => 'Demo Admin',
+            'name' => 'Monolith Admin',
             'email' => 'admin@gmail.com',
             'password' => bcrypt('password'),
         ]);
 
-        // 2. Create 20 Owners and some cars for them
-        User::factory(20)->owner()->create()->each(function ($user) {
-            \App\Models\Car::factory(rand(1, 3))->create([
+        // 2. Create Sector Owners (9) - Each with exactly 2 assets
+        User::factory(8)->owner()->create()->each(function ($user) {
+            Car::factory(2)->create([
                 'user_id' => $user->id,
-                'status' => 'approved', // Seed with some approved cars so they show up on home page
+                'status' => 'approved',
             ]);
         });
 
-        // 3. Create 20 Customers
-        User::factory(20)->customer()->create();
-
-        // Specific test owner and customer for easy access
-        User::factory()->owner()->create([
+        // Dedicated Demo Owner (Part of the 9)
+        $demoOwner = User::factory()->owner()->create([
             'name' => 'Demo Owner',
             'email' => 'owner@gmail.com',
             'password' => bcrypt('password'),
         ]);
+        Car::factory(2)->create([
+            'user_id' => $demoOwner->id,
+            'status' => 'approved',
+        ]);
 
+        // 3. Create Operational Customers (10)
+        User::factory(9)->customer()->create();
+
+        // Dedicated Demo Customer (Part of the 10)
         User::factory()->customer()->create([
             'name' => 'Demo Customer',
             'email' => 'customer@gmail.com',
             'password' => bcrypt('password'),
         ]);
 
-        // 4. Populate Operational Data (Bookings, Reviews, Earnings, etc.)
-        $this->call(DemoHubSeeder::class);
+        // 4. Tactical Operational Data (Disabled for clean demo)
+        // $this->call(DemoHubSeeder::class);
     }
 }

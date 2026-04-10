@@ -21,7 +21,7 @@ class DamageReportController extends Controller
 
         $damageReport->update([
             'status' => $validated['status'],
-            'customer_notes' => $validated['customer_notes'],
+            'customer_notes' => $validated['customer_notes'] ?? null,
         ]);
 
         if ($validated['status'] === 'acknowledged') {

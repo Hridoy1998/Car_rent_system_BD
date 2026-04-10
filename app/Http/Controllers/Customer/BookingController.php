@@ -173,6 +173,11 @@ class BookingController extends Controller
             abort(403);
         }
 
+        if ($booking->payment_status === 'paid') {
+            return redirect()->route('customer.bookings.show', $booking)
+                ->with('success', 'This mission has already been settled. Payment verified.');
+        }
+
         $booking->load('car.images');
 
         return view('customer.bookings.checkout', compact('booking'));
@@ -180,6 +185,11 @@ class BookingController extends Controller
 
     public function pay(Booking $booking)
     {
+        if ($booking->payment_status === 'paid') {
+            return redirect()->route('customer.bookings.show', $booking)
+                ->with('success', 'Payment already confirmed in the ledger.');
+        }
+
         $this->authorize('pay', $booking);
 
         $paid = $this->paymentService->processPayment($booking);

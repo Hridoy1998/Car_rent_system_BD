@@ -158,7 +158,10 @@
                              <div class="absolute inset-x-0 top-1/2 h-px bg-white/5 text-[8px] text-gray-800 font-black pl-2 pt-1 uppercase">Midway Threshold</div>
                              <div class="absolute inset-x-0 top-3/4 h-px bg-white/5"></div>
 
-                            @php $maxRev = !empty($stats['monthly_revenue']) ? max($stats['monthly_revenue']) : 1; @endphp
+                            @php 
+                                $maxVal = !empty($stats['monthly_revenue']) ? max($stats['monthly_revenue']) : 0;
+                                $maxRev = $maxVal > 0 ? $maxVal : 1; 
+                            @endphp
                             @foreach($stats['monthly_revenue'] ?? [] as $month => $sum)
                                 <div class="flex-1 flex flex-col items-center group relative z-10 h-full justify-end">
                                     <div class="text-[10px] text-gray-600 mb-4 font-black uppercase tracking-widest transition-colors group-hover:text-indigo-400">{{ \Carbon\Carbon::create()->month($month)->format('M') }}</div>

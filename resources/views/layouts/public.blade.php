@@ -30,13 +30,13 @@
                 <div class="flex items-center space-x-6">
                     @if (Route::has('login'))
                         @auth
-                            <a href="{{ url('/dashboard') }}" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Tactical HQ</a>
+                            <a href="{{ url('/dashboard') }}" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Dashboard</a>
                         @else
                             <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 hover:text-white transition-colors">Log in</a>
  
                             @if (Route::has('register'))
                                 <a href="{{ route('register') }}" class="relative group px-6 py-2.5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden">
-                                    <span class="relative z-10 text-[10px] font-black uppercase tracking-widest text-white transition-colors">Access Registry</span>
+                                    <span class="relative z-10 text-[10px] font-black uppercase tracking-widest text-white transition-colors">Register</span>
                                 </a>
                             @endif
                         @endauth
@@ -59,33 +59,33 @@
                     <x-application-logo class="w-8 h-8 opacity-50" />
                     <span class="text-xl font-black text-white italic uppercase tracking-tighter">NEON MONOLITH</span>
                 </div>
-                <p class="mb-4 max-w-sm text-xs font-medium leading-relaxed uppercase tracking-tighter italic text-gray-600">The premier decentralized car sharing marketplace in standardizing ultra-premium mobility. Peer-to-peer asset management with logarithmic yield focus.</p>
+                <p class="mb-4 max-w-sm text-xs font-medium leading-relaxed uppercase tracking-tighter italic text-gray-600">The premier peer-to-peer car sharing marketplace. Secure asset management with professional standards.</p>
             </div>
             <div>
                 <h4 class="text-white text-[10px] font-black mb-4 uppercase tracking-[0.3em]">Operational</h4>
                 <ul class="space-y-2 text-[10px] font-black uppercase tracking-widest text-gray-600">
-                    <li><a href="{{ route('pages.how-it-works') }}" class="hover:text-white transition-colors">Fleet Protocol</a></li>
-                    <li><a href="{{ route('pages.safety') }}" class="hover:text-white transition-colors">Integrity Standard</a></li>
-                    <li><a href="{{ route('pages.mediation') }}" class="hover:text-white transition-colors italic text-indigo-400">Mediation Hub</a></li>
-                    <li><a href="{{ route('pages.faq') }}" class="hover:text-white transition-colors">Knowledge Base</a></li>
+                    <li><a href="{{ route('pages.how-it-works') }}" class="hover:text-white transition-colors">How it Works</a></li>
+                    <li><a href="{{ route('pages.safety') }}" class="hover:text-white transition-colors">Safety Standards</a></li>
+                    <li><a href="{{ route('pages.mediation') }}" class="hover:text-white transition-colors italic text-indigo-400">Support & Disputes</a></li>
+                    <li><a href="{{ route('pages.faq') }}" class="hover:text-white transition-colors">Help & FAQ</a></li>
                 </ul>
             </div>
             <div>
                 <h4 class="text-white text-[10px] font-black mb-4 uppercase tracking-[0.3em]">Legal & Support</h4>
                 <ul class="space-y-2 text-[10px] font-black uppercase tracking-widest text-gray-600">
-                    <li><a href="{{ route('pages.contact') }}" class="hover:text-emerald-400 transition-colors italic">Contact Terminal</a></li>
-                    <li><a href="{{ route('pages.termination') }}" class="hover:text-white transition-colors">Termination</a></li>
-                    <li><a href="{{ route('pages.terms') }}" class="hover:text-white transition-colors">Terms of Engagement</a></li>
-                    <li><a href="{{ route('pages.privacy') }}" class="hover:text-white transition-colors">Privacy Shield</a></li>
+                    <li><a href="{{ route('pages.contact') }}" class="hover:text-emerald-400 transition-colors italic">Contact Support</a></li>
+                    <li><a href="{{ route('pages.termination') }}" class="hover:text-white transition-colors">Cancelation Policy</a></li>
+                    <li><a href="{{ route('pages.terms') }}" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    <li><a href="{{ route('pages.privacy') }}" class="hover:text-white transition-colors">Privacy Policy</a></li>
                 </ul>
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] font-black uppercase tracking-widest">
-            <p>&copy; {{ date('Y') }} NEON MONOLITH • GLOBAL ASSET MANAGEMENT</p>
+            <p>&copy; {{ date('Y') }} NEON MONOLITH • PREMIUM CAR SHARING NETWORK</p>
             <div class="flex space-x-6 mt-4 md:mt-0 opacity-40">
-                <a href="#" class="hover:text-white transition-colors">Protocol Log [FB]</a>
-                <a href="#" class="hover:text-white transition-colors">Neural Net [TW]</a>
-                <a href="#" class="hover:text-white transition-colors">Visual Array [IG]</a>
+                <a href="#" class="hover:text-white transition-colors">Facebook</a>
+                <a href="#" class="hover:text-white transition-colors">Twitter</a>
+                <a href="#" class="hover:text-white transition-colors">Instagram</a>
             </div>
         </div>
     </footer>

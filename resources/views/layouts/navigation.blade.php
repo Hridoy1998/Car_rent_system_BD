@@ -17,7 +17,7 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('*.dashboard')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                         <div class="flex items-center gap-2">
                              <span class="w-1 h-1 rounded-full {{ request()->routeIs('dashboard') || request()->routeIs('*.dashboard') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                             {{ __('HQ') }}
+                             {{ __('Dashboard') }}
                         </div>
                     </x-nav-link>
  
@@ -26,31 +26,31 @@
                             <x-nav-link :href="route('owner.cars.index')" :active="request()->routeIs('owner.cars.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.cars.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Fleet') }}
+                                     {{ __('My Cars') }}
                                 </div>
                             </x-nav-link>
                             <x-nav-link :href="route('owner.bookings.index')" :active="request()->routeIs('owner.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.bookings.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Workflows') }}
+                                     {{ __('Bookings') }}
                                 </div>
                             </x-nav-link>
                             <x-nav-link :href="route('owner.logistics.index')" :active="request()->routeIs('owner.logistics.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.logistics.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Logistics') }}
+                                     {{ __('Handovers') }}
                                 </div>
                             </x-nav-link>
                             <x-nav-link :href="route('owner.finance.index')" :active="request()->routeIs('owner.finance.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.finance.*') ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Fiscal') }}
+                                     {{ __('Finance') }}
                                 </div>
                             </x-nav-link>
                             <x-nav-link :href="route('owner.integrity.index')" :active="request()->routeIs('owner.integrity.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.integrity.*') ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Integrity') }}
+                                     {{ __('Damages') }}
                                      @php $breachCount = \App\Models\DamageReport::whereHas('booking.car', fn($q) => $q->where('user_id', auth()->id()))->whereIn('status', ['pending', 'disputed'])->count(); @endphp
                                      @if($breachCount > 0)
                                          <span class="ms-1 px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black rounded-md animate-pulse">{{ $breachCount }}</span>
@@ -67,40 +67,40 @@
                             <x-nav-link :href="route('admin.verifications.index')" :active="request()->routeIs('admin.verifications.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.verifications.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('ID') }}
+                                     {{ __('Verification') }}
                                 </div>
                             </x-nav-link>
                             <x-nav-link :href="route('admin.bookings.index')" :active="request()->routeIs('admin.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.bookings.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Stream') }}
+                                     {{ __('Bookings') }}
                                 </div>
                             </x-nav-link>
                             <x-nav-link :href="route('admin.finance.index')" :active="request()->routeIs('admin.finance.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.finance.*') ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Fiscal') }}
+                                     {{ __('Financials') }}
                                 </div>
                             </x-nav-link>
                             <x-nav-link :href="route('admin.damage-reports.index')" :active="request()->routeIs('admin.damage-reports.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.damage-reports.*') ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Integrity') }}
+                                     {{ __('Damages') }}
                                 </div>
                             </x-nav-link>
                         @elseif(auth()->user()->role === 'customer')
                             <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                {{ __('Market') }}
+                                {{ __('Browse Cars') }}
                             </x-nav-link>
                             <x-nav-link :href="route('customer.bookings.index')" :active="request()->routeIs('customer.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                {{ __('Trips') }}
+                                {{ __('My Trips') }}
                             </x-nav-link>
                             @php
                                 $isVerified = \App\Models\Verification::where('user_id', auth()->id())->where('status', 'approved')->exists();
                             @endphp
                             @if(!$isVerified)
                                 <x-nav-link :href="route('customer.verifications.index')" :active="request()->routeIs('customer.verifications.*')" class="text-amber-500 font-bold px-4 py-2 rounded-xl">
-                                    {{ __('Verify') }}
+                                    {{ __('Verify Account') }}
                                     <span class="ms-1 w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                                 </x-nav-link>
                             @endif
@@ -129,7 +129,7 @@
 
                         <x-slot name="content">
                             <x-dropdown-link :href="route('profile.edit')" class="text-[10px] font-black uppercase tracking-widest">
-                                {{ __('Registry Profile') }}
+                                {{ __('Account Settings') }}
                             </x-dropdown-link>
 
                             <!-- Authentication -->
@@ -138,7 +138,7 @@
                                 <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault(); this.closest('form').submit();"
                                         class="text-[10px] font-black uppercase tracking-widest text-red-400 transition-colors">
-                                    {{ __('Terminate Session') }}
+                                    {{ __('Logout') }}
                                 </x-dropdown-link>
                             </form>
                         </x-slot>
@@ -167,7 +167,7 @@
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-950 border-t border-white/5">
         <div class="pt-4 pb-4 space-y-2 px-4 italic">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="rounded-2xl border border-white/5 font-black uppercase text-[10px] tracking-widest">
-                {{ __('Tactical HQ') }}
+                {{ __('Dashboard') }}
             </x-responsive-nav-link>
             <!-- Add other mobile links as needed, matching the theme -->
         </div>

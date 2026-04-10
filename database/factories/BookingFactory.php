@@ -14,11 +14,14 @@ class BookingFactory extends Factory
     public function definition(): array
     {
         $start = fake()->dateTimeBetween('-1 month', '+1 month');
-        $end = (clone $start)->modify('+' . rand(1, 14) . ' days');
-        
+        $end = (clone $start)->modify('+'.rand(1, 14).' days');
+
         $pricePerDay = rand(2000, 15000);
         $days = $start->diff($end)->days ?: 1;
         $total = $pricePerDay * $days;
+
+        $status = fake()->randomElement(['pending', 'approved', 'ongoing', 'returning', 'completed', 'cancelled']);
+        $paymentStatus = in_array($status, ['ongoing', 'returning', 'completed']) ? 'paid' : 'pending';
 
         return [
             'user_id' => User::factory(), // Fallback if not provided
@@ -26,8 +29,8 @@ class BookingFactory extends Factory
             'start_date' => $start,
             'end_date' => $end,
             'total_price' => $total,
-            'status' => fake()->randomElement(['pending', 'approved', 'ongoing', 'returning', 'completed', 'cancelled']),
-            'payment_status' => fake()->randomElement(['pending', 'paid']),
+            'status' => $status,
+            'payment_status' => $paymentStatus,
             'checked_in_at' => null,
             'returned_at' => null,
             'start_odo' => rand(1000, 50000),
