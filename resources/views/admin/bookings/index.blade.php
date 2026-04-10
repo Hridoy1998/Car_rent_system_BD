@@ -66,9 +66,9 @@
                                                 <div
                                                     class="text-[8px] text-indigo-500 font-black uppercase tracking-widest mb-1">
                                                     ID #B-{{ str_pad($booking->id, 4, '0', STR_PAD_LEFT) }}</div>
-                                                <div
-                                                    class="font-bold text-white group-hover:text-indigo-400 transition-colors block">
-                                                    {{ $booking->car->title }}</div>
+                                                <a href="{{ route('admin.cars.show', $booking->car) }}"
+                                                    class="font-bold text-white group-hover:text-indigo-400 transition-colors block underline decoration-indigo-500/30 hover:decoration-indigo-500">
+                                                    {{ $booking->car->title }}</a>
                                                 <div class="text-[9px] text-gray-600 font-bold uppercase mt-1">
                                                     {{ $booking->car->location }}</div>
                                             </div>

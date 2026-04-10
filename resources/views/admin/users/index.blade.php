@@ -40,65 +40,93 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
-                                <th class="py-8 pl-8">Operator Identity</th>
-                                <th class="py-8">Authorization Level</th>
-                                <th class="py-8">Platform Tenure</th>
-                                <th class="py-8 text-right pr-8">Lifecycle Control</th>
+                            <tr class="border-b border-white/5 text-[9px] font-black uppercase tracking-[0.3em] text-gray-600">
+                                <th class="py-6 pl-8">Operator Identity</th>
+                                <th class="py-6">Authorization & Verification</th>
+                                <th class="py-6">Platform Tenure</th>
+                                <th class="py-6 text-right pr-8">Lifecycle Control</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @foreach ($users as $user)
-                                <tr class="group hover:bg-white/[0.02] transition-colors">
-                                    <td class="py-8 pl-8">
+                                <tr class="group hover:bg-white/[0.03] transition-all duration-300">
+                                    <td class="py-5 pl-8">
                                         <div class="flex items-center gap-4">
-                                            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-lg font-black text-indigo-400 overflow-hidden shadow-lg">
-                                                @if($user->profile_photo)
-                                                    <img src="{{ Storage::url($user->profile_photo) }}" class="w-full h-full object-cover">
-                                                @else
-                                                    {{ substr($user->name, 0, 1) }}
-                                                @endif
+                                            <div class="relative group/photo">
+                                                <div class="w-11 h-11 rounded-2xl bg-gray-800 border-2 border-white/5 flex items-center justify-center text-md font-black text-indigo-400 overflow-hidden shadow-2xl transition-all group-hover/photo:border-indigo-500/50">
+                                                    @if($user->profile_photo)
+                                                        <img src="{{ Storage::url($user->profile_photo) }}" class="w-full h-full object-cover">
+                                                    @else
+                                                        {{ substr($user->name, 0, 1) }}
+                                                    @endif
+                                                </div>
+                                                <div class="absolute -bottom-1 -right-1 w-4 h-4 rounded-full border-2 border-gray-950 {{ $user->is_blocked ? 'bg-red-500' : 'bg-emerald-500' }} shadow-[0_0_8px_currentColor]"></div>
                                             </div>
                                             <div>
-                                                <a href="{{ route('profiles.show', $user) }}" class="font-bold text-white hover:text-indigo-400 transition-colors block">{{ $user->name }}</a>
-                                                <div class="text-[10px] text-gray-600 font-bold uppercase tracking-widest truncate max-w-[200px]">{{ $user->email }}</div>
+                                                <a href="{{ route('admin.users.show', $user) }}" class="text-sm font-black text-white hover:text-indigo-400 transition-colors block italic tracking-tight">{{ $user->name }}</a>
+                                                <div class="text-[9px] text-gray-500 font-bold uppercase tracking-wider mt-0.5 flex items-center gap-2">
+                                                    <span>{{ $user->email }}</span>
+                                                    <span class="text-gray-800">•</span>
+                                                    <span class="text-gray-700 font-mono">ID:{{ $user->id }}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-8">
-                                        @if($user->role === 'admin')
-                                            <span class="px-3 py-1 bg-red-500/10 text-red-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-red-500/20">System Admin</span>
-                                        @elseif($user->role === 'owner')
-                                            <span class="px-3 py-1 bg-purple-500/10 text-purple-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-purple-500/20">Fleet Host</span>
-                                        @else
-                                            <span class="px-3 py-1 bg-green-500/10 text-green-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-green-500/20">Client Renter</span>
-                                        @endif
-                                        @if($user->is_verified)
-                                            <div class="flex items-center gap-1.5 mt-2">
-                                                <svg class="w-3 h-3 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
-                                                <span class="text-[8px] font-black text-emerald-500 uppercase">Verified</span>
+                                    <td class="py-5">
+                                        <div class="flex flex-col gap-1.5">
+                                            @if($user->role === 'admin')
+                                                <span class="w-fit px-2 py-0.5 bg-red-500/10 text-red-500 text-[8px] font-black uppercase tracking-widest rounded-md border border-red-500/20">Auth: Supreme Admin</span>
+                                            @elseif($user->role === 'owner')
+                                                <span class="w-fit px-2 py-0.5 bg-purple-500/10 text-purple-400 text-[8px] font-black uppercase tracking-widest rounded-md border border-purple-500/20">Auth: Fleet Host</span>
+                                            @else
+                                                <span class="w-fit px-2 py-0.5 bg-green-500/10 text-green-400 text-[8px] font-black uppercase tracking-widest rounded-md border border-green-500/20">Auth: Client Renter</span>
+                                            @endif
+                                            
+                                            <div class="flex items-center gap-2">
+                                                <span class="w-1.5 h-1.5 rounded-full {{ $user->is_verified ? 'bg-emerald-500' : 'bg-amber-500' }}"></span>
+                                                <span class="text-[8px] font-black {{ $user->is_verified ? 'text-emerald-500' : 'text-amber-500' }} uppercase tracking-tighter italic">
+                                                    {{ $user->is_verified ? 'Identity Verified' : 'Awaiting NID Audit' }}
+                                                </span>
                                             </div>
-                                        @endif
+                                        </div>
                                     </td>
-                                    <td class="py-8">
-                                        <div class="text-xs font-bold text-gray-400">{{ $user->created_at->format('M d, Y') }}</div>
-                                        <div class="text-[9px] text-gray-600 font-bold uppercase mt-1 tracking-widest">{{ $user->created_at->diffForHumans() }}</div>
+                                    <td class="py-5">
+                                        <div class="text-[10px] font-black text-gray-400 font-mono">{{ $user->created_at->format('Y-m-d') }}</div>
+                                        <div class="text-[8px] text-gray-600 font-black uppercase tracking-widest mt-0.5">{{ $user->created_at->diffForHumans() }}</div>
                                     </td>
-                                    <td class="py-8 text-right pr-8">
-                                        @if($user->id !== auth()->id())
-                                            <form action="{{ route('admin.users.update', $user) }}" method="POST">
-                                                @csrf @method('PUT')
-                                                <input type="hidden" name="is_blocked" value="{{ $user->is_blocked ? '0' : '1' }}">
-                                                <button type="submit" class="px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all 
-                                                    {{ $user->is_blocked 
-                                                        ? 'bg-emerald-600/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-600 hover:text-white' 
-                                                        : 'bg-red-600/10 text-red-400 border border-red-500/20 hover:bg-red-600 hover:text-white' }}">
-                                                    {{ $user->is_blocked ? 'Authorize Access' : 'Invoke Restriction' }}
-                                                </button>
-                                            </form>
-                                        @else
-                                            <span class="text-[9px] text-gray-700 font-black uppercase tracking-widest">Active Authority</span>
-                                        @endif
+                                    <td class="py-5 text-right pr-8">
+                                        <div class="flex items-center justify-end gap-2">
+                                            <a href="{{ route('admin.users.show', $user) }}" class="p-2.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl border border-white/5 transition-all shadow-lg" title="Full Identity Audit">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                            </a>
+
+                                            <a href="{{ route('admin.users.edit', $user) }}" class="p-2.5 bg-indigo-600/10 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl border border-indigo-500/20 transition-all shadow-lg" title="Refactor Identity">
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
+                                            </a>
+
+                                            @if($user->id !== auth()->id())
+                                                <form action="{{ route('admin.users.update', $user) }}" method="POST">
+                                                    @csrf @method('PUT')
+                                                    <input type="hidden" name="is_blocked" value="{{ $user->is_blocked ? '0' : '1' }}">
+                                                    <button type="submit" class="p-2.5 {{ $user->is_blocked ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20 hover:bg-emerald-500 hover:text-white' : 'bg-amber-500/10 text-amber-500 border-amber-500/20 hover:bg-amber-500 hover:text-white' }} rounded-xl border transition-all shadow-lg" title="{{ $user->is_blocked ? 'Authorization: Restore Access' : 'Authorization: Impose Block' }}">
+                                                        @if($user->is_blocked)
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path></svg>
+                                                        @else
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                                        @endif
+                                                    </button>
+                                                </form>
+
+                                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST" onsubmit="return confirm('SCUTTLE PROTOCOL: This identity node will be permanently purged. Confirm?');">
+                                                    @csrf @method('DELETE')
+                                                    <button type="submit" class="p-2.5 bg-red-600/10 border border-red-500/20 text-red-500 hover:bg-red-600 hover:text-white rounded-xl transition-all shadow-lg" title="Scuttle Node">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                                    </button>
+                                                </form>
+                                            @else
+                                                <span class="text-[7px] text-gray-700 font-black uppercase tracking-widest px-3 py-1.5 bg-white/5 border border-white/5 rounded-lg">Authority Node</span>
+                                            @endif
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach

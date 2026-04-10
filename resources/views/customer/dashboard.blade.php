@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col md:flex-row justify-between md:items-center gap-6">
             <div>
                 <h2 class="font-black text-3xl text-white tracking-tighter">
                     {{ __('Customer Dashboard') }}
                 </h2>
                 <p class="text-[10px] text-indigo-400 font-black uppercase tracking-[0.3em] mt-1">Manage your rentals and wishlist</p>
             </div>
-            <div class="flex items-center space-x-6 text-[10px] font-black uppercase tracking-widest text-gray-400">
+            <div class="flex items-center space-x-4 md:space-x-6 text-[10px] font-black uppercase tracking-widest text-gray-400">
                 <div class="flex flex-col items-end">
                     <span class="text-gray-600">Sync Status</span>
                     <span class="text-emerald-500 flex items-center gap-1">

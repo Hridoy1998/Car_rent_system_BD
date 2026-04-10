@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\MessageSent;
 use App\Models\Booking;
 use App\Models\Message;
 use App\Models\User;
@@ -48,6 +49,9 @@ class MessageController extends Controller
             'message' => $request->message,
             'seen' => false,
         ]);
+
+        // Broadcast the real-time websocket event
+        broadcast(new MessageSent($message))->toOthers();
 
         // Notify the receiver
         $receiver = User::find($receiverId);

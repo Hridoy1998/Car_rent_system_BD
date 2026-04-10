@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col md:flex-row justify-between md:items-center gap-6">
             <div>
                 <h2 class="font-black text-3xl text-white tracking-tighter">
                     {{ __('Admin Dashboard') }}
                 </h2>
                 <p class="text-[10px] text-indigo-400 font-black uppercase tracking-[0.3em] mt-1">Management Overview</p>
             </div>
-            <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-4 md:space-x-6">
                 <div class="flex flex-col items-end">
                     <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Platform Activity</span>
                     <div class="flex gap-1 mt-1">

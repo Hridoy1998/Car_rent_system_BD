@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center bg-gray-950 text-white p-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-6 bg-gray-950 text-white p-6">
             <div>
                 <h2 class="font-black text-3xl tracking-tighter uppercase italic text-white mb-1">
                     {{ __('Fiscal Intel Ledger') }}
@@ -13,7 +13,7 @@
             </div>
             <div class="flex items-center gap-6">
                 <div class="text-right">
-                    <div class="text-[9px] font-black text-gray-600 uppercase tracking-widest leading-none mb-1">Net
+                    <div class="text-[9px] font-black text-gray-600 uppercase tracking-widest leading-none mb-1 text-right">Net
                         Liquidity</div>
                     <div class="text-xl font-black text-emerald-400">৳ {{ number_format($stats['total_net']) }}</div>
                 </div>
@@ -30,7 +30,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-12">
 
             <!-- Strategic Yield Metrics -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
                 <!-- Gross Strategic Yield -->
                 <div
@@ -77,16 +77,18 @@
 
             <!-- Detailed Settlement Ledger -->
             <div class="space-y-8">
-                <div class="flex items-center justify-between px-6">
+                <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 px-6">
                     <h3 class="text-xl font-black text-white italic tracking-tight flex items-center gap-4">
                         <span class="w-1.5 h-8 bg-white/10 rounded-full"></span>
                         TRANSACTION MANIFEST
                     </h3>
-                    <div class="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
-                        <x-search-bar :route="route('owner.finance.index')"
-                            placeholder="Search by reference, car, or date..." />
+                    <div class="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto">
+                        <div class="w-full sm:flex-1">
+                            <x-search-bar :route="route('owner.finance.index')"
+                                placeholder="Search by reference, car, or date..." />
+                        </div>
                         <div
-                            class="px-5 py-2 bg-white/5 border border-white/10 rounded-2xl text-[9px] font-black text-gray-500 uppercase tracking-widest whitespace-nowrap">
+                            class="w-full sm:w-auto px-5 py-3 text-center bg-white/5 border border-white/10 rounded-2xl text-[9px] font-black text-gray-500 uppercase tracking-widest whitespace-nowrap">
                             Sort: Latest</div>
                     </div>
                 </div>

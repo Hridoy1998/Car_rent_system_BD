@@ -20,10 +20,10 @@ class NewMessageReceived extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'booking_id' => $this->message->booking_id,
+            'booking_id' => $this->message->booking->getRouteKey(),
             'title' => 'New Message',
             'message' => "You have a new message from {$this->message->sender->name}.",
-            'action_url' => route('bookings.messages.index', $this->message->booking_id),
+            'action_url' => route('bookings.messages.index', $this->message->booking->getRouteKey()),
         ];
     }
 }

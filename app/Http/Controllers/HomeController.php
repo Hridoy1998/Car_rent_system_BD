@@ -31,7 +31,7 @@ class HomeController extends Controller
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
-        $query = Car::available($startDate, $endDate)->with(['images', 'reviews'])->withAvg('reviews', 'rating');
+        $query = Car::available($startDate, $endDate)->with(['images', 'owner', 'reviews'])->withAvg('reviews', 'rating');
 
         if ($location) {
             $query->where(function ($q) use ($location) {

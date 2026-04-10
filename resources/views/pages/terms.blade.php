@@ -22,7 +22,7 @@
                     <div class="space-y-8 text-sm text-gray-400 font-medium leading-relaxed">
                         <section>
                             <h3 class="text-white uppercase font-black tracking-widest italic mb-3">1. Operational Scope</h3>
-                            <p>NEON MONOLITH facilitates peer-to-peer asset mobility. We provide the technology node; all physical engagements are between the Asset Owner and the User.</p>
+                            <p>Car Rent System facilitates peer-to-peer asset mobility. We provide the technology node; all physical engagements are between the Asset Owner and the User.</p>
                         </section>
                         
                         <section>

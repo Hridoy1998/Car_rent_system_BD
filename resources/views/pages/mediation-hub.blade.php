@@ -16,7 +16,7 @@
                 <div class="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl mb-12">
                     <h2 class="text-xl font-black text-white uppercase tracking-widest italic mb-6">Dispute Resolution Process</h2>
                     <p class="text-gray-400 leading-relaxed font-medium mb-8">
-                        The NEON MONOLITH Support Center helps resolve any disagreements between car owners and renters. Our goal is to ensure neutral, fair resolutions using provided photographic evidence and trip logs.
+                        The Car Rent System Support Center helps resolve any disagreements between car owners and renters. Our goal is to ensure neutral, fair resolutions using provided photographic evidence and trip logs.
                     </p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

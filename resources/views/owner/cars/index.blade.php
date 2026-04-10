@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center bg-gray-950 text-white p-4">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-6 bg-gray-950 text-white p-6">
             <div>
                 <h2 class="font-black text-3xl tracking-tighter uppercase italic text-white mb-1">
                     {{ __('Asset Inventory') }}
@@ -10,8 +10,8 @@
                     <span class="text-[10px] text-gray-500 font-extrabold uppercase tracking-[0.3em]">Fleet Deployment Active</span>
                 </div>
             </div>
-            <a href="{{ route('owner.cars.create') }}" class="group relative px-6 py-3 bg-white text-gray-950 font-black rounded-2xl shadow-2xl hover:bg-emerald-500 hover:text-white transition-all overflow-hidden uppercase tracking-widest text-[10px]">
-                <span class="relative z-10 flex items-center gap-2">
+            <a href="{{ route('owner.cars.create') }}" class="w-full sm:w-auto group relative px-8 py-4 bg-white text-gray-950 font-black rounded-2xl shadow-2xl hover:bg-emerald-500 hover:text-white transition-all overflow-hidden uppercase tracking-widest text-[10px] text-center">
+                <span class="relative z-10 flex items-center justify-center gap-2">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
                     Register Asset
                 </span>

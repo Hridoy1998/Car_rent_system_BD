@@ -1,13 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col md:flex-row justify-between md:items-center gap-6">
             <div>
                 <h2 class="font-black text-3xl text-white tracking-tighter uppercase italic">
                     {{ __('Owner Dashboard') }}
                 </h2>
                 <p class="text-[10px] text-emerald-400 font-black uppercase tracking-[0.3em] mt-1 italic">Earnings & Fleet Overview</p>
             </div>
-            <div class="flex items-center space-x-6">
+            <div class="flex items-center space-x-4 md:space-x-6">
                 <div class="flex flex-col items-end">
                     <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Earnings Pulse</span>
                     <div class="flex gap-1 mt-1">
@@ -36,7 +36,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
                 <!-- Liquidity Pulse -->
-                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl transition-all hover:bg-gray-900/60 overflow-hidden">
+                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-all hover:bg-gray-900/60 overflow-hidden">
                     <div class="absolute -right-4 -top-4 w-32 h-32 bg-emerald-500/5 rounded-full blur-3xl group-hover:bg-emerald-500/10 transition-all"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="p-3 bg-emerald-500/10 rounded-2xl border border-emerald-500/20 text-emerald-400">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                     <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Total Earnings</h4>
-                    <div class="text-3xl font-black text-white tracking-tighter">৳ {{ number_format($stats['total_earnings']) }}</div>
+                    <div class="text-2xl md:text-3xl font-black text-white tracking-tighter">৳ {{ number_format($stats['total_earnings']) }}</div>
                     <div class="mt-4 flex items-center justify-between text-[8px] font-black text-gray-600 uppercase tracking-widest">
                          <span>Net Balance</span>
                          <a href="{{ route('owner.finance.index') }}" class="text-emerald-400 hover:text-white transition-colors">Details →</a>
@@ -56,7 +56,7 @@
                 </div>
 
                 <!-- Active Bookings -->
-                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl transition-all overflow-hidden">
+                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-all overflow-hidden">
                     <div class="absolute -right-4 -top-4 w-32 h-32 bg-indigo-500/5 rounded-full blur-3xl group-hover:bg-indigo-500/10 transition-all"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="p-3 bg-indigo-500/10 rounded-2xl border border-indigo-500/20 text-indigo-400">
@@ -68,7 +68,7 @@
                         </div>
                     </div>
                     <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Trip Status</h4>
-                    <div class="text-3xl font-black text-white tracking-tighter">IN PROGRESS</div>
+                    <div class="text-2xl md:text-3xl font-black text-white tracking-tighter">IN PROGRESS</div>
                     <div class="mt-4">
                         <div class="w-full bg-indigo-500/10 h-1.5 rounded-full overflow-hidden">
                             <div class="bg-indigo-500 h-full rounded-full shadow-[0_0_10px_rgba(99,102,241,0.5)] animate-pulse" style="width: 75%"></div>
@@ -77,7 +77,7 @@
                 </div>
 
                 <!-- Fleet Readiness -->
-                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl transition-all overflow-hidden">
+                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-all overflow-hidden">
                     <div class="absolute -right-4 -top-4 w-32 h-32 bg-purple-500/5 rounded-full blur-3xl group-hover:bg-purple-500/10 transition-all"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="p-3 bg-purple-500/10 rounded-2xl border border-purple-500/20 text-purple-400">
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Car Inventory</h4>
-                    <div class="text-3xl font-black text-white tracking-tighter">{{ $stats['approved_cars'] }} APPROVED</div>
+                    <div class="text-2xl md:text-3xl font-black text-white tracking-tighter">{{ $stats['approved_cars'] }} APPROVED</div>
                     <div class="mt-4 flex items-center justify-between text-[8px] font-black text-gray-600 uppercase tracking-widest">
                          <span>Status: Active</span>
                          <a href="{{ route('owner.cars.index') }}" class="text-purple-400">Details →</a>
@@ -97,7 +97,7 @@
                 </div>
 
                 <!-- Damage Disputes -->
-                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl transition-all overflow-hidden {{ $stats['pending_damages'] > 0 ? 'border-red-500/20' : '' }}">
+                <div class="relative group bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-6 md:p-8 rounded-[2rem] md:rounded-[2.5rem] shadow-2xl transition-all overflow-hidden {{ $stats['pending_damages'] > 0 ? 'border-red-500/20' : '' }}">
                     <div class="absolute -right-4 -top-4 w-32 h-32 bg-red-500/5 rounded-full blur-3xl group-hover:bg-red-500/10 transition-all"></div>
                     <div class="flex justify-between items-start mb-6">
                         <div class="p-3 bg-red-500/10 rounded-2xl border border-red-500/20 text-red-500">
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Damage Status</h4>
-                    <div class="text-3xl font-black text-white tracking-tighter">{{ $stats['pending_damages'] > 0 ? 'CLAIM' : 'SECURE' }}</div>
+                    <div class="text-2xl md:text-3xl font-black text-white tracking-tighter">{{ $stats['pending_damages'] > 0 ? 'CLAIM' : 'SECURE' }}</div>
                     <div class="mt-4 text-[8px] font-black text-gray-600 uppercase tracking-widest">
                          {{ $stats['pending_damages'] > 0 ? 'Action required on damage claims' : 'No active damage claims' }}
                     </div>
@@ -122,12 +122,12 @@
                 
                 <!-- Action Queue (The Marshaling Protocol) -->
                 <div class="lg:col-span-2 space-y-8">
-                    <div class="flex items-center justify-between px-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 px-4">
                         <h3 class="text-xl font-black text-white italic tracking-tight flex items-center gap-3">
                             <span class="p-1.5 bg-indigo-500 rounded-lg shadow-[0_0_15px_rgba(99,102,241,0.3)]"></span>
                             ACTION REQUIRED
                         </h3>
-                        <a href="{{ route('owner.bookings.index') }}" class="text-[10px] font-black text-indigo-400 bg-indigo-500/5 hover:bg-indigo-500 hover:text-white px-5 py-2.5 rounded-2xl border border-indigo-500/10 transition-all uppercase tracking-widest">View All Bookings →</a>
+                        <a href="{{ route('owner.bookings.index') }}" class="w-full sm:w-auto text-center text-[10px] font-black text-indigo-400 bg-indigo-500/5 hover:bg-indigo-500 hover:text-white px-5 py-2.5 rounded-2xl border border-indigo-500/10 transition-all uppercase tracking-widest">View All Bookings →</a>
                     </div>
 
                     <livewire:owner-action-queue />

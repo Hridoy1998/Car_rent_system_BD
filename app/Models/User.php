@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Traits\HasObfuscatedId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use \App\Traits\HasObfuscatedId, HasFactory, Notifiable;
+    use HasFactory, HasObfuscatedId, Notifiable;
 
     public function favorites()
     {
@@ -38,6 +39,11 @@ class User extends Authenticatable
         return $this->hasMany(Booking::class, 'user_id');
     }
 
+    public function receivedBookings()
+    {
+        return $this->hasManyThrough(Booking::class, Car::class);
+    }
+
     public function messages()
     {
         return $this->hasMany(Message::class, 'sender_id');
@@ -56,6 +62,11 @@ class User extends Authenticatable
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+
+    public function receivedReviews()
+    {
+        return $this->hasMany(UserReview::class, 'reviewee_id');
     }
 
     public function latestVerification()

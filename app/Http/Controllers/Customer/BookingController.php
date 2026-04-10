@@ -148,10 +148,15 @@ class BookingController extends Controller
                 $updateData['renter_end_odo'] = $validated['renter_end_odo'] ?? null;
             }
 
-            if ($newStatus === 'cancelled' && $booking->payment_status === 'paid') {
-                $refundAmount = $this->bookingService->calculateRefund($booking);
-                $this->paymentService->processRefund($booking, $refundAmount);
-                $updateData['payment_status'] = 'pending';
+            if ($newStatus === 'cancelled') {
+                if ($booking->payment_status === 'paid') {
+                    $refundAmount = $this->bookingService->calculateRefund($booking);
+                    $this->paymentService->processRefund($booking, $refundAmount);
+                    $updateData['payment_status'] = 'pending';
+                }
+
+                // Release security deposit hold on any cancellation
+                $updateData['security_deposit_status'] = 'released';
             }
 
             $booking->update($updateData);
@@ -183,7 +188,7 @@ class BookingController extends Controller
         return view('customer.bookings.checkout', compact('booking'));
     }
 
-    public function pay(Booking $booking)
+    public function pay(Request $request, Booking $booking)
     {
         if ($booking->payment_status === 'paid') {
             return redirect()->route('customer.bookings.show', $booking)
@@ -192,15 +197,34 @@ class BookingController extends Controller
 
         $this->authorize('pay', $booking);
 
+        $rules = [
+            'payment_method' => 'required|in:card,mfs',
+        ];
+
+        if ($request->payment_method === 'card') {
+            $rules['card_number'] = 'required|string|min:16';
+            $rules['expiry'] = 'required|string|regex:/^\d{2}\/\d{2}$/';
+            $rules['cvv'] = 'required|string|min:3|max:4';
+            $rules['holder_name'] = 'required|string|max:255';
+        } else {
+            $rules['mfs_number'] = 'required|string|min:11';
+        }
+
+        $request->validate($rules);
+
+        if ($booking->status !== 'approved') {
+            return back()->with('error', 'The host has not yet authorized this mission for settlement. Current status: '.strtoupper($booking->status));
+        }
+
         $paid = $this->paymentService->processPayment($booking);
 
         if ($paid) {
             $booking->customer->notify(new PaymentSuccessful($booking->load('car')));
             $booking->car->owner->notify(new BookingStatusUpdated($booking->load('car')));
 
-            return back()->with('success', 'Payment successful! Your booking is confirmed.');
+            return redirect()->route('customer.bookings.index')->with('success', 'Payment transaction handled via '.$str = strtoupper($request->payment_method).' node. Your booking is confirmed.');
         }
 
-        return back()->with('error', 'Payment failed. Please try again.');
+        return back()->with('error', 'Payment failed. Please try again or switch settlement modes.');
     }
 }

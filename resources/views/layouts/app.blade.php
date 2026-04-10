@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'NEON MONOLITH') }}</title>
+        <title>{{ config('app.name', 'Car Rent System') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -42,26 +42,49 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased text-gray-100 bg-gray-950">
-        <div class="min-h-screen relative overflow-hidden">
+    <body class="font-sans antialiased text-gray-100 bg-gray-950" x-data="{ sidebarOpen: false, sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true' }" x-init="$watch('sidebarCollapsed', value => localStorage.setItem('sidebarCollapsed', value))">
+        <div class="min-h-screen flex bg-gray-950 relative overflow-hidden">
             <!-- Neon background glows -->
-            <div class="absolute top-[-10rem] left-[-10rem] w-[30rem] h-[30rem] bg-indigo-600/20 rounded-full blur-[120px] pointer-events-none"></div>
-            <div class="absolute bottom-[-10rem] right-[-10rem] w-[30rem] h-[30rem] bg-purple-600/20 rounded-full blur-[120px] pointer-events-none"></div>
-            @include('layouts.navigation')
+            <div class="absolute top-[-10rem] left-[-10rem] w-[40rem] h-[40rem] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse-neon"></div>
+            <div class="absolute bottom-[-10rem] right-[-10rem] w-[40rem] h-[40rem] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse-neon" style="animation-delay: 2s"></div>
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-transparent pt-20">
-                    <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+            <!-- Sidebar -->
+            @include('layouts.sidebar')
 
-            <!-- Page Content -->
-            <main class="{{ isset($header) ? '' : 'pt-20' }}">
-                {{ $slot }}
-            </main>
+            <!-- Main Content Area -->
+            <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+                @include('layouts.navigation')
+                <x-live-notifications />
+
+                <div class="flex-1 overflow-y-auto custom-scrollbar">
+                    <!-- Page Heading -->
+                    @isset($header)
+                        <header class="bg-transparent pt-8">
+                            <div class="max-w-7xl mx-auto py-2 px-4 sm:px-6 lg:px-8">
+                                {{ $header }}
+                            </div>
+                        </header>
+                    @endisset
+
+                    <!-- Page Content -->
+                    <main>
+                        {{ $slot }}
+                    </main>
+                </div>
+            </div>
+
+            <!-- Mobile Sidebar Overlay -->
+            <div 
+                x-show="sidebarOpen" 
+                @click="sidebarOpen = false" 
+                class="fixed inset-0 z-40 bg-gray-950/60 backdrop-blur-sm lg:hidden"
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+            ></div>
         </div>
     </body>
 </html>

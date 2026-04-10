@@ -16,7 +16,7 @@
                 <div class="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl mb-12">
                     <h2 class="text-xl font-black text-white uppercase tracking-widest italic mb-6">Data Protection Protocol</h2>
                     <p class="text-gray-400 leading-relaxed font-medium mb-12">
-                        At NEON MONOLITH, your data is treated with tactical precision. We use high-level encryption to shield your identity, financial logs, and mobility history from unauthorized discovery.
+                        At Car Rent System, your data is treated with tactical precision. We use high-level encryption to shield your identity, financial logs, and mobility history from unauthorized discovery.
                     </p>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">

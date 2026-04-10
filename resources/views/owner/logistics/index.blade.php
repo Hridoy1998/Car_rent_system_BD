@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-6">
             <div>
-                <h2 class="font-black text-3xl text-white tracking-tighter">
+                <h2 class="font-black text-3xl text-white tracking-tighter uppercase italic">
                     {{ __('FLEET LOGISTICS') }}
                 </h2>
                 <p class="text-[10px] text-indigo-400 font-black uppercase tracking-[0.3em] mt-1">Movement Tracking & Deployment Schedule</p>
@@ -106,7 +106,7 @@
 
             <!-- Global Movement Timeline -->
             <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
-                <div class="p-10 border-b border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="p-8 md:p-10 border-b border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
                     <h3 class="text-xl font-black text-white italic tracking-tighter flex items-center gap-4">
                         <span class="w-1.5 h-6 bg-indigo-500 rounded-full"></span>
                         MOVEMENT LEDGER (PHASE IV)

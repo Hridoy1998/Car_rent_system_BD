@@ -52,9 +52,35 @@
                         </div>
                     </div>
 
+                    <!-- Operator Identity Module -->
+                    <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-8 rounded-3xl shadow-2xl relative overflow-hidden group">
+                         <div class="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                         <h4 class="text-[10px] font-black text-white uppercase tracking-[0.3em] mb-6 italic flex items-center gap-3">
+                            <span class="w-1 h-3 bg-indigo-500 rounded-full"></span>
+                            Operator Identity (Host)
+                        </h4>
+                        
+                        <a href="{{ route('profiles.show', $booking->car->owner) }}" class="flex items-center gap-5 group/id">
+                            <div class="w-14 h-14 rounded-2xl bg-gray-800 border-2 border-indigo-500/30 overflow-hidden flex items-center justify-center text-lg font-black text-white shadow-xl group-hover/id:border-indigo-500 transition-all">
+                                @if($booking->car->owner->profile_photo)
+                                    <img src="{{ Storage::url($booking->car->owner->profile_photo) }}" class="w-full h-full object-cover">
+                                @else
+                                    {{ substr($booking->car->owner->name, 0, 1) }}
+                                @endif
+                            </div>
+                            <div>
+                                <h5 class="text-sm font-black text-white uppercase tracking-tight group-hover/id:text-indigo-400 transition-colors">{{ $booking->car->owner->name }}</h5>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="w-1.5 h-1.5 rounded-full {{ $booking->car->owner->is_verified ? 'bg-emerald-500' : 'bg-amber-500' }} shadow-[0_0_5px_currentColor]"></span>
+                                    <span class="text-[8px] text-gray-500 font-black uppercase tracking-widest">{{ $booking->car->owner->is_verified ? 'Verified Bio-ID' : 'Identity Unverified' }}</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+
                     <!-- Financial Hub -->
                     <div class="bg-indigo-600/10 backdrop-blur-xl border border-indigo-500/20 rounded-3xl p-8 shadow-2xl flex-1">
-                        <h4 class="text-lg font-bold text-white mb-6">Financial Summary</h4>
+                        <h4 class="text-sm font-black text-white uppercase tracking-widest mb-6">Financial Summary</h4>
                         <div class="space-y-4">
                             <div class="flex justify-between items-center text-sm">
                                 <span class="text-gray-400 font-medium italic">Base Fare</span>
@@ -103,8 +129,23 @@
                                     @elseif($booking->status === 'approved' && $booking->payment_status === 'paid')
                                         <form action="{{ route('owner.bookings.update', $booking) }}" method="POST">
                                             @csrf @method('PUT')
+                                            <input type="hidden" name="status" value="ongoing">
+                                            <div class="space-y-3">
+                                                <input type="number" name="start_odo" placeholder="Current Odometer" required class="w-full bg-gray-950 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:ring-2 focus:ring-indigo-500">
+                                                <button type="submit" class="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl uppercase tracking-widest shadow-xl shadow-indigo-600/20">Initiate Handover</button>
+                                            </div>
+                                        </form>
+                                    @elseif($booking->status === 'ongoing')
+                                        <form action="{{ route('owner.bookings.update', $booking) }}" method="POST">
+                                            @csrf @method('PUT')
+                                            <input type="hidden" name="status" value="returned">
+                                            <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-2xl uppercase tracking-widest shadow-xl shadow-emerald-600/20">Acknowledge Return</button>
+                                        </form>
+                                    @elseif($booking->status === 'returned')
+                                        <form action="{{ route('owner.bookings.update', $booking) }}" method="POST">
+                                            @csrf @method('PUT')
                                             <input type="hidden" name="status" value="completed">
-                                            <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-2xl uppercase tracking-widest shadow-xl shadow-emerald-600/20">Mark Trip Completed</button>
+                                            <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-2xl uppercase tracking-widest shadow-xl shadow-emerald-600/20">Finalize Completion</button>
                                         </form>
                                     @endif
                                 @endif
@@ -119,7 +160,7 @@
                 <div class="lg:col-span-2 space-y-8 flex flex-col">
                     
                     <!-- Chat Integrated -->
-                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col flex-1">
+                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-2xl flex flex-col min-h-[500px]">
                         <div class="px-6 py-4 border-b border-white/10 bg-gray-800/30 flex items-center gap-3">
                             <div class="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center font-bold text-indigo-400 border border-indigo-500/30">
                                 @if(auth()->user()->role === 'customer')
@@ -138,13 +179,13 @@
                                 </h4>
                                 <p class="text-[10px] text-emerald-500 flex items-center gap-1">
                                     <span class="w-1 h-1 rounded-full bg-emerald-500 animate-ping"></span>
-                                    Active Trip Chat
+                                    Active Signal Stream
                                 </p>
                             </div>
                         </div>
 
-                        <!-- Chat Messages - Inherit layout logic -->
-                        <div class="flex-1 p-6 overflow-y-auto space-y-6 min-h-[400px]" id="messages-hub">
+                        <!-- Chat Messages -->
+                        <div class="flex-1 p-6 overflow-y-auto space-y-6 max-h-[400px]" id="messages-hub">
                              @forelse($booking->messages as $msg)
                                 <div class="flex {{ $msg->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}">
                                     <div class="flex flex-col {{ $msg->sender_id === auth()->id() ? 'items-end' : 'items-start' }} max-w-[80%]">
@@ -157,7 +198,7 @@
                             @empty
                                 <div class="h-full flex flex-col items-center justify-center text-center opacity-40">
                                     <svg class="w-16 h-16 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                                    <p class="text-sm font-bold tracking-widest uppercase">Start a conversation with your host</p>
+                                    <p class="text-sm font-bold tracking-widest uppercase">Start a conversation</p>
                                 </div>
                             @endforelse
                         </div>
@@ -166,11 +207,56 @@
                         <div class="p-4 border-t border-white/10 bg-gray-900/50">
                             <form action="{{ route('bookings.messages.store', $booking) }}" method="POST" class="flex gap-2">
                                 @csrf
-                                <input type="text" name="message" required autocomplete="off" placeholder="Discuss trip details..." class="flex-1 bg-gray-950 border border-white/5 rounded-2xl px-5 py-4 text-sm text-white focus:ring-2 focus:ring-indigo-500 transition-all outline-none">
+                                <input type="text" name="message" required autocomplete="off" placeholder="Discuss mission details..." class="flex-1 bg-gray-950 border border-white/5 rounded-2xl px-5 py-4 text-sm text-white focus:ring-2 focus:ring-indigo-500 transition-all outline-none">
                                 <button type="submit" class="px-6 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl transition-all">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                 </button>
                             </form>
+                        </div>
+                    </div>
+
+                    <!-- Operational Timeline Artifacts -->
+                    <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] overflow-hidden">
+                        <div class="p-8 border-b border-white/5 flex items-center gap-4">
+                             <div class="p-2 bg-indigo-500 rounded-xl text-white shadow-lg">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                             </div>
+                             <h3 class="text-lg font-black text-white uppercase italic tracking-tighter">Operational Timeline Artifacts</h3>
+                        </div>
+
+                        <div class="p-8 space-y-8">
+                            <!-- Milestone: Authorization -->
+                            <div class="flex gap-6 relative">
+                                <div class="absolute left-6 top-10 bottom-0 w-px bg-white/5"></div>
+                                <div class="w-12 h-12 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-500 z-10">✔</div>
+                                <div>
+                                    <h4 class="text-sm font-black text-white uppercase tracking-tight">Authorization Process Verified</h4>
+                                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Confirmed At: {{ $booking->updated_at->format('M d, H:i') }}</p>
+                                </div>
+                            </div>
+
+                            <!-- Milestone: Deployed -->
+                            @if($booking->checked_in_at)
+                            <div class="flex gap-6 relative">
+                                <div class="absolute left-6 top-10 bottom-0 w-px bg-white/5"></div>
+                                <div class="w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-500 z-10">🚀</div>
+                                <div>
+                                    <h4 class="text-sm font-black text-white uppercase tracking-tight">Active Deployment Protocol</h4>
+                                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Released At: {{ \Carbon\Carbon::parse($booking->checked_in_at)->format('M d, H:i') }}</p>
+                                </div>
+                            </div>
+                            @endif
+
+                            <!-- Milestone: Return Artifacts -->
+                            @if($booking->returned_at)
+                            <div class="flex gap-6 relative">
+                                <div class="w-12 h-12 rounded-full bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-500 z-10">🏁</div>
+                                <div>
+                                    <h4 class="text-sm font-black text-white uppercase tracking-tight">Return & Integrity Audit</h4>
+                                    <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Archived At: {{ \Carbon\Carbon::parse($booking->returned_at)->format('M d, H:i') }}</p>
+                                </div>
+                            </div>
+                            @endif
                         </div>
                     </div>
 

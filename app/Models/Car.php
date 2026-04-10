@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasObfuscatedId;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Car extends Model
 {
-    use \App\Traits\HasObfuscatedId, HasFactory;
+    use HasFactory, HasObfuscatedId;
 
     protected $fillable = [
         'user_id',
@@ -69,12 +70,20 @@ class Car extends Model
         return $this->favorites()->where('user_id', $user->id)->exists();
     }
 
+    public function scopeActiveOwner($query)
+    {
+        return $query->whereHas('owner', function ($q) {
+            $q->where('is_blocked', false);
+        });
+    }
+
     public function scopeAvailable($query, $startDate = null, $endDate = null)
     {
         $startDate = $startDate ?? now()->toDateString();
         $endDate = $endDate ?? now()->addDay()->toDateString();
 
         return $query->where('status', 'approved')
+            ->activeOwner()
             ->whereDoesntHave('bookings', function ($q) use ($startDate, $endDate) {
                 $q->whereNotIn('status', ['cancelled', 'rejected', 'completed'])
                     ->where(function ($sq) use ($startDate, $endDate) {

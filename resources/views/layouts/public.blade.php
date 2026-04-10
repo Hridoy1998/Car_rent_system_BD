@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ $title ?? 'NEON MONOLITH - Premium Peer-to-Peer Mobility' }}</title>
+    <title>{{ $title ?? 'Car Rent System - Premium Peer-to-Peer Mobility' }}</title>
  
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -22,7 +22,7 @@
                     <a href="{{ route('home') }}" class="flex items-center gap-3 group">
                         <x-application-logo class="w-10 h-10 shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform" />
                         <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-400 tracking-tighter italic uppercase">
-                            NEON MONOLITH
+                            Car Rent System
                         </span>
                     </a>
                 </div>
@@ -57,7 +57,7 @@
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-2 mb-6">
                     <x-application-logo class="w-8 h-8 opacity-50" />
-                    <span class="text-xl font-black text-white italic uppercase tracking-tighter">NEON MONOLITH</span>
+                    <span class="text-xl font-black text-white italic uppercase tracking-tighter">Car Rent System</span>
                 </div>
                 <p class="mb-4 max-w-sm text-xs font-medium leading-relaxed uppercase tracking-tighter italic text-gray-600">The premier peer-to-peer car sharing marketplace. Secure asset management with professional standards.</p>
             </div>
@@ -81,7 +81,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-[9px] font-black uppercase tracking-widest">
-            <p>&copy; {{ date('Y') }} NEON MONOLITH • PREMIUM CAR SHARING NETWORK</p>
+            <p>&copy; {{ date('Y') }} Car Rent System • PREMIUM CAR SHARING NETWORK</p>
             <div class="flex space-x-6 mt-4 md:mt-0 opacity-40">
                 <a href="#" class="hover:text-white transition-colors">Facebook</a>
                 <a href="#" class="hover:text-white transition-colors">Twitter</a>

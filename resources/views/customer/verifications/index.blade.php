@@ -45,7 +45,8 @@
                                 </div>
                                 <div>
                                     <p class="text-white font-bold">{{ $verification->document_type }}</p>
-                                    <p class="text-xs text-gray-500 italic">Submitted on {{ $verification->created_at->format('M d, Y') }}</p>
+                                    <p class="text-[10px] text-gray-500 font-medium uppercase tracking-widest mt-0.5">ID: {{ $verification->id_number }}</p>
+                                    <p class="text-xs text-gray-500 italic mt-1">Submitted on {{ $verification->created_at->format('M d, Y') }}</p>
                                 </div>
                             </div>
                             
@@ -78,13 +79,18 @@
                                     </div>
 
                                     <div class="space-y-2">
-                                        <label class="text-xs font-bold text-gray-500 uppercase tracking-widest ms-1">Identity File</label>
-                                        <div class="relative group cursor-pointer">
-                                            <input type="file" name="document_file" required accept="image/jpeg,image/png,image/jpg" class="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer">
-                                            <div class="bg-gray-950 border border-white/5 rounded-xl px-4 py-3 text-sm text-gray-400 flex items-center justify-between group-hover:border-indigo-500/50 transition-colors">
-                                                <span class="truncate">Select JPEG or PNG...</span>
-                                                <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                                            </div>
+                                        <label class="text-xs font-bold text-gray-500 uppercase tracking-widest ms-1">ID / Passport Number</label>
+                                        <input type="text" name="id_number" required placeholder="Enter document number" class="w-full bg-gray-950 border border-white/5 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 transition-all placeholder:text-gray-700">
+                                    </div>
+                                </div>
+
+                                <div class="space-y-2">
+                                    <label class="text-xs font-bold text-gray-500 uppercase tracking-widest ms-1">Identity File</label>
+                                    <div class="relative group cursor-pointer">
+                                        <input type="file" name="document_file" required accept="image/jpeg,image/png,image/jpg" class="absolute inset-0 w-full h-full opacity-0 z-20 cursor-pointer">
+                                        <div class="bg-gray-950 border border-white/5 rounded-xl px-4 py-3 text-sm text-gray-400 flex items-center justify-between group-hover:border-indigo-500/50 transition-colors">
+                                            <span class="truncate">Select JPEG or PNG...</span>
+                                            <svg class="w-5 h-5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
                                         </div>
                                     </div>
                                 </div>

@@ -37,7 +37,7 @@
                     <a href="{{ route('home') }}" class="flex items-center gap-4 group">
                         <x-application-logo class="w-10 h-10 shadow-lg shadow-indigo-500/20 group-hover:scale-110 transition-transform" />
                         <div class="flex flex-col">
-                            <span class="text-xl font-black text-white tracking-widest leading-none">NEON MONOLITH</span>
+                            <span class="text-xl font-black text-white tracking-widest leading-none">Car Rent System</span>
                             <span class="text-[9px] font-black text-indigo-400 tracking-[0.4em] uppercase mt-1 italic">Premium Car Sharing</span>
                         </div>
                     </a>
@@ -78,7 +78,7 @@
             <div class="col-span-1 md:col-span-2">
                 <div class="flex items-center gap-4 mb-8">
                     <x-application-logo class="w-10 h-10 shadow-lg shadow-indigo-500/20" />
-                    <span class="text-2xl font-black text-white tracking-widest uppercase italic">NEON MONOLITH</span>
+                    <span class="text-2xl font-black text-white tracking-widest uppercase italic">Car Rent System</span>
                 </div>
                 <p class="mb-8 max-w-sm leading-relaxed text-gray-500 font-medium">The premier peer-to-peer car sharing marketplace in Bangladesh. Secure rentals and professional standards for every journey.</p>
                 <div class="flex gap-6">
@@ -105,7 +105,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-700 italic">&copy; {{ date('Y') }} NEON MONOLITH. PREMIUM CAR SHARING NETWORK.</p>
+            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-700 italic">&copy; {{ date('Y') }} Car Rent System. PREMIUM CAR SHARING NETWORK.</p>
             <div class="flex gap-8 mt-6 md:mt-0 text-[9px] font-black uppercase tracking-widest">
                 <a href="#" class="text-gray-700 hover:text-white transition-colors">Terms of Service</a>
                 <a href="#" class="text-gray-700 hover:text-white transition-colors">Privacy Policy</a>

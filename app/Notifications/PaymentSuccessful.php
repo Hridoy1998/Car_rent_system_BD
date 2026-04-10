@@ -20,7 +20,7 @@ class PaymentSuccessful extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'booking_id' => $this->booking->id,
+            'booking_id' => $this->booking->getRouteKey(),
             'title' => 'Payment Successful',
             'message' => "Payment for booking #{$this->booking->id} has been confirmed.",
             'action_url' => route('customer.bookings.index'),

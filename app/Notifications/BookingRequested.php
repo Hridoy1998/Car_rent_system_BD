@@ -20,7 +20,7 @@ class BookingRequested extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'booking_id' => $this->booking->id,
+            'booking_id' => $this->booking->getRouteKey(),
             'title' => 'New Booking Request',
             'message' => "{$this->booking->customer->name} requested a booking for {$this->booking->car->title}.",
             'action_url' => route('owner.bookings.index'),

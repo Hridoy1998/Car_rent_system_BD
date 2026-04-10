@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-6">
             <div>
-                <h2 class="font-black text-3xl text-white tracking-tighter">
+                <h2 class="font-black text-3xl text-white tracking-tighter uppercase italic">
                     {{ __('ASSET INTEGRITY') }}
                 </h2>
                 <p class="text-[10px] text-red-500 font-black uppercase tracking-[0.3em] mt-1">Breach Containment & Resolution Center</p>
@@ -58,12 +58,12 @@
 
                 <!-- Main Breach Ledger -->
                 <div class="lg:col-span-2 bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl h-full">
-                    <div class="p-10 border-b border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
+                    <div class="p-8 md:p-10 border-b border-white/5 flex flex-col lg:flex-row items-center justify-between gap-6">
                         <h3 class="text-xl font-black text-white italic tracking-tighter flex items-center gap-4">
                             <span class="p-1.5 bg-red-500 rounded-lg shadow-lg"></span>
                             INTEGRITY BREACH LEDGER
                         </h3>
-                        <div class="w-full md:w-auto">
+                        <div class="w-full lg:w-auto">
                             <x-search-bar :route="route('owner.integrity.index')" placeholder="Search breaches, cars, or operators..." />
                         </div>
                     </div>

@@ -40,7 +40,9 @@
                             @endif
                         </div>
                         <div>
-                            <h4 class="text-2xl font-black text-white">{{ $booking->customer->name }}</h4>
+                            <a href="{{ route('admin.users.show', $booking->customer) }}" class="group/name">
+                                <h4 class="text-2xl font-black text-white group-hover/name:text-indigo-400 transition-colors">{{ $booking->customer->name }}</h4>
+                            </a>
                             <p class="text-gray-500 font-bold text-sm">{{ $booking->customer->email }}</p>
                             <div class="flex gap-2 mt-2">
                                 @if($booking->customer->is_verified)
@@ -49,6 +51,7 @@
                                     <span class="px-2 py-0.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest">Unverified</span>
                                 @endif
                                 <span class="px-2 py-0.5 bg-white/5 text-gray-500 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest">User #{{ $booking->customer->id }}</span>
+                                <a href="{{ route('admin.users.show', $booking->customer) }}" class="px-2 py-0.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition-all">Audit Identity →</a>
                             </div>
                         </div>
                     </div>
@@ -79,11 +82,14 @@
                             @endif
                         </div>
                         <div>
-                            <h4 class="text-2xl font-black text-white">{{ $booking->car->owner->name }}</h4>
+                            <a href="{{ route('admin.users.show', $booking->car->owner) }}" class="group/name">
+                                <h4 class="text-2xl font-black text-white group-hover/name:text-pink-400 transition-colors">{{ $booking->car->owner->name }}</h4>
+                            </a>
                             <p class="text-gray-500 font-bold text-sm">{{ $booking->car->owner->email }}</p>
                             <div class="flex gap-2 mt-2">
                                 <span class="px-2 py-0.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest">Professional Host</span>
                                 <span class="px-2 py-0.5 bg-white/5 text-gray-500 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest">Fleet Size: {{ $booking->car->owner->cars()->count() }}</span>
+                                <a href="{{ route('admin.users.show', $booking->car->owner) }}" class="px-2 py-0.5 bg-pink-500/10 text-pink-400 border border-pink-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-pink-500 hover:text-white transition-all">Audit Authority →</a>
                             </div>
                         </div>
                     </div>

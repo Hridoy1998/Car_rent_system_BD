@@ -105,5 +105,45 @@
             @endif
 
         </div>
+
+        <!-- Community Reviews -->
+        <div class="space-y-6 mt-12 max-w-7xl mx-auto sm:px-6 lg:px-8 relative z-10">
+            <h3 class="text-2xl font-bold text-white px-2">Community Perception</h3>
+            
+            @if($userReviews->isNotEmpty())
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($userReviews as $review)
+                        <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-[2rem] p-6 shadow-xl relative overflow-hidden group">
+                            <div class="flex items-center gap-4 mb-4">
+                                <a href="{{ route('profiles.show', $review->reviewer) }}" class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-sm font-black text-indigo-400 shrink-0">
+                                    @if($review->reviewer->profile_photo)
+                                        <img src="{{ Storage::url($review->reviewer->profile_photo) }}" class="w-full h-full object-cover rounded-xl">
+                                    @else
+                                        {{ substr($review->reviewer->name, 0, 1) }}
+                                    @endif
+                                </a>
+                                <div>
+                                    <h4 class="text-white font-bold">{{ $review->reviewer->name }}</h4>
+                                    <div class="text-[9px] text-gray-500 uppercase tracking-widest font-black">{{ $review->reviewer->role }} • {{ $review->created_at->diffForHumans() }}</div>
+                                </div>
+                                <div class="ml-auto flex items-center gap-1 bg-white/5 px-2 py-1 rounded-lg">
+                                    <svg class="w-3 h-3 text-yellow-400 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+                                    <span class="text-xs font-black text-white">{{ $review->rating }}</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-400 text-sm italic">{{ $review->comment }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/5 rounded-[2rem] p-12 shadow-xl text-center">
+                    <div class="w-16 h-16 bg-white/5 rounded-2xl flex items-center justify-center mx-auto mb-4 text-gray-500">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
+                    </div>
+                    <h3 class="text-gray-300 font-bold mb-2">No Reviews Yet</h3>
+                    <p class="text-gray-500 text-sm">This user hasn't received any community feedback yet.</p>
+                </div>
+            @endif
+        </div>
     </div>
 </x-app-layout>

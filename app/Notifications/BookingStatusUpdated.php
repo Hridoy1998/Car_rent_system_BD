@@ -20,7 +20,7 @@ class BookingStatusUpdated extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'booking_id' => $this->booking->id,
+            'booking_id' => $this->booking->getRouteKey(),
             'title' => 'Booking '.ucfirst($this->booking->status),
             'message' => "Your booking for {$this->booking->car->title} has been ".$this->booking->status.'.',
             'action_url' => route('customer.bookings.index'),

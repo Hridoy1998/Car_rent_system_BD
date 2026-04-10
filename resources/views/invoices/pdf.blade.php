@@ -21,8 +21,8 @@
 <body>
     <div class="invoice-box">
         <div class="header">
-            <h1>CarRent BD</h1>
-            <p>Official Booking Invoice</p>
+            <h1>Car Rent System</h1>
+            <p>Premium Car Rental Invoice</p>
         </div>
         
         <table class="details-table">
@@ -75,7 +75,7 @@
         </table>
         
         <div style="margin-top: 50px; text-align: center; color: #777; font-size: 12px;">
-            <p>Thank you for using CarRent BD. If you have any questions, please contact the host directly.</p>
+            <p>Thank you for choosing Car Rent System. For support or disputes, please visit the Mediation Hub.</p>
         </div>
     </div>
 </body>

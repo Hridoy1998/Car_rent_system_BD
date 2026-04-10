@@ -170,15 +170,16 @@
                         </div>
                     </div>
 
-                    <!-- Actor Identity Module -->
-                    <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-10 rounded-[3rem] shadow-2xl">
+                    <!-- Operator Identity Module -->
+                    <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 p-10 rounded-[3rem] shadow-2xl relative overflow-hidden group">
+                         <div class="absolute inset-0 bg-indigo-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                          <h4 class="text-xs font-black text-white uppercase tracking-[0.3em] mb-8 italic flex items-center gap-3">
                             <span class="w-1.5 h-4 bg-indigo-500 rounded-full"></span>
                             Operator Identity
                         </h4>
                         
-                        <a href="{{ route('profiles.show', $booking->customer) }}" class="flex items-center gap-6 group">
-                            <div class="w-16 h-16 rounded-2xl bg-gray-800 border-2 border-indigo-500/30 overflow-hidden flex items-center justify-center text-xl font-black text-white shadow-xl group-hover:border-indigo-500 transition-all">
+                        <a href="{{ route('profiles.show', $booking->customer) }}" class="flex items-center gap-6 group/id">
+                            <div class="w-16 h-16 rounded-2xl bg-gray-800 border-2 border-indigo-500/30 overflow-hidden flex items-center justify-center text-xl font-black text-white shadow-xl group-hover/id:border-indigo-500 transition-all">
                                 @if($booking->customer->profile_photo)
                                     <img src="{{ Storage::url($booking->customer->profile_photo) }}" class="w-full h-full object-cover">
                                 @else
@@ -186,19 +187,48 @@
                                 @endif
                             </div>
                             <div>
-                                <h5 class="text-sm font-black text-white uppercase tracking-tight group-hover:text-indigo-400 transition-colors">{{ $booking->customer->name }}</h5>
+                                <h5 class="text-sm font-black text-white uppercase tracking-tight group-hover/id:text-indigo-400 transition-colors">{{ $booking->customer->name }}</h5>
                                 <div class="flex items-center gap-2 mt-1">
                                     <span class="w-1.5 h-1.5 rounded-full {{ $booking->customer->is_verified ? 'bg-emerald-500' : 'bg-amber-500' }} shadow-[0_0_5px_currentColor]"></span>
                                     <span class="text-[8px] text-gray-500 font-black uppercase tracking-widest">{{ $booking->customer->is_verified ? 'Verified Bio-ID' : 'Awaiting ID Signal' }}</span>
                                 </div>
                             </div>
                         </a>
+                    </div>
 
-                        <div class="mt-8 pt-8 border-t border-white/5 text-center">
-                             <a href="{{ route('bookings.messages.index', $booking) }}" class="flex items-center justify-center gap-3 px-6 py-4 bg-gray-950 text-indigo-400 font-black text-[10px] uppercase tracking-widest rounded-2xl border border-white/5 hover:border-indigo-500/30 transition-all">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
-                                Signal Operator
-                             </a>
+                    <!-- Signal Terminal (Chat Integrated) -->
+                    <div class="bg-gray-900 border border-white/10 rounded-[3.5rem] overflow-hidden shadow-2xl flex flex-col min-h-[500px]">
+                        <div class="p-8 border-b border-white/5 bg-gray-950/50 flex items-center gap-4">
+                            <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_10px_rgba(16,185,129,1)]"></div>
+                            <h4 class="text-[10px] font-black text-white uppercase tracking-[0.3em]">Signal Terminal: Secure Stream</h4>
+                        </div>
+
+                        <div class="flex-1 p-8 overflow-y-auto space-y-6 max-h-[400px]" id="messages-hub">
+                             @forelse($booking->messages as $msg)
+                                <div class="flex {{ $msg->sender_id === auth()->id() ? 'justify-end' : 'justify-start' }}">
+                                    <div class="flex flex-col {{ $msg->sender_id === auth()->id() ? 'items-end' : 'items-start' }} max-w-[85%]">
+                                        <div class="px-5 py-4 rounded-3xl shadow-xl {{ $msg->sender_id === auth()->id() ? 'bg-indigo-600 text-white rounded-br-none' : 'bg-gray-800 text-gray-200 border border-white/10 rounded-bl-none' }}">
+                                            <p class="text-xs leading-relaxed font-medium">{{ $msg->message }}</p>
+                                        </div>
+                                        <span class="mt-2 text-[8px] text-gray-600 font-black uppercase tracking-widest">{{ $msg->created_at->diffForHumans() }}</span>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="h-full flex flex-col items-center justify-center text-center opacity-20">
+                                    <div class="text-4xl mb-4">📡</div>
+                                    <p class="text-[9px] font-black tracking-[0.2em] uppercase">No active signals detected in the stream</p>
+                                </div>
+                            @endforelse
+                        </div>
+
+                        <div class="p-6 border-t border-white/5 bg-gray-950/30">
+                            <form action="{{ route('bookings.messages.store', $booking) }}" method="POST" class="flex gap-3">
+                                @csrf
+                                <input type="text" name="message" required autocomplete="off" placeholder="Inscribe mission command..." class="flex-1 bg-gray-900 border border-white/5 rounded-2xl px-6 py-4 text-xs text-white focus:ring-2 focus:ring-indigo-500 transition-all outline-none italic">
+                                <button type="submit" class="p-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl transition-all shadow-xl shadow-indigo-600/20">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                                </button>
+                            </form>
                         </div>
                     </div>
 
@@ -345,4 +375,10 @@
 
         </div>
     </div>
+    <script>
+        window.onload = () => {
+            const container = document.getElementById('messages-hub');
+            if (container) container.scrollTop = container.scrollHeight;
+        }
+    </script>
 </x-app-layout>

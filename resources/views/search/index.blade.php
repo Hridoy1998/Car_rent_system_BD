@@ -76,16 +76,16 @@
                             </div>
 
                             <div class="flex items-center justify-between pt-6 border-t border-white/5">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-10 h-10 rounded-2xl bg-gray-800 border border-white/10 flex items-center justify-center overflow-hidden">
+                                <a href="{{ route('profiles.show', $car->owner) }}" class="flex items-center gap-3 group/owner">
+                                    <div class="w-10 h-10 rounded-2xl bg-gray-800 border border-white/10 flex items-center justify-center overflow-hidden group-hover/owner:border-indigo-500/50 transition-all">
                                         @if($car->owner->profile_photo)
-                                            <img src="{{ asset('storage/' . $car->owner->profile_photo) }}" class="w-full h-full object-cover">
+                                            <img src="{{ Storage::url($car->owner->profile_photo) }}" class="w-full h-full object-cover">
                                         @else
                                             <span class="text-[10px] font-black text-indigo-400 capitalize">{{ substr($car->owner->name, 0, 1) }}</span>
                                         @endif
                                     </div>
-                                    <span class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] italic">{{ $car->owner->name }}</span>
-                                </div>
+                                    <span class="text-[10px] font-black text-gray-500 group-hover/owner:text-indigo-400 transition-colors uppercase tracking-[0.2em] italic">{{ $car->owner->name }}</span>
+                                </a>
                                 <div class="flex items-center gap-2">
                                     <a href="{{ route('cars.show', $car) }}" class="px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all">
                                         View Details

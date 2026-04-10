@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ class VerificationController extends Controller
     public function index()
     {
         $verification = Verification::where('user_id', auth()->id())->latest()->first();
+
         return view('customer.verifications.index', compact('verification'));
     }
 
@@ -26,6 +28,7 @@ class VerificationController extends Controller
 
         $request->validate([
             'document_type' => 'required|string|max:100',
+            'id_number' => 'required|string|max:100',
             'document_file' => 'required|image|mimes:jpeg,png,jpg|max:5120',
         ]);
 
@@ -34,6 +37,7 @@ class VerificationController extends Controller
         Verification::create([
             'user_id' => auth()->id(),
             'document_type' => $request->document_type,
+            'id_number' => $request->id_number,
             'document_file' => $path,
             'status' => 'pending',
         ]);

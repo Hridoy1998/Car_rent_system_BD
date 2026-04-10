@@ -16,7 +16,7 @@
                 <div class="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 shadow-2xl mb-12">
                     <h2 class="text-xl font-black text-white uppercase tracking-widest italic mb-6">Exit & Refund Framework</h2>
                     <p class="text-gray-400 leading-relaxed font-medium mb-8">
-                        NEON MONOLITH provides a structured termination protocol to protect both Asset Owners and Users. All cancellations are audited for timestamp precision and adherence to specific epoch thresholds.
+                        Car Rent System provides a structured termination protocol to protect both Asset Owners and Users. All cancellations are audited for timestamp precision and adherence to specific epoch thresholds.
                     </p>
                     
                     <div class="space-y-6">

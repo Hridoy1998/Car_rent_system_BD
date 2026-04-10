@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'NEON MONOLITH') }}</title>
+        <title>{{ config('app.name', 'Car Rent System') }}</title>
  
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -26,7 +26,7 @@
                 <a href="/" class="flex flex-col items-center gap-4 group">
                     <x-application-logo class="w-20 h-20 shadow-2xl shadow-indigo-500/20" />
                     <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-400 tracking-tighter italic uppercase">
-                        NEON MONOLITH
+                        Car Rent System
                     </span>
                 </a>
             </div>
@@ -40,7 +40,7 @@
             </div>
             
             <p class="text-center text-gray-700 text-[10px] font-black uppercase tracking-widest mt-8">
-                &copy; {{ date('Y') }} NEON MONOLITH • Premium Car Rental
+                &copy; {{ date('Y') }} Car Rent System • Premium Car Rental
             </p>
         </div>
     </body>

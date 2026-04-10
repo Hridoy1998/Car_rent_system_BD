@@ -1,175 +1,79 @@
-<nav x-data="{ open: false }" class="glass sticky top-0 z-50 border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-20">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}" class="group transition-all duration-500">
-                        <div class="bg-indigo-600/10 p-2.5 rounded-2xl border border-indigo-500/20 group-hover:bg-indigo-600 transition-all shadow-[0_0_20px_rgba(99,102,241,0.1)] group-hover:shadow-indigo-500/40">
-                             <x-application-logo class="block h-8 w-auto text-indigo-500 group-hover:text-white" />
+<nav class="h-20 bg-gray-950/50 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-6 shrink-0 z-40">
+    <!-- Sidebar Toggle & Brand Presence -->
+    <div class="flex items-center gap-6">
+        <button 
+            @click="sidebarOpen = !sidebarOpen" 
+            class="p-2.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl border border-white/5 transition-all lg:hidden"
+        >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+
+        <button 
+            @click="sidebarCollapsed = !sidebarCollapsed" 
+            class="hidden lg:flex p-2.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl border border-white/5 transition-all"
+            title="Toggle Sidebar Expand (Desktop)"
+        >
+            <svg x-show="sidebarCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
+            <svg x-show="!sidebarCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
+        </button>
+
+        <div class="hidden sm:flex items-center gap-3">
+             <div class="w-1 h-6 bg-indigo-500 rounded-full"></div>
+             <h2 class="text-sm font-black text-white uppercase tracking-[0.2em] italic">Command Deck</h2>
+        </div>
+    </div>
+
+    <!-- Global Actions Terminal -->
+    <div class="flex items-center gap-4">
+        @auth
+            <!-- Live Signal Terminal -->
+            <livewire:notification-bell />
+
+            <!-- Identity Module -->
+            <div class="h-10 w-px bg-white/5 mx-2"></div>
+            
+            <x-dropdown align="right" width="64">
+                <x-slot name="trigger">
+                    <button class="flex items-center gap-3 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group">
+                        <div class="text-right hidden sm:block">
+                            <div class="text-[9px] font-black text-white uppercase tracking-tighter">{{ auth()->user()->name }}</div>
+                            <div class="text-[7px] text-gray-500 font-bold uppercase tracking-widest">{{ auth()->user()->role }}</div>
                         </div>
-                    </a>
-                </div>
- 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-1 sm:-my-px sm:ms-12 sm:flex items-center">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('*.dashboard')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                        <div class="flex items-center gap-2">
-                             <span class="w-1 h-1 rounded-full {{ request()->routeIs('dashboard') || request()->routeIs('*.dashboard') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                             {{ __('Dashboard') }}
+                        <div class="w-8 h-8 rounded-xl bg-gray-950 flex items-center justify-center text-[10px] font-black text-indigo-400 border border-white/10 group-hover:border-indigo-500">
+                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                         </div>
-                    </x-nav-link>
- 
-                    @auth
-                        @if(auth()->user()->role === 'owner')
-                            <x-nav-link :href="route('owner.cars.index')" :active="request()->routeIs('owner.cars.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.cars.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('My Cars') }}
-                                </div>
-                            </x-nav-link>
-                            <x-nav-link :href="route('owner.bookings.index')" :active="request()->routeIs('owner.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.bookings.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Bookings') }}
-                                </div>
-                            </x-nav-link>
-                            <x-nav-link :href="route('owner.logistics.index')" :active="request()->routeIs('owner.logistics.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.logistics.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Handovers') }}
-                                </div>
-                            </x-nav-link>
-                            <x-nav-link :href="route('owner.finance.index')" :active="request()->routeIs('owner.finance.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.finance.*') ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Finance') }}
-                                </div>
-                            </x-nav-link>
-                            <x-nav-link :href="route('owner.integrity.index')" :active="request()->routeIs('owner.integrity.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.integrity.*') ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Damages') }}
-                                     @php $breachCount = \App\Models\DamageReport::whereHas('booking.car', fn($q) => $q->where('user_id', auth()->id()))->whereIn('status', ['pending', 'disputed'])->count(); @endphp
-                                     @if($breachCount > 0)
-                                         <span class="ms-1 px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black rounded-md animate-pulse">{{ $breachCount }}</span>
-                                     @endif
-                                </div>
-                            </x-nav-link>
-                        @elseif(auth()->user()->role === 'admin')
-                            <x-nav-link :href="route('admin.cars.index')" :active="request()->routeIs('admin.cars.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.cars.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Fleet') }}
-                                </div>
-                            </x-nav-link>
-                            <x-nav-link :href="route('admin.verifications.index')" :active="request()->routeIs('admin.verifications.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.verifications.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Verification') }}
-                                </div>
-                            </x-nav-link>
-                            <x-nav-link :href="route('admin.bookings.index')" :active="request()->routeIs('admin.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.bookings.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Bookings') }}
-                                </div>
-                            </x-nav-link>
-                            <x-nav-link :href="route('admin.finance.index')" :active="request()->routeIs('admin.finance.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.finance.*') ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Finance') }}
-                                </div>
-                            </x-nav-link>
-                            <x-nav-link :href="route('admin.damage-reports.index')" :active="request()->routeIs('admin.damage-reports.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                <div class="flex items-center gap-2">
-                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.damage-reports.*') ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Damages') }}
-                                </div>
-                            </x-nav-link>
-                        @elseif(auth()->user()->role === 'customer')
-                            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                {{ __('Browse Cars') }}
-                            </x-nav-link>
-                            <x-nav-link :href="route('customer.bookings.index')" :active="request()->routeIs('customer.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
-                                {{ __('My Trips') }}
-                            </x-nav-link>
-                            @php
-                                $isVerified = \App\Models\Verification::where('user_id', auth()->id())->where('status', 'approved')->exists();
-                            @endphp
-                            @if(!$isVerified)
-                                <x-nav-link :href="route('customer.verifications.index')" :active="request()->routeIs('customer.verifications.*')" class="text-amber-500 font-bold px-4 py-2 rounded-xl">
-                                    {{ __('Verify Account') }}
-                                    <span class="ms-1 w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                                </x-nav-link>
-                            @endif
-                        @endif
-                    @endauth
-                </div>
-            </div>
- 
-            <!-- User Auth Profile -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6 gap-6">
-                @auth
-                    <!-- Notifications Bell -->
-                    <div class="p-1 px-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 hover:border-indigo-500/30 transition-all flex items-center h-10">
-                        <livewire:notification-bell />
-                    </div>
+                    </button>
+                    </x-slot>
 
-                    <x-dropdown align="right" width="48">
-                        <x-slot name="trigger">
-                            <button class="inline-flex items-center p-1 px-4 bg-indigo-600/10 hover:bg-indigo-600 hover:text-white transition-all duration-300 rounded-2xl border border-indigo-500/20 group h-10">
-                                <div class="text-[10px] font-black uppercase tracking-widest mr-3">{{ Auth::user()->name }}</div>
-                                <div class="w-6 h-6 rounded-lg bg-gray-950 flex items-center justify-center text-[8px] font-black border border-white/10 group-hover:border-indigo-400 transition-all">
-                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
-                                </div>
-                            </button>
-                        </x-slot>
+                    <x-slot name="content">
+                        <div class="px-4 py-3 border-b border-white/5">
+                            <p class="text-[8px] font-black text-gray-500 uppercase tracking-widest mb-1">Authenticated Email</p>
+                            <p class="text-[10px] font-bold text-white truncate">{{ auth()->user()->email }}</p>
+                        </div>
 
-                        <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')" class="text-[10px] font-black uppercase tracking-widest">
-                                {{ __('Account Settings') }}
-                            </x-dropdown-link>
+                        <x-dropdown-link :href="route('profile.edit')" class="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 py-3">
+                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            {{ __('Account Protocol') }}
+                        </x-dropdown-link>
 
-                            <!-- Authentication -->
+                        <div class="border-t border-white/5">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault(); this.closest('form').submit();"
-                                        class="text-[10px] font-black uppercase tracking-widest text-red-400 transition-colors">
-                                    {{ __('Logout') }}
+                                        class="text-[10px] font-black uppercase tracking-widest text-red-500 flex items-center gap-2 py-3">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                    {{ __('Exit System') }}
                                 </x-dropdown-link>
                             </form>
-                        </x-slot>
-                    </x-dropdown>
-                @else
-                    <div class="flex items-center gap-4">
-                        <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Login</a>
-                        <a href="{{ route('register') }}" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)]">Register</a>
-                    </div>
-                @endauth
+                        </div>
+                    </x-slot>
+                </x-dropdown>
+        @else
+            <div class="flex items-center gap-4">
+                <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Login</a>
+                <a href="{{ route('register') }}" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-indigo-600/20">Register Access</a>
             </div>
- 
-            <!-- Hamburger -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-xl text-gray-400 hover:text-gray-300 hover:bg-gray-800 transition duration-150 ease-in-out border border-white/5">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
- 
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-950 border-t border-white/5">
-        <div class="pt-4 pb-4 space-y-2 px-4 italic">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="rounded-2xl border border-white/5 font-black uppercase text-[10px] tracking-widest">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-            <!-- Add other mobile links as needed, matching the theme -->
-        </div>
+        @endauth
     </div>
 </nav>

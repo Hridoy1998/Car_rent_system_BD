@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Booking;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
@@ -16,14 +15,15 @@ class InvoiceController extends Controller
             abort(403);
         }
 
-        // Must be approved or completed
-        if (!in_array($booking->status, ['approved', 'completed'])) {
-            return back()->with('error', 'Invoice not yet available context.');
+        // Must be approved, ongoing, returning, returned, or completed
+        if (! in_array($booking->status, ['approved', 'ongoing', 'returning', 'returned', 'completed'])) {
+            return back()->with('error', 'Invoice is not yet available for this booking.');
         }
 
         $booking->load(['car.owner', 'customer']);
 
         $pdf = Pdf::loadView('invoices.pdf', compact('booking'));
+
         return $pdf->download("Invoice-CarRentBD-{$booking->id}.pdf");
     }
 }

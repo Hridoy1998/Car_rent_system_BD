@@ -58,7 +58,7 @@ Route::get('/profiles/{user}', [PublicProfileController::class, 'show'])->name('
 Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('cars', CarController::class);
-    Route::resource('users', UserController::class)->only(['index', 'update']);
+    Route::resource('users', UserController::class);
     Route::resource('verifications', VerificationController::class)->only(['index', 'show', 'update']);
     Route::resource('bookings', BookingController::class)->only(['index', 'show', 'update']);
     Route::resource('settings', SettingController::class)->only(['index', 'store', 'update', 'destroy']);

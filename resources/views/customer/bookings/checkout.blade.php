@@ -73,23 +73,57 @@
                             </div>
                         </div>
 
-                        <form action="{{ route('customer.bookings.pay', $booking) }}" method="POST" class="space-y-6">
+                        <form action="{{ route('customer.bookings.pay', $booking) }}" method="POST" class="space-y-6" x-data="{ method: 'card' }" x-cloak>
                             @csrf
-                            <div class="p-6 bg-gray-950/80 border border-white/5 rounded-3xl space-y-4">
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-[9px] font-black text-gray-500 uppercase tracking-widest">Payment Method</span>
-                                    <div class="flex gap-2">
-                                        <div class="w-8 h-5 bg-white/5 rounded border border-white/10 flex items-center justify-center text-[6px] font-black opacity-50 italic">VISA</div>
-                                        <div class="w-8 h-5 bg-white/5 rounded border border-white/10 flex items-center justify-center text-[6px] font-black opacity-50 italic">BKASH</div>
+                            <input type="hidden" name="payment_method" :value="method">
+                            
+                            <div class="p-6 bg-gray-950/80 border border-white/5 rounded-3xl space-y-6">
+                                <div class="flex gap-4 p-1 bg-white/5 rounded-2xl">
+                                    <button type="button" @click="method = 'card'" :class="method === 'card' ? 'bg-indigo-600 shadow-lg text-white' : 'text-gray-500 hover:text-white'" class="flex-1 py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all">Credit Card</button>
+                                    <button type="button" @click="method = 'mfs'" :class="method === 'mfs' ? 'bg-pink-600 shadow-lg text-white' : 'text-gray-500 hover:text-white'" class="flex-1 py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all">Mobile Finance (bKash/Nagad)</button>
+                                </div>
+
+                                <!-- Card Gateway Mockup -->
+                                <div x-show="method === 'card'" x-transition class="space-y-4">
+                                    <div>
+                                        <label class="text-[9px] font-black text-gray-500 uppercase tracking-widest block mb-1">Card Number</label>
+                                        <input type="text" name="card_number" placeholder="0000 0000 0000 0000" :required="method === 'card'" class="w-full bg-gray-900 border border-white/10 text-white rounded-xl text-sm py-3 px-4 focus:ring-indigo-500 hover:border-indigo-500/50 outline-none font-mono tracking-widest relative z-20">
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="text-[9px] font-black text-gray-500 uppercase tracking-widest block mb-1">Expiry Date</label>
+                                            <input type="text" name="expiry" placeholder="MM/YY" :required="method === 'card'" class="w-full bg-gray-900 border border-white/10 text-white rounded-xl text-sm py-3 px-4 focus:ring-indigo-500 hover:border-indigo-500/50 outline-none font-mono text-center relative z-20">
+                                        </div>
+                                        <div>
+                                            <label class="text-[9px] font-black text-gray-500 uppercase tracking-widest block mb-1">CVC/CVV</label>
+                                            <input type="text" name="cvv" placeholder="123" :required="method === 'card'" class="w-full bg-gray-900 border border-white/10 text-white rounded-xl text-sm py-3 px-4 focus:ring-indigo-500 hover:border-indigo-500/50 outline-none font-mono text-center relative z-20">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label class="text-[9px] font-black text-gray-500 uppercase tracking-widest block mb-1">Cardholder Name</label>
+                                        <input type="text" name="holder_name" placeholder="{{ auth()->user()->name }}" :required="method === 'card'" class="w-full bg-gray-900 border border-white/10 text-white rounded-xl text-sm py-3 px-4 focus:ring-indigo-500 hover:border-indigo-500/50 outline-none uppercase font-black relative z-20">
                                     </div>
                                 </div>
+
+                                <!-- MFS Gateway Mockup -->
+                                <div x-show="method === 'mfs'" x-transition style="display: none;" class="space-y-4">
+                                    <div class="p-4 bg-pink-500/5 border border-pink-500/20 rounded-2xl flex gap-4 items-center mb-4">
+                                        <div class="w-12 h-12 bg-pink-600 rounded-xl flex items-center justify-center text-white font-black italic">bKash</div>
+                                        <div class="text-[10px] text-gray-400 font-bold max-w-[200px]">Secure MFS settlement bypassing traditional banking nodes.</div>
+                                    </div>
+                                    <div>
+                                        <label class="text-[9px] font-black text-pink-400 uppercase tracking-widest block mb-1">Registered Mobile Number</label>
+                                        <input type="text" name="mfs_number" placeholder="01XXX-XXXXXX" :required="method === 'mfs'" class="w-full bg-gray-900 border border-pink-500/20 text-white rounded-xl text-sm py-3 px-4 focus:ring-pink-500 hover:border-pink-500/50 outline-none font-mono tracking-widest text-center text-lg relative z-20">
+                                    </div>
+                                </div>
+
                                 <div class="text-[10px] text-emerald-400 font-bold italic flex items-center gap-2 bg-emerald-500/5 p-3 rounded-xl border border-emerald-500/10">
                                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-                                    End-to-end encrypted protocol active
+                                    End-to-end encrypted protocol active via Car Rent System node.
                                 </div>
                             </div>
 
-                            <button type="submit" class="w-full py-5 bg-indigo-600 hover:bg-indigo-500 text-white font-black text-[10px] uppercase tracking-[0.4em] rounded-[2rem] shadow-[0_20px_40px_rgba(99,102,241,0.2)] transition-all transform hover:scale-[1.02] active:scale-[0.98]">
+                            <button type="submit" :class="method === 'mfs' ? 'bg-pink-600 hover:bg-pink-500 shadow-[0_20px_40px_rgba(219,39,119,0.2)]' : 'bg-indigo-600 hover:bg-indigo-500 shadow-[0_20px_40px_rgba(99,102,241,0.2)]'" class="w-full py-5 text-white font-black text-[10px] uppercase tracking-[0.4em] rounded-[2rem] transition-all transform hover:scale-[1.02] active:scale-[0.98]">
                                 Authorize Transaction
                             </button>
                         </form>

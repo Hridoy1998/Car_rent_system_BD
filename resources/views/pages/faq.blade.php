@@ -5,7 +5,7 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16">
                 <h1 class="text-4xl md:text-5xl font-black text-white mb-6">Frequently Asked</h1>
-                <p class="text-gray-400">Everything you need to know about the Neon Monolith platform.</p>
+                <p class="text-gray-400">Everything you need to know about the Car Rent System platform.</p>
             </div>
 
             <div class="space-y-4" x-data="{ active: null }">
