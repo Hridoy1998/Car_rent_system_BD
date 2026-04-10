@@ -40,7 +40,7 @@
             </div>
             
             <p class="text-center text-gray-700 text-[10px] font-black uppercase tracking-widest mt-8">
-                &copy; {{ date('Y') }} NEON MONOLITH • GLOBAL FLEET OPS
+                &copy; {{ date('Y') }} NEON MONOLITH • Premium Car Rental
             </p>
         </div>
     </body>

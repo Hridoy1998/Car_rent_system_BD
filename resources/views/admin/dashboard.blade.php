@@ -3,13 +3,13 @@
         <div class="flex justify-between items-center">
             <div>
                 <h2 class="font-black text-3xl text-white tracking-tighter">
-                    {{ __('COMMAND CENTER') }}
+                    {{ __('Admin Dashboard') }}
                 </h2>
-                <p class="text-[10px] text-indigo-400 font-black uppercase tracking-[0.3em] mt-1">Global Platform Oversight & Authority Hub</p>
+                <p class="text-[10px] text-indigo-400 font-black uppercase tracking-[0.3em] mt-1">Management Overview</p>
             </div>
             <div class="flex items-center space-x-6">
                 <div class="flex flex-col items-end">
-                    <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">System Load</span>
+                    <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Platform Activity</span>
                     <div class="flex gap-1 mt-1">
                         <div class="w-1 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
                         <div class="w-1 h-3 bg-emerald-500 rounded-full animate-pulse" style="animation-delay: 0.1s"></div>
@@ -22,7 +22,7 @@
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-3 w-3 bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
                     </span>
-                    <span class="text-white text-xs font-black uppercase tracking-widest">LIVE OPERATIONAL</span>
+                    <span class="text-white text-xs font-black uppercase tracking-widest">LIVE STATUS</span>
                 </div>
             </div>
         </div>
@@ -50,14 +50,14 @@
                              <div class="text-lg font-black text-white">৳ {{ number_format($stats['projected_revenue'] / 1000, 1) }}K</div>
                         </div>
                     </div>
-                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Settled Revenue</h4>
+                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Total Revenue</h4>
                     <div class="text-3xl font-black text-white tracking-tighter">৳ {{ number_format($stats['settled_revenue']) }}</div>
                     <div class="mt-4 flex items-center justify-between text-[10px] font-bold">
                         <div class="flex items-center text-emerald-500">
                              <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
                              Live Ledger
                         </div>
-                        <span class="text-gray-600">Audit Status: OK</span>
+                        <span class="text-gray-600">Audit Status: Nominal</span>
                     </div>
                 </a>
 
@@ -69,7 +69,7 @@
                             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                         </div>
                         <div class="text-right">
-                             <div class="text-[9px] font-black text-indigo-400 uppercase tracking-widest leading-none mb-1">Completion</div>
+                             <div class="text-[9px] font-black text-indigo-400 uppercase tracking-widest leading-none mb-1">Success Rate</div>
                              <div class="text-lg font-black text-white">{{ $stats['success_rate'] }}%</div>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
                              <div class="text-lg font-black text-white">{{ $stats['blocked_users'] }}</div>
                         </div>
                     </div>
-                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Global Identities</h4>
+                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Platform Users</h4>
                     <div class="text-3xl font-black text-white tracking-tighter">{{ number_format($stats['total_users']) }}</div>
                     <div class="mt-4 flex items-center space-x-2">
                         <div class="flex -space-x-2">
@@ -122,7 +122,7 @@
                              <div class="text-lg font-black text-white">{{ $stats['pending_cars_count'] }}</div>
                         </div>
                     </div>
-                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Managed Fleet</h4>
+                    <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-1">Car Management</h4>
                     <div class="text-3xl font-black text-white tracking-tighter">PHASE V</div>
                      <div class="mt-4 flex items-center justify-between">
                          <span class="px-3 py-1 bg-purple-600 text-white font-black text-[8px] uppercase tracking-widest rounded-lg animate-pulse">Action Required</span>
@@ -142,8 +142,8 @@
                     <div class="bg-gray-900/40 backdrop-blur-2xl border border-white/5 p-10 rounded-[2.5rem] shadow-2xl relative overflow-hidden">
                          <div class="flex items-center justify-between mb-12">
                             <div>
-                                <h3 class="text-2xl font-black text-white tracking-tight">Revenue Trajectory</h3>
-                                <p class="text-[11px] text-gray-500 font-bold uppercase tracking-widest mt-1">Global platform volume settlement trend</p>
+                                <h3 class="text-2xl font-black text-white tracking-tight">Revenue Trend</h3>
+                                <p class="text-[11px] text-gray-500 font-bold uppercase tracking-widest mt-1">Monthly platform revenue growth</p>
                             </div>
                             <div class="flex items-center space-x-2 text-[10px] font-black text-indigo-400 bg-indigo-500/10 px-4 py-2 rounded-xl border border-indigo-500/20 uppercase tracking-widest">
                                 <span class="w-2 h-2 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]"></span>
@@ -168,7 +168,7 @@
                                     <div class="w-full bg-gradient-to-t from-indigo-600/20 to-indigo-500/60 rounded-t-2xl transition-all duration-1000 group-hover:from-indigo-600/40 group-hover:to-indigo-400 group-hover:shadow-[0_0_30px_rgba(99,102,241,0.3)] relative" 
                                          style="height: {{ ($sum / $maxRev) * 80 }}%">
                                         <div class="absolute -top-12 left-1/2 -translate-x-1/2 bg-gray-950 border border-white/10 text-[10px] font-black text-white px-3 py-2 rounded-xl opacity-0 group-hover:opacity-100 transition-all scale-75 group-hover:scale-100 whitespace-nowrap z-20 shadow-2xl">
-                                            <div class="text-indigo-400 text-[8px] uppercase mb-1">Gross Yield</div>
+                                            <div class="text-indigo-400 text-[8px] uppercase mb-1">Gross Revenue</div>
                                             ৳ {{ number_format($sum) }}
                                         </div>
                                     </div>
@@ -193,10 +193,10 @@
                             <table class="w-full text-left">
                                 <thead class="bg-white/[0.02]">
                                     <tr class="text-[9px] font-black text-gray-600 uppercase tracking-widest">
-                                        <th class="px-8 py-5">Initiator</th>
-                                        <th class="px-8 py-5">Asset</th>
-                                        <th class="px-8 py-5">Status Protocol</th>
-                                        <th class="px-8 py-5 text-right">Yield</th>
+                                        <th class="px-8 py-5">Customer</th>
+                                        <th class="px-8 py-5">Car</th>
+                                        <th class="px-8 py-5">Booking Status</th>
+                                        <th class="px-8 py-5 text-right">Revenue</th>
                                     </tr>
                                 </thead>
                                 <tbody class="divide-y divide-white/5">
@@ -213,7 +213,7 @@
                                                 </div>
                                                 <div>
                                                     <a href="{{ route('profiles.show', $booking->customer) }}" class="text-xs font-black text-gray-200 hover:text-indigo-400 transition-colors block uppercase tracking-tight">{{ $booking->customer->name }}</a>
-                                                    <div class="text-[9px] text-gray-600 font-bold">UID: #{{ $booking->customer_id }}</div>
+                                                    <div class="text-[9px] text-gray-600 font-bold">ID: #{{ $booking->customer_id }}</div>
                                                 </div>
                                             </div>
                                         </td>
@@ -246,7 +246,7 @@
                                     </tr>
                                     @empty
                                     <tr>
-                                        <td colspan="4" class="px-8 py-20 text-center text-gray-600 text-xs font-black uppercase tracking-[0.4em] italic opacity-20">Dormant Database Signal</td>
+                                        <td colspan="4" class="px-8 py-20 text-center text-gray-600 text-xs font-black uppercase tracking-[0.4em] italic opacity-20">No recent activity</td>
                                     </tr>
                                     @endforelse
                                 </tbody>
@@ -264,7 +264,7 @@
                         <div class="flex items-center justify-between mb-8">
                             <h3 class="text-sm font-black text-white uppercase tracking-widest flex items-center gap-2">
                                 <span class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></span>
-                                Critical Hub
+                                URGENT TASKS
                             </h3>
                             <span class="px-2 py-0.5 bg-red-500 text-white text-[8px] font-black rounded-md animate-bounce">Priority</span>
                         </div>
@@ -278,9 +278,9 @@
                                     </div>
                                     <span class="text-[10px] font-black text-white bg-indigo-600 px-2 py-0.5 rounded-lg">{{ $stats['pending_cars_count'] }} Requests</span>
                                 </div>
-                                <h5 class="text-xs font-black text-gray-200 uppercase tracking-widest mb-1">Fleet Deployment</h5>
-                                <p class="text-[9px] text-gray-500 font-bold uppercase leading-relaxed mb-4">New assets awaiting security clearance and platform listing.</p>
-                                <a href="{{ route('admin.cars.index') }}" class="block w-full text-center py-2.5 bg-indigo-600/10 hover:bg-indigo-600 text-indigo-400 hover:text-white text-[9px] font-black uppercase tracking-widest rounded-xl border border-indigo-500/20 transition-all">Engage Audit Protocol</a>
+                                <h5 class="text-xs font-black text-gray-200 uppercase tracking-widest mb-1">Car Approval</h5>
+                                <p class="text-[9px] text-gray-500 font-bold uppercase leading-relaxed mb-4">Review car listings awaiting platform approval.</p>
+                                <a href="{{ route('admin.cars.index') }}" class="block w-full text-center py-2.5 bg-indigo-600/10 hover:bg-indigo-600 text-indigo-400 hover:text-white text-[9px] font-black uppercase tracking-widest rounded-xl border border-indigo-500/20 transition-all">Review Cars</a>
                             </div>
 
                             <!-- Verification Requests -->
@@ -291,9 +291,9 @@
                                     </div>
                                     <span class="text-[10px] font-black text-white bg-purple-600 px-2 py-0.5 rounded-lg">{{ $stats['pending_verifications_count'] }} IDs</span>
                                 </div>
-                                <h5 class="text-xs font-black text-gray-200 uppercase tracking-widest mb-1">Identity Governance</h5>
-                                <p class="text-[9px] text-gray-500 font-bold uppercase leading-relaxed mb-4">Participant credentials in queue for background verification.</p>
-                                <a href="{{ route('admin.verifications.index') }}" class="block w-full text-center py-2.5 bg-purple-600/10 hover:bg-purple-600 text-purple-400 hover:text-white text-[9px] font-black uppercase tracking-widest rounded-xl border border-purple-500/20 transition-all">Inspect Credentials</a>
+                                <h5 class="text-xs font-black text-gray-200 uppercase tracking-widest mb-1">User Verification</h5>
+                                <p class="text-[9px] text-gray-500 font-bold uppercase leading-relaxed mb-4">Verify identity documents for new users.</p>
+                                <a href="{{ route('admin.verifications.index') }}" class="block w-full text-center py-2.5 bg-purple-600/10 hover:bg-purple-600 text-purple-400 hover:text-white text-[9px] font-black uppercase tracking-widest rounded-xl border border-purple-500/20 transition-all">Verify Users</a>
                             </div>
 
                             <!-- Damage Dispute Resolution (MEDIATION) -->
@@ -307,10 +307,10 @@
                                 </div>
                                 <h5 class="text-xs font-black text-white uppercase tracking-widest mb-1 font-italic flex items-center gap-2">
                                      <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping"></span>
-                                     Security Breach Resolution
+                                     Damage Disputes
                                 </h5>
-                                <p class="text-[9px] text-red-400 font-bold uppercase leading-relaxed mb-4">Active integrity disputes between users requiring platform arbitration.</p>
-                                <a href="{{ route('admin.damage-reports.index') }}" class="block w-full text-center py-2.5 bg-red-600 hover:bg-red-500 text-white text-[9px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-red-600/20">Engage Mediation Hub</a>
+                                <p class="text-[9px] text-red-400 font-bold uppercase leading-relaxed mb-4">Resolve active damage claims between owners and renters.</p>
+                                <a href="{{ route('admin.damage-reports.index') }}" class="block w-full text-center py-2.5 bg-red-600 hover:bg-red-500 text-white text-[9px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl shadow-red-600/20">Resolve Issues</a>
                             </div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@
                      <div class="bg-gray-900/40 backdrop-blur-2xl border border-white/5 p-8 rounded-[2.5rem] shadow-2xl">
                          <h3 class="text-xs font-black text-white uppercase tracking-[0.2em] mb-8 flex items-center gap-2">
                             <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                            Global Registry
+                            System Settings
                         </h3>
                         <div class="space-y-6">
                             <div class="flex justify-between items-center text-[10px] font-black uppercase tracking-widest p-4 bg-gray-950/50 rounded-2xl border border-white/5">

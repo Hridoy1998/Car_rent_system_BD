@@ -79,7 +79,7 @@
                             <x-nav-link :href="route('admin.finance.index')" :active="request()->routeIs('admin.finance.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
                                 <div class="flex items-center gap-2">
                                      <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.finance.*') ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]' : 'bg-gray-700' }}"></span>
-                                     {{ __('Financials') }}
+                                     {{ __('Finance') }}
                                 </div>
                             </x-nav-link>
                             <x-nav-link :href="route('admin.damage-reports.index')" :active="request()->routeIs('admin.damage-reports.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
@@ -145,8 +145,8 @@
                     </x-dropdown>
                 @else
                     <div class="flex items-center gap-4">
-                        <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Log In</a>
-                        <a href="{{ route('register') }}" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)]">Join Network</a>
+                        <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Login</a>
+                        <a href="{{ route('register') }}" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)]">Register</a>
                     </div>
                 @endauth
             </div>
