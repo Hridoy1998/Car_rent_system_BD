@@ -15,12 +15,17 @@
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
             
-            @if(session('success'))
-                <div class="bg-emerald-500/10 border border-emerald-500/50 text-emerald-400 p-4 rounded-2xl font-bold text-sm flex items-center gap-3">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     {{ session('success') }}
                 </div>
             @endif
+
+            <!-- Strategic Itinerary Search -->
+            <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-6 rounded-[2rem] shadow-2xl flex flex-col md:flex-row gap-4 items-center justify-between">
+                <x-search-bar :route="route('owner.bookings.index')" placeholder="Search by user, car, or ID..." />
+                <div class="flex items-center gap-4">
+                     <span class="text-[10px] font-black text-gray-500 uppercase tracking-widest">Active Pipeline: {{ $bookings->total() }} Records</span>
+                </div>
+            </div>
 
             <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 overflow-hidden shadow-2xl rounded-[2.5rem]">
                 @if($bookings->count() > 0)

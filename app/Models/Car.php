@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Car extends Model
 {
-    use HasFactory;
+    use \App\Traits\HasObfuscatedId, HasFactory;
 
     protected $fillable = [
         'user_id',
@@ -79,17 +79,17 @@ class Car extends Model
                 $q->whereNotIn('status', ['cancelled', 'rejected', 'completed'])
                     ->where(function ($sq) use ($startDate, $endDate) {
                         // Conventional Date Overlap
-                        $sq->where(function ($ssq) use ($startDate, $endDate) {
+                        $sq->where(function ($ssq) use ($startDate) {
                             $ssq->where('start_date', '<=', $startDate)
                                 ->where('end_date', '>=', $startDate);
-                        })->orWhere(function ($ssq) use ($startDate, $endDate) {
+                        })->orWhere(function ($ssq) use ($endDate) {
                             $ssq->where('start_date', '<=', $endDate)
                                 ->where('end_date', '>=', $endDate);
                         })->orWhere(function ($ssq) use ($startDate, $endDate) {
                             $ssq->where('start_date', '>=', $startDate)
                                 ->where('end_date', '<=', $endDate);
                         })->orWhere(function ($ssq) use ($startDate) {
-                            // Operational Hardening: If status is ongoing/returning/returned, 
+                            // Operational Hardening: If status is ongoing/returning/returned,
                             // it blocks everything from NOW until its end_date.
                             $ssq->whereIn('status', ['ongoing', 'returning', 'returned'])
                                 ->where('end_date', '>=', $startDate);
@@ -110,7 +110,7 @@ class Car extends Model
             ->where(function ($q) use ($today) {
                 $q->where(function ($sq) use ($today) {
                     $sq->where('start_date', '<=', $today)
-                       ->where('end_date', '>=', $today);
+                        ->where('end_date', '>=', $today);
                 })->orWhere(function ($sq) {
                     $sq->whereIn('status', ['ongoing', 'returning', 'returned']);
                 });
@@ -118,5 +118,31 @@ class Car extends Model
             ->exists();
 
         return ! $isOccupied;
+    }
+
+    public function getPrimaryImageUrlAttribute(): string
+    {
+        $primary = $this->images()->where('is_primary', true)->first();
+
+        if (! $primary && $this->images()->exists()) {
+            $primary = $this->images()->first();
+        }
+
+        if ($primary) {
+            return asset('storage/'.$primary->image_path);
+        }
+
+        return 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=800'; // Sleek dark car fallback
+    }
+
+    protected function casts(): array
+    {
+        return [
+            'features' => 'array',
+            'latitude' => 'decimal:8',
+            'longitude' => 'decimal:8',
+            'price_per_day' => 'decimal:2',
+            'price_per_month' => 'decimal:2',
+        ];
     }
 }

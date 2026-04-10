@@ -138,11 +138,7 @@
                 
                 <div class="flex flex-col lg:flex-row gap-12 items-center">
                     <div class="w-full lg:w-1/3 aspect-[4/3] rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl relative rotate-[-2deg] group-hover:rotate-0 transition-transform duration-700">
-                        @if($activeTrip->car->images->count() > 0)
-                            <img src="{{ Storage::url($activeTrip->car->images->first()->image_path) }}" class="w-full h-full object-cover">
-                        @else
-                            <div class="w-full h-full bg-gray-950 flex items-center justify-center text-xs font-black text-gray-800 italic uppercase">No Visual Signal</div>
-                        @endif
+                        <img src="{{ $activeTrip->car->primary_image_url }}" class="w-full h-full object-cover">
                         <div class="absolute inset-0 bg-gradient-to-t from-indigo-950/80 via-transparent to-transparent"></div>
                         <div class="absolute bottom-6 left-6 flex items-center gap-2">
                              <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
@@ -199,11 +195,7 @@
                     @forelse($wishlist as $fav)
                     <div class="group relative bg-gray-900/40 backdrop-blur-2xl border border-white/5 p-6 rounded-[2.5rem] shadow-2xl transition-all hover:scale-[1.02] hover:bg-gray-900/60 overflow-hidden">
                         <div class="aspect-video rounded-3xl overflow-hidden border border-white/5 shadow-2xl relative mb-6">
-                            @if($fav->car->images->count() > 0)
-                                <img src="{{ Storage::url($fav->car->images->first()->image_path) }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-                            @else
-                                <div class="w-full h-full bg-gray-950 flex items-center justify-center text-[10px] font-black text-gray-800 uppercase italic">Awaiting Visuals</div>
-                            @endif
+                            <img src="{{ $fav->car->primary_image_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             <!-- Favorite Toggle (Remove) -->
                              <form action="{{ route('customer.favorites.toggle', $fav->car) }}" method="POST" class="absolute top-4 right-4 z-20">
                                 @csrf

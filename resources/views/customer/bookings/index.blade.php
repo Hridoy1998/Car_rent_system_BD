@@ -32,6 +32,11 @@
                 </div>
             @endif
 
+            <!-- Tactical History Search -->
+            <div class="flex justify-center mb-10">
+                <x-search-bar :route="route('customer.bookings.index')" placeholder="Search by booking ID, car brand, or host..." />
+            </div>
+
             <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 overflow-hidden shadow-2xl rounded-[2.5rem]">
                 @if($bookings->count() > 0)
                     <div class="overflow-x-auto">
@@ -101,6 +106,10 @@
                                             <div class="flex items-center justify-end gap-3 mb-6">
                                                  {{-- Action Buttons --}}
                                                  <div class="flex gap-2">
+                                                    <a href="{{ route('customer.bookings.show', $booking) }}" class="p-2.5 bg-indigo-600/10 hover:bg-indigo-600 text-indigo-400 hover:text-white rounded-xl border border-indigo-500/20 transition-all font-black text-[9px] flex items-center gap-2 uppercase tracking-widest" title="Tactical Hub">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                        Details
+                                                    </a>
                                                     <a href="{{ route('bookings.messages.index', $booking) }}" class="p-2.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl border border-white/5 transition-all" title="Chat with Host">
                                                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                                                     </a>

@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'NEON MONOLITH') }}</title>
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -13,6 +13,34 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+        <style>
+            [x-cloak] { display: none !important; }
+            
+            ::-webkit-scrollbar { width: 8px; }
+            ::-webkit-scrollbar-track { background: #020617; }
+            ::-webkit-scrollbar-thumb { 
+                background: #1e293b; 
+                border-radius: 10px;
+                border: 2px solid #020617;
+            }
+            ::-webkit-scrollbar-thumb:hover { background: #334155; }
+
+            .neon-shadow-blue { box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+            .neon-shadow-emerald { box-shadow: 0 0 15px rgba(16, 185, 129, 0.5); }
+            .neon-shadow-purple { box-shadow: 0 0 15px rgba(168, 85, 247, 0.5); }
+            
+            .glass {
+                background: rgba(15, 23, 42, 0.6);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            @keyframes pulse-neon {
+                0%, 100% { opacity: 0.5; filter: blur(120px); }
+                50% { opacity: 0.8; filter: blur(140px); }
+            }
+        </style>
     </head>
     <body class="font-sans antialiased text-gray-100 bg-gray-950">
         <div class="min-h-screen relative overflow-hidden">

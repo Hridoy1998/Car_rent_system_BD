@@ -11,38 +11,58 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+    <style>
+        @keyframes neon-pulse {
+            0%, 100% { opacity: 1; filter: drop-shadow(0 0 5px rgba(99,102,241,0.8)); }
+            50% { opacity: 0.8; filter: drop-shadow(0 0 15px rgba(99,102,241,1)); }
+        }
+        .glass {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .text-glow { text-shadow: 0 0 15px rgba(255, 255, 255, 0.3); }
+        .indigo-glow { text-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+    </style>
 </head>
 <body class="bg-gray-950 text-slate-200 font-['Inter'] antialiased selection:bg-indigo-500 selection:text-white">
 
     <!-- Navigation -->
-    <nav class="fixed w-full z-50 transition-all duration-300 bg-gray-950/80 backdrop-blur-md border-b border-white/10">
+    <nav class="fixed w-full z-50 transition-all duration-300 border-b border-white/5 bg-gray-950/60 backdrop-blur-3xl" x-data="{ atTop: true }" @scroll.window="atTop = (window.pageYOffset > 40) ? false : true">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+            <div class="flex justify-between items-center h-24 transition-all duration-500" :class="atTop ? 'h-24' : 'h-20'">
                 <div class="flex-shrink-0 flex items-center gap-3">
-                    <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-indigo-500/30 group-hover:scale-105 transition-transform">
-                            CR
+                    <a href="{{ route('home') }}" class="flex items-center gap-4 group">
+                        <div class="w-12 h-12 rounded-2xl bg-indigo-600 flex items-center justify-center text-white font-black text-xl shadow-[0_0_20px_rgba(99,102,241,0.4)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                            C
                         </div>
-                        <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                            CarRent BD
-                        </span>
+                        <div class="flex flex-col">
+                            <span class="text-xl font-black text-white tracking-widest leading-none">CARRENT</span>
+                            <span class="text-[9px] font-black text-indigo-400 tracking-[0.4em] uppercase mt-1">Sovereign Fleet</span>
+                        </div>
                     </a>
                 </div>
                 
-                <div class="flex items-center space-x-6">
-                    @if (Route::has('login'))
-                        @auth
-                            <a href="{{ url('/dashboard') }}" class="text-sm font-semibold text-gray-300 hover:text-white transition-colors">Dashboard</a>
-                        @else
-                            <a href="{{ route('login') }}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">Log in</a>
+                <div class="hidden md:flex items-center space-x-10">
+                    <a href="{{ route('search') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">Tactical Search</a>
+                    <a href="{{ route('pages.how-it-works') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">Protocol</a>
+                    <a href="{{ route('pages.safety') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-[0.2em] transition-colors">Security</a>
+                </div>
 
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}" class="relative group px-6 py-2.5 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-300 overflow-hidden">
-                                    <span class="relative z-10 text-sm font-medium text-white group-hover:text-white transition-colors">Register</span>
-                                </a>
-                            @endif
-                        @endauth
-                    @endif
+                <div class="flex items-center space-x-6">
+                    @auth
+                        <div class="flex items-center gap-6">
+                            <a href="{{ route('dashboard') }}" class="text-[10px] font-black text-white bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-2xl shadow-[0_10px_20px_rgba(99,102,241,0.2)] transition-all uppercase tracking-widest">Command Center</a>
+                            <livewire:notification-bell />
+                        </div>
+                    @else
+                        <a href="{{ route('login') }}" class="text-[10px] font-black text-gray-400 hover:text-white uppercase tracking-widest transition-colors">Access Logic</a>
+                        <a href="{{ route('register') }}" class="px-6 py-3 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-indigo-500/50 transition-all duration-300 group">
+                            <span class="text-[10px] font-black text-white uppercase tracking-widest group-hover:text-glow">Initialize Account</span>
+                        </a>
+                    @endauth
                 </div>
             </div>
         </div>
@@ -54,40 +74,43 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-950 border-t border-white/5 py-12 text-gray-400 text-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+    <footer class="bg-gray-950 border-t border-white/5 py-24 text-gray-400 text-sm overflow-hidden relative">
+        <div class="absolute bottom-0 right-0 w-96 h-96 bg-indigo-500/5 blur-[100px] rounded-full -z-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-20 mb-20">
             <div class="col-span-1 md:col-span-2">
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-sm">
-                        CR
-                    </div>
-                    <span class="text-xl font-bold text-white">CarRent BD</span>
+                <div class="flex items-center gap-4 mb-8">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-white font-black text-sm">C</div>
+                    <span class="text-2xl font-black text-white tracking-widest uppercase">CARRENT</span>
                 </div>
-                <p class="mb-4 max-w-sm">The premier peer-to-peer car sharing marketplace in Bangladesh. Rent out your car to earn, or book one for your next trip.</p>
+                <p class="mb-8 max-w-sm leading-relaxed text-gray-500 font-medium">The premier peer-to-peer car sharing marketplace in Bangladesh. Engineering unique travel experiences through verified local asset ownership.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">FB</a>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">TW</a>
+                    <a href="#" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-indigo-600 hover:text-white transition-all">IG</a>
+                </div>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Company</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-white transition-colors">About</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Trust & Safety</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                <h4 class="text-white font-black mb-8 uppercase text-[10px] tracking-[0.3em] italic">System Architecture</h4>
+                <ul class="space-y-4 text-[11px] font-bold uppercase tracking-widest">
+                    <li><a href="{{ route('pages.how-it-works') }}" class="hover:text-indigo-400 transition-colors">How Protocol Works</a></li>
+                    <li><a href="{{ route('pages.safety') }}" class="hover:text-indigo-400 transition-colors">Security & Trust</a></li>
+                    <li><a href="{{ route('pages.faq') }}" class="hover:text-indigo-400 transition-colors">Knowledge Base</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-white font-bold mb-4 uppercase text-xs tracking-wider">Support</h4>
-                <ul class="space-y-2">
-                    <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Contact</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Cancelation Policy</a></li>
+                <h4 class="text-white font-black mb-8 uppercase text-[10px] tracking-[0.3em] italic">Support Modules</h4>
+                <ul class="space-y-4 text-[11px] font-bold uppercase tracking-widest">
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Mediation Hub</a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Contact Terminal</a></li>
+                    <li><a href="#" class="hover:text-indigo-400 transition-colors">Termination Policy</a></li>
                 </ul>
             </div>
         </div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center text-xs">
-            <p>&copy; {{ date('Y') }} CarRent BD. All rights reserved.</p>
-            <div class="flex space-x-4 mt-4 md:mt-0">
-                <a href="#" class="text-gray-500 hover:text-white transition-colors">Facebook</a>
-                <a href="#" class="text-gray-500 hover:text-white transition-colors">Twitter</a>
-                <a href="#" class="text-gray-500 hover:text-white transition-colors">Instagram</a>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 border-t border-white/5 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-[9px] font-black uppercase tracking-[0.3em] text-gray-700 italic">&copy; {{ date('Y') }} CARRENT BD. OPERATIONAL STATUS: NOMINAL.</p>
+            <div class="flex gap-8 mt-6 md:mt-0 text-[9px] font-black uppercase tracking-widest">
+                <a href="#" class="text-gray-700 hover:text-white transition-colors">Terms of Engagement</a>
+                <a href="#" class="text-gray-700 hover:text-white transition-colors">Privacy Shield</a>
             </div>
         </div>
     </footer>

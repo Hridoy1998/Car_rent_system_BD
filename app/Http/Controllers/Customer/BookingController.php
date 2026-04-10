@@ -14,6 +14,7 @@ use App\Notifications\BookingStatusUpdated;
 use App\Notifications\PaymentSuccessful;
 use App\Services\BookingService;
 use App\Services\PaymentService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
@@ -23,12 +24,21 @@ class BookingController extends Controller
         protected PaymentService $paymentService
     ) {}
 
-    public function index()
+    public function index(Request $request)
     {
-        $bookings = Booking::where('user_id', auth()->id())
-            ->with(['car.owner', 'car.images', 'car.reviews', 'damageReports'])
-            ->latest()
-            ->paginate(10);
+        $query = Booking::where('user_id', auth()->id())
+            ->with(['car.owner', 'car.images', 'car.reviews', 'damageReports']);
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('id', 'like', "%{$search}%")
+                    ->orWhereHas('car', fn ($c) => $c->where('brand', 'like', "%{$search}%"))
+                    ->orWhereHas('car.owner', fn ($u) => $u->where('name', 'like', "%{$search}%"));
+            });
+        }
+
+        $bookings = $query->latest()->paginate(10)->withQueryString();
 
         return view('customer.bookings.index', compact('bookings'));
     }
@@ -150,11 +160,22 @@ class BookingController extends Controller
         // Notify customer
         $booking->customer->notify(new BookingStatusUpdated($booking->load('car')));
 
-        $message = $newStatus === 'returning' 
-            ? 'Return request submitted successfully. Mission awaiting host audit.' 
+        $message = $newStatus === 'returning'
+            ? 'Return request submitted successfully. Mission awaiting host audit.'
             : 'Booking cancelled successfully.';
 
         return back()->with('success', $message);
+    }
+
+    public function checkout(Booking $booking)
+    {
+        if ($booking->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $booking->load('car.images');
+
+        return view('customer.bookings.checkout', compact('booking'));
     }
 
     public function pay(Booking $booking)

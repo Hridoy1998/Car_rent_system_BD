@@ -21,10 +21,7 @@
             
             <!-- Global Search & Filters -->
             <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-6 rounded-[2rem] shadow-2xl flex flex-col md:flex-row gap-4 items-center justify-between">
-                <form action="{{ route('admin.bookings.index') }}" method="GET" class="relative w-full md:w-96">
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by user, car, or ID..." class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 pl-12 text-sm text-white focus:ring-indigo-500">
-                    <svg class="absolute left-4 top-4 w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                </form>
+                <x-search-bar :route="route('admin.bookings.index')" placeholder="Search by user, car, or ID..." />
                 <div class="flex gap-2">
                     <select class="bg-gray-950 border border-white/5 rounded-xl px-4 py-2 text-[10px] font-black uppercase tracking-widest text-gray-400 focus:ring-indigo-500">
                         <option>Status: All</option>
@@ -48,8 +45,8 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-white/5">
-                            @foreach ($bookings as $booking)
-                                <tr class="group hover:bg-white/[0.02] transition-colors">
+                             @foreach ($bookings as $booking)
+                                <tr class="group hover:bg-white/[0.02] transition-colors cursor-pointer" onclick="window.location='{{ route('admin.bookings.show', $booking) }}'">
                                     <td class="py-8 pl-8">
                                         <div class="flex items-center gap-4">
                                             <div class="w-16 h-12 rounded-xl overflow-hidden border border-white/10 shadow-lg relative bg-gray-800">
@@ -59,13 +56,13 @@
                                             </div>
                                             <div>
                                                 <div class="text-[8px] text-indigo-500 font-black uppercase tracking-widest mb-1">ID #B-{{ str_pad($booking->id, 4, '0', STR_PAD_LEFT) }}</div>
-                                                <a href="{{ route('cars.show', $booking->car) }}" class="font-bold text-white hover:text-indigo-400 transition-colors block">{{ $booking->car->title }}</a>
+                                                <div class="font-bold text-white group-hover:text-indigo-400 transition-colors block">{{ $booking->car->title }}</div>
                                                 <div class="text-[9px] text-gray-600 font-bold uppercase mt-1">{{ $booking->car->location }}</div>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="py-8">
-                                        <div class="space-y-4">
+                                        <div class="space-y-4" onclick="event.stopPropagation()">
                                             <div class="flex items-center gap-3">
                                                 <div class="w-6 h-6 rounded-md bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-[8px] font-black text-purple-400">H</div>
                                                 <a href="{{ route('profiles.show', $booking->car->owner) }}" class="text-[10px] font-bold text-gray-300 hover:text-indigo-400 transition-colors">{{ $booking->car->owner->name }}</a>
@@ -101,20 +98,25 @@
                                         <div class="text-[8px] text-gray-700 font-bold uppercase mt-2">{{ \Carbon\Carbon::parse($booking->start_date)->format('M d') }} - {{ \Carbon\Carbon::parse($booking->end_date)->format('M d') }}</div>
                                     </td>
                                     <td class="py-8 text-right pr-8">
-                                        <div class="flex justify-end gap-2 group-hover:translate-x-[-4px] transition-transform">
-                                            <a href="{{ route('admin.bookings.show', $booking) }}" class="p-3 bg-white/5 hover:bg-indigo-600 hover:text-white text-gray-400 rounded-2xl border border-white/5 transition-all shadow-lg">
-                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                                            </a>
-                                            <form action="{{ route('admin.bookings.update', $booking) }}" method="POST">
-                                                @csrf @method('PUT')
-                                                <input type="hidden" name="status" value="cancelled">
-                                                <button type="submit" class="p-3 bg-red-600/10 hover:bg-red-600 hover:text-white text-red-500 rounded-2xl border border-red-500/20 transition-all shadow-lg" title="Invoke Cancellation">
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                                                </button>
-                                            </form>
+                                        <div class="flex items-center justify-end gap-6">
+                                            <div class="flex justify-end gap-2" onclick="event.stopPropagation()">
+                                                <a href="{{ route('admin.bookings.show', $booking) }}" class="p-3 bg-white/5 hover:bg-indigo-600 hover:text-white text-gray-400 rounded-2xl border border-white/5 transition-all shadow-lg">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                </a>
+                                                <form action="{{ route('admin.bookings.update', $booking) }}" method="POST">
+                                                    @csrf @method('PUT')
+                                                    <input type="hidden" name="status" value="cancelled">
+                                                    <button type="submit" class="p-3 bg-red-600/10 hover:bg-red-600 hover:text-white text-red-500 rounded-2xl border border-red-500/20 transition-all shadow-lg" title="Invoke Cancellation">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            <div class="opacity-0 group-hover:opacity-100 transition-opacity">
+                                                 <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                            </div>
                                         </div>
                                     </td>
-                                </tr>
+                                </tr>r>
                             @endforeach
                         </tbody>
                     </table>

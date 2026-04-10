@@ -48,16 +48,14 @@
 
                                 <div class="flex items-center justify-between">
                                     <div class="flex gap-2">
-                                        @if(isset($notification->data['action_url']))
-                                            <a href="{{ $notification->data['action_url'] }}" class="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-white/5 hover:bg-white/10 text-gray-300 rounded-lg border border-white/5 transition-all">View Details</a>
-                                        @endif
+                                        <a href="{{ route('notifications.show', $notification->id) }}" class="text-[10px] font-black uppercase tracking-widest px-3 py-1.5 bg-white/5 hover:bg-white/10 text-gray-300 rounded-lg border border-white/5 transition-all">Engage Action</a>
                                     </div>
                                     
                                     @if(!$notification->read_at)
-                                        <form action="{{ route('notifications.read', $notification->id) }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="text-[9px] font-black uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors">Mark as Seen</button>
-                                        </form>
+                                        <div class="flex items-center gap-1">
+                                            <span class="w-1.5 h-1.5 bg-indigo-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(99,102,241,1)]"></span>
+                                            <span class="text-[9px] font-black uppercase tracking-widest text-indigo-400">Action Required</span>
+                                        </div>
                                     @endif
                                 </div>
                             </div>

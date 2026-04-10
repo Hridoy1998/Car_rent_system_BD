@@ -35,4 +35,29 @@ class PagesController extends Controller
     {
         return view('success.car');
     }
+
+    public function mediation()
+    {
+        return view('pages.mediation-hub');
+    }
+
+    public function contact()
+    {
+        return view('pages.contact');
+    }
+
+    public function termination()
+    {
+        return view('pages.termination');
+    }
+
+    public function terms()
+    {
+        return view('pages.terms');
+    }
+
+    public function privacy()
+    {
+        return view('pages.privacy');
+    }
 }

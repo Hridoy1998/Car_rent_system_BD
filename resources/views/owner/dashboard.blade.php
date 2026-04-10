@@ -130,73 +130,7 @@
                         <a href="{{ route('owner.bookings.index') }}" class="text-[10px] font-black text-indigo-400 bg-indigo-500/5 hover:bg-indigo-500 hover:text-white px-5 py-2.5 rounded-2xl border border-indigo-500/10 transition-all uppercase tracking-widest">View Full Archive →</a>
                     </div>
 
-                    <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse">
-                                <thead>
-                                    <tr class="text-[9px] font-black text-gray-600 uppercase tracking-[0.3em] bg-white/[0.01] border-b border-white/5">
-                                        <th class="px-10 py-6">Renter Identity</th>
-                                        <th class="px-10 py-6">Target Asset</th>
-                                        <th class="px-10 py-6">Status Delta</th>
-                                        <th class="px-10 py-6 text-right">Yield</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="divide-y divide-white/5">
-                                    @forelse($actionQueue as $booking)
-                                    <tr class="group hover:bg-white/[0.02] transition-colors">
-                                        <td class="px-10 py-8">
-                                            <a href="{{ route('profiles.show', $booking->customer) }}" class="flex items-center gap-4 group/renter">
-                                                <div class="w-10 h-10 rounded-xl bg-gray-800 border border-white/10 flex items-center justify-center text-xs font-black text-indigo-400 group-hover/renter:bg-indigo-600 group-hover/renter:text-white transition-all overflow-hidden shadow-lg">
-                                                    @if($booking->customer->profile_photo)
-                                                        <img src="{{ Storage::url($booking->customer->profile_photo) }}" class="w-full h-full object-cover">
-                                                    @else
-                                                        {{ strtoupper(substr($booking->customer->name, 0, 1)) }}
-                                                    @endif
-                                                </div>
-                                                <div>
-                                                    <div class="text-xs font-black text-gray-200 uppercase tracking-tight group-hover/renter:text-indigo-400 transition-colors">{{ $booking->customer->name }}</div>
-                                                    <div class="text-[9px] text-gray-600 font-bold uppercase italic">Reputation: High</div>
-                                                </div>
-                                            </a>
-                                        </td>
-                                        <td class="px-10 py-8">
-                                            <div class="flex flex-col">
-                                                <span class="text-xs font-bold text-white uppercase tracking-widest">{{ $booking->car->brand }}</span>
-                                                <span class="text-[9px] text-gray-600 font-black uppercase italic">{{ $booking->car->model }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="px-10 py-8">
-                                             @php
-                                                $statusColors = [
-                                                    'pending' => 'bg-amber-500/10 text-amber-500 border-amber-500/20',
-                                                    'approved' => 'bg-blue-500/10 text-blue-500 border-blue-500/20', // Authorized
-                                                    'ongoing' => 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20', // Trip Started
-                                                    'returned' => 'bg-purple-500/10 text-purple-400 border-purple-500/20', // Inspection Needed
-                                                ];
-                                                $color = $statusColors[$booking->status] ?? 'bg-white/5 text-gray-500 border-white/10';
-                                            @endphp
-                                            <div class="flex items-center gap-2">
-                                                <span class="w-1.5 h-1.5 rounded-full {{ explode(' ', $color)[1] }} {{ $booking->status === 'pending' || $booking->status === 'returned' ? 'animate-pulse shadow-[0_0_8px_currentColor]' : '' }}"></span>
-                                                <span class="px-2.5 py-1 rounded-lg text-[8px] font-black uppercase tracking-widest border {{ $color }}">
-                                                    {{ $booking->status === 'approved' ? 'AUTHORIZED' : ($booking->status === 'ongoing' ? 'DEPOLYED' : $booking->status) }}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td class="px-10 py-8 text-right">
-                                            <a href="{{ route('owner.bookings.index') }}" class="inline-flex py-2 px-4 bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/10 rounded-xl text-[9px] font-black uppercase tracking-widest transition-all">Engage</a>
-                                        </td>
-                                    </tr>
-                                    @empty
-                                    <tr>
-                                        <td colspan="4" class="px-10 py-24 text-center">
-                                            <div class="text-[10px] text-gray-700 font-black uppercase tracking-[0.4em] italic opacity-20">No combat orders in the tactical queue</div>
-                                        </td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                    <livewire:owner-action-queue />
                 </div>
 
                 <!-- Strategic Insights (Side Panel) -->
@@ -239,11 +173,7 @@
                             <div class="flex items-center justify-between p-4 bg-gray-950/50 hover:bg-white/[0.02] border border-white/5 rounded-3xl transition-all group">
                                 <div class="flex items-center space-x-4">
                                     <div class="w-12 h-12 rounded-xl bg-gray-900 border border-white/10 overflow-hidden relative shadow-lg">
-                                        @if($car->images->count() > 0)
-                                            <img src="{{ Storage::url($car->images->first()->image_path) }}" class="w-full h-full object-cover">
-                                        @else
-                                            <div class="w-full h-full flex items-center justify-center text-gray-700 text-[8px] font-black uppercase italic">No Visual</div>
-                                        @endif
+                                        <img src="{{ $car->primary_image_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                         @if($car->status === 'pending')
                                             <div class="absolute inset-0 bg-amber-500/10 backdrop-blur-[2px]"></div>
                                         @endif

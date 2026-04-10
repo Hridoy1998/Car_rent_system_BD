@@ -5,12 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'CarRent BD') }}</title>
-
+        <title>{{ config('app.name', 'NEON MONOLITH') }}</title>
+ 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
-
+ 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
@@ -19,20 +19,18 @@
         <!-- Background Neon Glows -->
         <div class="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-600/30 to-purple-600/30 blur-[120px] pointer-events-none"></div>
         <div class="fixed bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 blur-[120px] pointer-events-none"></div>
-
+ 
         <div class="w-full sm:max-w-md mx-auto relative z-10 px-6 py-12">
             <!-- Logo Section -->
             <div class="flex flex-col items-center justify-center mb-10">
-                <a href="/" class="flex flex-col items-center gap-3 group">
-                    <div class="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-3xl shadow-lg shadow-indigo-500/30 transform group-hover:scale-105 group-hover:rotate-3 transition-all duration-300">
-                        CR
-                    </div>
-                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-                        CarRent BD
+                <a href="/" class="flex flex-col items-center gap-4 group">
+                    <x-application-logo class="w-20 h-20 shadow-2xl shadow-indigo-500/20" />
+                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-400 tracking-tighter italic uppercase">
+                        NEON MONOLITH
                     </span>
                 </a>
             </div>
-
+ 
             <!-- Content Card -->
             <div class="w-full px-8 py-8 bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/50 sm:rounded-3xl relative overflow-hidden">
                 <!-- Subtle inner top glow -->
@@ -41,8 +39,8 @@
                 {{ $slot }}
             </div>
             
-            <p class="text-center text-gray-500 text-sm mt-8">
-                &copy; {{ date('Y') }} CarRent BD. All rights reserved.
+            <p class="text-center text-gray-700 text-[10px] font-black uppercase tracking-widest mt-8">
+                &copy; {{ date('Y') }} NEON MONOLITH • GLOBAL FLEET OPS
             </p>
         </div>
     </body>

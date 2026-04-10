@@ -59,12 +59,15 @@
 
             <!-- Ledger Activity -->
             <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
-                <div class="p-10 border-b border-white/5 flex items-center justify-between">
+                <div class="p-10 border-b border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
                     <div>
                          <h3 class="text-2xl font-black text-white tracking-tight italic">Transaction Ledger</h3>
                          <p class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-1">Audit of every paid lease agreement on the platform</p>
                     </div>
-                    <button class="px-6 py-3 bg-white/5 hover:bg-white/10 text-[10px] font-black text-gray-300 uppercase tracking-widest rounded-2xl border border-white/5 transition-all">Export CSV Manifest</button>
+                    <div class="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                        <x-search-bar :route="route('admin.finance.index')" placeholder="Search by user, car, or TX ID..." />
+                        <button class="px-6 py-3 bg-white/5 hover:bg-white/10 text-[10px] font-black text-gray-300 uppercase tracking-widest rounded-2xl border border-white/5 transition-all w-full md:w-auto whitespace-nowrap">Export CSV Manifest</button>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -80,7 +83,7 @@
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @foreach($transactions as $tx)
-                            <tr class="group hover:bg-white/[0.01] transition-colors">
+                            <tr class="group hover:bg-white/[0.01] transition-colors cursor-pointer" onclick="window.location='{{ route('admin.finance.show', $tx) }}'">
                                 <td class="px-10 py-8">
                                     <div class="flex flex-col">
                                         <span class="text-[11px] font-mono font-black text-indigo-400">#TX-{{ str_pad($tx->id, 8, '0', STR_PAD_LEFT) }}</span>
@@ -88,22 +91,27 @@
                                     </div>
                                 </td>
                                 <td class="px-10 py-8">
-                                    <a href="{{ route('profiles.show', $tx->customer) }}" class="flex items-center space-x-3 group/renter">
+                                    <div class="flex items-center space-x-3 group/renter">
                                         <div class="w-8 h-8 rounded-xl bg-gray-800 flex items-center justify-center text-[10px] font-black text-gray-500 group-hover/renter:bg-indigo-600 group-hover/renter:text-white transition-all">{{ substr($tx->customer->name, 0, 1) }}</div>
                                         <span class="text-xs font-black text-gray-200 uppercase group-hover/renter:text-indigo-400 transition-colors">{{ $tx->customer->name }}</span>
-                                    </a>
+                                    </div>
                                 </td>
                                 <td class="px-10 py-8">
-                                    <a href="{{ route('profiles.show', $tx->car->owner) }}" class="flex items-center space-x-3 group/host">
+                                    <div class="flex items-center space-x-3 group/host">
                                         <div class="w-8 h-8 rounded-xl bg-gray-800 flex items-center justify-center text-[10px] font-black text-pink-500 group-hover/host:bg-pink-600 group-hover/host:text-white transition-all">{{ substr($tx->car->owner->name, 0, 1) }}</div>
                                         <span class="text-xs font-black text-gray-200 uppercase group-hover/host:text-pink-400 transition-colors">{{ $tx->car->owner->name }}</span>
-                                    </a>
+                                    </div>
                                 </td>
                                 <td class="px-10 py-8">
                                     <span class="text-[11px] font-black text-gray-500 italic">৳ {{ number_format(($tx->total_price * $stats['commission']) / 100) }}</span>
                                 </td>
                                 <td class="px-10 py-8 text-right">
-                                    <span class="text-lg font-black text-white italic tracking-tighter">৳ {{ number_format($tx->total_price) }}</span>
+                                    <div class="flex items-center justify-end gap-6">
+                                        <span class="text-lg font-black text-white italic tracking-tighter">৳ {{ number_format($tx->total_price) }}</span>
+                                        <div class="opacity-0 group-hover:opacity-100 transition-opacity">
+                                             <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             @endforeach

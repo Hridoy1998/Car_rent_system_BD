@@ -1,9 +1,16 @@
-<x-app-layout>
     <x-slot name="header">
-        <h2 class="font-black text-2xl leading-tight text-white mb-2">
-            {{ __('Refine Vehicle: ') . $car->brand . ' ' . $car->model }}
-        </h2>
-        <p class="text-xs text-gray-500 font-bold uppercase tracking-widest">Optimizing asset parameters for maximum yield</p>
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="font-black text-3xl text-white tracking-tighter uppercase italic">
+                    {{ __('Asset Modification') }}
+                </h2>
+                <p class="text-[10px] text-indigo-400 font-bold uppercase tracking-[0.3em] mt-1 italic italic">Optimizing Parameters for: {{ $car->brand }} {{ $car->model }}</p>
+            </div>
+             <a href="{{ route('owner.cars.index') }}" class="text-[10px] font-black text-gray-500 hover:text-white transition-colors uppercase tracking-widest bg-white/5 px-6 py-3 rounded-2xl border border-white/5 flex items-center gap-3 group">
+                <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7"></path></svg>
+                Abort Protocol
+            </a>
+        </div>
     </x-slot>
 
     <!-- Leaflet CSS -->

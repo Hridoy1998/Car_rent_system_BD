@@ -9,7 +9,7 @@ class Earning extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['owner_id', 'booking_id', 'amount'];
+    protected $fillable = ['owner_id', 'booking_id', 'amount', 'platform_fee'];
 
     public function owner()
     {
@@ -21,4 +21,3 @@ class Earning extends Model
         return $this->belongsTo(Booking::class);
     }
 }
-

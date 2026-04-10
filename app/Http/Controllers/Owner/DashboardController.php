@@ -27,13 +27,15 @@ class DashboardController extends Controller
             'revenue_24h' => Earning::where('owner_id', $user->id)
                 ->where('created_at', '>=', now()->subDay())
                 ->sum('amount'),
-            'monthly_earnings' => Earning::selectRaw('SUM(amount) as sum, MONTH(created_at) as month')
-                ->where('owner_id', $user->id)
-                ->where('created_at', '>=', now()->subMonths(6))
-                ->groupBy('month')
-                ->orderBy('month')
-                ->pluck('sum', 'month')
-                ->toArray(),
+            'monthly_earnings' => collect(range(0, 5))->mapWithKeys(function ($i) use ($user) {
+                $date = now()->subMonths($i);
+                $month = $date->month;
+                $sum = Earning::where('owner_id', $user->id)
+                    ->whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $month)
+                    ->sum('amount');
+                return [$month => $sum];
+            })->reverse()->toArray(),
         ];
 
         $recentCars = $user->cars()->with('images')->latest()->take(4)->get();

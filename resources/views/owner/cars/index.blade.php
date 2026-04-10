@@ -44,6 +44,11 @@
                 </div>
             @endif
 
+            <!-- Tactical Fleet Search -->
+            <div class="flex justify-center mb-12">
+                <x-search-bar :route="route('owner.cars.index')" placeholder="Search your assets by brand, model, or location..." />
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse ($cars as $car)
                 <div class="group relative bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[3.5rem] overflow-hidden shadow-2xl transition-all hover:bg-gray-900/60 hover:-translate-y-2 hover:shadow-indigo-500/5">

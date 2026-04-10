@@ -20,39 +20,9 @@
         
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
 
-            <!-- Progress Timeline -->
-            <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
-                <div class="flex items-center justify-between relative max-w-4xl mx-auto">
-                    <div class="absolute top-1/2 left-0 w-full h-0.5 bg-gray-800 -translate-y-1/2 -z-10"></div>
-                    <div class="absolute top-1/2 left-0 h-0.5 bg-indigo-500 -translate-y-1/2 -z-10 transition-all duration-1000" 
-                         style="width: {{ $booking->status === 'pending' ? '0%' : ($booking->status === 'approved' ? '33%' : ($booking->status === 'completed' ? '100%' : '0%')) }}"></div>
-                    
-                    @php
-                        $steps = [
-                            ['id' => 'pending', 'label' => 'Requested', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'],
-                            ['id' => 'approved', 'label' => 'Approved', 'icon' => 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z'],
-                            ['id' => 'paid', 'label' => 'Payment', 'icon' => 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z'],
-                            ['id' => 'completed', 'label' => 'Finished', 'icon' => 'M5 13l4 4L19 7'],
-                        ];
-                    @endphp
-
-                    @foreach($steps as $step)
-                        @php
-                            $isDone = ($booking->status === $step['id']) || 
-                                     ($step['id'] === 'pending' && in_array($booking->status, ['approved', 'completed'])) ||
-                                     ($step['id'] === 'approved' && $booking->status === 'completed') ||
-                                     ($step['id'] === 'paid' && $booking->payment_status === 'paid');
-                            $isCurrent = ($booking->status === $step['id']) || ($step['id'] === 'paid' && $booking->status === 'approved' && $booking->payment_status === 'pending');
-                        @endphp
-                        <div class="flex flex-col items-center">
-                            <div class="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 border-2 
-                                {{ $isDone ? 'bg-indigo-600 border-indigo-500 text-white shadow-[0_0_15px_rgba(79,70,229,0.5)]' : ($isCurrent ? 'bg-gray-800 border-indigo-400 text-indigo-400 animate-pulse' : 'bg-gray-900 border-gray-700 text-gray-600') }}">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $step['icon'] }}"></path></svg>
-                            </div>
-                            <span class="mt-2 text-[10px] font-bold uppercase tracking-widest {{ $isCurrent ? 'text-indigo-400' : ($isDone ? 'text-white' : 'text-gray-600') }}">{{ $step['label'] }}</span>
-                        </div>
-                    @endforeach
-                </div>
+            <!-- Live Tactical Tracker -->
+            <div class="max-w-4xl mx-auto">
+                <livewire:booking-status-tracker :booking="$booking" />
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 h-full">
@@ -62,9 +32,7 @@
                     <!-- Vehicle Card -->
                     <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-6 shadow-2xl">
                         <div class="aspect-video rounded-2xl overflow-hidden mb-4 border border-white/5 relative group">
-                            @if($booking->car->images->count() > 0)
-                                <img src="{{ Storage::url($booking->car->images->first()->image_path) }}" class="w-full h-full object-cover">
-                            @endif
+                            <img src="{{ $booking->car->primary_image_url }}" class="w-full h-full object-cover">
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-950/80 to-transparent"></div>
                             <div class="absolute bottom-4 left-4">
                                 <h3 class="text-xl font-black text-white leading-none">{{ $booking->car->brand }} {{ $booking->car->model }}</h3>

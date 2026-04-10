@@ -41,32 +41,50 @@ class DashboardController extends Controller
         $pendingPayments = Booking::where('user_id', $user->id)
             ->where('status', 'approved')
             ->where('payment_status', 'pending')
+            ->with('car')
             ->get();
         foreach ($pendingPayments as $b) {
             $actionQueue[] = [
                 'type' => 'PAYMENT',
                 'title' => 'Settlement Required',
-                'desc' => "Finalize payment for {$b->car->brand} {$b->car->model}",
-                'link' => route('customer.bookings.index'),
+                'desc' => "Finalize payment protocol for deployment: {$b->car->brand} {$b->car->model}",
+                'link' => route('customer.bookings.checkout', $b), // Direct to checkout
                 'priority' => 'high',
             ];
         }
 
-        // B. Return Confirmation Needed (Handover acknowledgment from user side? Not in current schema, but let's check for completed trips with no customer acknowledgement of return?)
-        // Actually, let's use Damage Disputes as actions
+        // B. Integrity Breach Responses
         $disputes = $user->bookings()->whereHas('damageReports', function ($q) {
             $q->where('status', 'pending');
-        })->with('damageReports')->get();
+        })->with(['damageReports', 'car'])->get();
         foreach ($disputes as $b) {
             foreach ($b->damageReports->where('status', 'pending') as $dr) {
                 $actionQueue[] = [
                     'type' => 'BREACH',
-                    'title' => 'Integrity Breach Dispute',
-                    'desc' => "Owner claimed damage on {$b->car->brand}. Response required.",
-                    'link' => route('customer.bookings.index'),
+                    'title' => 'Integrity Breach Defense',
+                    'desc' => "Host logged breach for #BR-{$dr->id}. Tactical response required.",
+                    'link' => route('customer.bookings.show', $b), // Respond in booking details
                     'priority' => 'critical',
                 ];
             }
+        }
+
+        // C. Upcoming Handovers
+        $upcoming = Booking::where('user_id', $user->id)
+            ->where('status', 'approved')
+            ->where('payment_status', 'paid')
+            ->where('start_date', '>=', now())
+            ->where('start_date', '<=', now()->addDays(2))
+            ->with('car')
+            ->get();
+        foreach($upcoming as $b) {
+            $actionQueue[] = [
+                'type' => 'LOGISTICS',
+                'title' => 'Deployment Imminent',
+                'desc' => "Asset handover scheduled in " . \Carbon\Carbon::parse($b->start_date)->diffForHumans() . ".",
+                'link' => route('customer.bookings.show', $b),
+                'priority' => 'medium',
+            ];
         }
 
         // 4. Reputation Shield
@@ -76,14 +94,16 @@ class DashboardController extends Controller
         ];
 
         // 5. Fiscal Pulse (Spending Analytics - Last 6 months)
-        $fiscalPulse = Booking::selectRaw('SUM(total_price) as sum, MONTH(created_at) as month')
-            ->where('user_id', $user->id)
-            ->where('payment_status', 'paid')
-            ->where('created_at', '>=', now()->subMonths(6))
-            ->groupBy('month')
-            ->orderBy('month')
-            ->pluck('sum', 'month')
-            ->toArray();
+        $fiscalPulse = collect(range(0, 5))->mapWithKeys(function ($i) use ($user) {
+            $date = now()->subMonths($i);
+            $month = $date->month;
+            $sum = Booking::where('user_id', $user->id)
+                ->where('payment_status', 'paid')
+                ->whereYear('created_at', $date->year)
+                ->whereMonth('created_at', $month)
+                ->sum('total_price');
+            return [$month => $sum];
+        })->reverse()->toArray();
 
         // 6. Tactical Wishlist
         $wishlist = $user->favorites()->with('car.images', 'car.owner')->latest()->limit(4)->get();

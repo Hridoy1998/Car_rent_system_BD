@@ -28,6 +28,7 @@ class EarningService
             [
                 'owner_id' => $booking->car->user_id,
                 'amount' => $hostEarning,
+                'platform_fee' => $platformCut,
             ]
         );
     }

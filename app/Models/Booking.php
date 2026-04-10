@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
-    use HasFactory;
+    use \App\Traits\HasObfuscatedId, HasFactory;
 
     protected $fillable = [
         'user_id',
@@ -60,5 +60,9 @@ class Booking extends Model
     {
         return $this->hasMany(DamageReport::class);
     }
-}
 
+    public function earnings()
+    {
+        return $this->hasMany(Earning::class);
+    }
+}

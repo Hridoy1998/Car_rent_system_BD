@@ -96,11 +96,14 @@
 
             <!-- Global Breach Ledger -->
             <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
-                <div class="p-10 border-b border-white/5 flex items-center justify-between">
+                <div class="p-10 border-b border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
                     <h3 class="text-xl font-black text-white italic tracking-tighter flex items-center gap-4">
                         <span class="p-1.5 bg-indigo-500 rounded-lg shadow-lg"></span>
                         INTEGRITY AUDIT LOG
                     </h3>
+                    <div class="w-full md:w-auto">
+                        <x-search-bar :route="route('admin.damage-reports.index')" placeholder="Search incidents, cars, or participants..." />
+                    </div>
                 </div>
                 
                 <div class="overflow-x-auto">
@@ -116,7 +119,7 @@
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @forelse($breaches as $b)
-                            <tr class="group hover:bg-white/[0.02] transition-colors">
+                            <tr class="group hover:bg-white/[0.02] transition-colors cursor-pointer" onclick="window.location='{{ route('admin.damage-reports.show', $b) }}'">
                                 <td class="px-10 py-8 text-xs font-black text-gray-200 uppercase tracking-tighter italic">#BR-{{ $b->id }}</td>
                                 <td class="px-10 py-8">
                                     <div class="flex flex-col">
@@ -144,11 +147,16 @@
                                     </div>
                                 </td>
                                 <td class="px-10 py-8 text-right font-black text-white text-xs">
-                                    @if($b->resolution_cost !== null)
-                                        ৳{{ number_format($b->resolution_cost) }}
-                                    @else
-                                        <span class="text-gray-600 italic">AWAITING</span>
-                                    @endif
+                                     <div class="flex items-center justify-end gap-4">
+                                        @if($b->resolution_cost !== null)
+                                            ৳{{ number_format($b->resolution_cost) }}
+                                        @else
+                                            <span class="text-gray-600 italic">AWAITING</span>
+                                        @endif
+                                        <div class="opacity-0 group-hover:opacity-100 transition-opacity">
+                                             <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                             @empty

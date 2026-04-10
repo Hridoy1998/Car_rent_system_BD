@@ -45,5 +45,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'customer@gmail.com',
             'password' => bcrypt('password'),
         ]);
+
+        // 4. Populate Operational Data (Bookings, Reviews, Earnings, etc.)
+        $this->call(DemoHubSeeder::class);
     }
 }

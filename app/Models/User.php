@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use \App\Traits\HasObfuscatedId, HasFactory, Notifiable;
 
     public function favorites()
     {

@@ -33,18 +33,16 @@
                 <div class="lg:col-span-2 space-y-12">
                     
                     <!-- Main Gallery Hub -->
-                    @php 
-                        $primaryImg = $car->images->where('is_primary', true)->first()->image_path ?? $car->images->first()->image_path ?? null; 
-                    @endphp
-                    <div class="space-y-4" x-data="{ activeImage: '{{ $primaryImg ? Storage::url($primaryImg) : '' }}' }">
+                    <div class="space-y-4" x-data="{ activeImage: '{{ $car->primary_image_url }}' }">
                         <div class="aspect-[16/9] w-full rounded-[2.5rem] overflow-hidden bg-gray-900 border border-white/10 relative shadow-2xl group">
                             @if($car->images->count() > 0)
                                 <img :src="activeImage" class="w-full h-full object-cover transition-all duration-500">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-gray-700">NO VEHICLE IMAGES</div>
+                                <img src="{{ $car->primary_image_url }}" class="w-full h-full object-cover opacity-20">
+                                <div class="absolute inset-0 flex items-center justify-center text-[10px] font-black tracking-[0.4em] text-gray-700 italic">No Operational Imagery</div>
                             @endif
                             <div class="absolute top-6 right-6 px-4 py-2 bg-gray-950/80 backdrop-blur-md rounded-2xl text-[10px] font-black text-white uppercase tracking-widest border border-white/10">
-                                Gallery View
+                                Tactical View
                             </div>
                         </div>
                         

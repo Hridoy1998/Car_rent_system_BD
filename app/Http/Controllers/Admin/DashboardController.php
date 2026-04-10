@@ -45,12 +45,14 @@ class DashboardController extends Controller
                 'bookings' => Booking::where('created_at', '>=', now()->subDay())->count(),
             ],
 
-            'monthly_revenue' => Earning::selectRaw('SUM(amount) as sum, MONTH(created_at) as month')
-                ->where('created_at', '>=', now()->subMonths(6))
-                ->groupBy('month')
-                ->orderBy('month')
-                ->pluck('sum', 'month')
-                ->toArray(),
+            'monthly_revenue' => collect(range(0, 5))->mapWithKeys(function ($i) {
+                $date = now()->subMonths($i);
+                $month = $date->month;
+                $sum = Earning::whereYear('created_at', $date->year)
+                    ->whereMonth('created_at', $month)
+                    ->sum(\DB::raw('amount + platform_fee'));
+                return [$month => $sum];
+            })->reverse()->toArray(),
         ];
 
         $recentBookings = Booking::with(['customer', 'car'])

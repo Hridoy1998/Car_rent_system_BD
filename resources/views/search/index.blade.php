@@ -51,12 +51,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 @foreach($cars as $car)
                     <a href="{{ route('cars.show', $car) }}" class="group bg-gray-900 border border-white/5 rounded-3xl overflow-hidden hover:border-indigo-500/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(79,70,229,0.15)] hover:-translate-y-1 block">
-                        <div class="aspect-[4/3] bg-gray-800 relative overflow-hidden">
-                            @if($car->images->count() > 0)
-                                <img src="{{ Storage::url($car->images->where('is_primary', true)->first()->image_path ?? $car->images->first()->image_path) }}" alt="{{ $car->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            @else
-                                <div class="w-full h-full flex items-center justify-center text-gray-600">No Image</div>
-                            @endif
+                        <div class="aspect-[16/10] bg-gray-800 relative overflow-hidden">
+                            <img src="{{ $car->primary_image_url }}" alt="{{ $car->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                             
                             <div class="absolute top-4 right-4 z-20 flex gap-2">
                                 @auth

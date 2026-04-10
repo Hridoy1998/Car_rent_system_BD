@@ -8,13 +8,29 @@ use Illuminate\Http\Request;
 
 class DamageReportController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $breaches = DamageReport::with(['booking.customer', 'booking.car'])
-            ->latest()
-            ->paginate(15);
+        $query = DamageReport::with(['booking.customer', 'booking.car']);
+
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('description', 'like', "%{$search}%")
+                    ->orWhere('id', 'like', "%{$search}%")
+                    ->orWhereHas('booking.customer', fn ($u) => $u->where('name', 'like', "%{$search}%"))
+                    ->orWhereHas('booking.car', fn ($c) => $c->where('brand', 'like', "%{$search}%"));
+            });
+        }
+
+        $breaches = $query->latest()->paginate(15)->withQueryString();
 
         return view('admin.damage-reports.index', compact('breaches'));
+    }
+
+    public function show(DamageReport $damageReport)
+    {
+        $damageReport->load(['booking.customer', 'booking.car.owner', 'booking.messages']);
+        return view('admin.damage-reports.show', compact('damageReport'));
     }
 
     public function resolve(Request $request, DamageReport $damageReport)

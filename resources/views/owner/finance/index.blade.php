@@ -61,8 +61,9 @@
                         <span class="w-1.5 h-8 bg-white/10 rounded-full"></span>
                         TRANSACTION MANIFEST
                     </h3>
-                    <div class="flex gap-4">
-                         <div class="px-5 py-2 bg-white/5 border border-white/10 rounded-2xl text-[9px] font-black text-gray-500 uppercase tracking-widest">Sort: Latest</div>
+                    <div class="flex flex-col md:flex-row items-center gap-4 w-full md:w-auto">
+                        <x-search-bar :route="route('owner.finance.index')" placeholder="Search by reference, car, or date..." />
+                        <div class="px-5 py-2 bg-white/5 border border-white/10 rounded-2xl text-[9px] font-black text-gray-500 uppercase tracking-widest whitespace-nowrap">Sort: Latest</div>
                     </div>
                 </div>
 
@@ -78,16 +79,15 @@
                                     <th class="px-10 py-8 text-right text-emerald-400">Net Yield</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-white/5">
-                                @forelse($earnings as $earning)
-                                <tr class="group hover:bg-white/[0.02] transition-colors border-b border-white/5 last:border-0">
+                            <tbody class="divide-y divide-wh                                @forelse($earnings as $earning)
+                                <tr class="group hover:bg-white/[0.02] transition-colors border-b border-white/5 last:border-0 cursor-pointer" onclick="window.location='{{ route('owner.finance.show', $earning) }}'">
                                     <td class="px-10 py-10">
                                         <div class="text-xs font-black text-white uppercase tracking-tighter">REF-{{ str_pad($earning->id, 6, '0', STR_PAD_LEFT) }}</div>
                                         <div class="text-[9px] text-gray-600 font-bold uppercase italic mt-1">{{ $earning->created_at->format('M d, Y | H:i') }}</div>
                                     </td>
                                     <td class="px-10 py-10">
-                                        <a href="{{ route('cars.show', $earning->booking->car) }}" class="flex items-center gap-4 group/asset">
-                                            <div class="w-10 h-10 rounded-xl bg-gray-800 border border-white/10 overflow-hidden flex-shrink-0">
+                                        <div class="flex items-center gap-4 group/asset">
+                                            <div class="w-10 h-10 rounded-xl bg-gray-900 border border-white/10 overflow-hidden flex-shrink-0">
                                                 @if($earning->booking->car->images->count() > 0)
                                                     <img src="{{ Storage::url($earning->booking->car->images->first()->image_path) }}" class="w-full h-full object-cover grayscale group-hover/asset:grayscale-0 transition-all">
                                                 @endif
@@ -96,7 +96,7 @@
                                                 <div class="text-xs font-black text-gray-400 group-hover/asset:text-white transition-colors uppercase italic">{{ $earning->booking->car->brand }}</div>
                                                 <div class="text-[9px] text-gray-700 font-black uppercase tracking-widest">{{ $earning->booking->car->model }}</div>
                                             </div>
-                                        </a>
+                                        </div>
                                     </td>
                                     <td class="px-10 py-10">
                                         <div class="text-xs font-bold text-gray-300">৳ {{ number_format($earning->amount + $earning->platform_fee) }}</div>
@@ -107,10 +107,17 @@
                                          </div>
                                     </td>
                                     <td class="px-10 py-10 text-right">
-                                        <div class="text-sm font-black text-emerald-400 tracking-tighter shadow-emerald-500/20">৳ {{ number_format($earning->amount) }}</div>
-                                        <div class="text-[7px] text-gray-700 font-black uppercase tracking-widest mt-1">Settled & Invoiced</div>
+                                        <div class="flex items-center justify-end gap-6">
+                                            <div>
+                                                <div class="text-sm font-black text-emerald-400 tracking-tighter shadow-emerald-500/20">৳ {{ number_format($earning->amount) }}</div>
+                                                <div class="text-[7px] text-gray-700 font-black uppercase tracking-widest mt-1">Settled & Invoiced</div>
+                                            </div>
+                                            <div class="opacity-0 group-hover:opacity-100 transition-opacity">
+                                                 <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                            </div>
+                                        </div>
                                     </td>
-                                </tr>
+                                </tr>         </tr>
                                 
                                 {{-- Inline Reputation Stream --}}
                                 @php

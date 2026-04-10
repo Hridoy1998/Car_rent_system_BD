@@ -106,11 +106,14 @@
 
             <!-- Global Movement Timeline -->
             <div class="bg-gray-900/40 backdrop-blur-3xl border border-white/5 rounded-[3rem] overflow-hidden shadow-2xl">
-                <div class="p-10 border-b border-white/5 flex items-center justify-between">
+                <div class="p-10 border-b border-white/5 flex flex-col md:flex-row items-center justify-between gap-6">
                     <h3 class="text-xl font-black text-white italic tracking-tighter flex items-center gap-4">
                         <span class="w-1.5 h-6 bg-indigo-500 rounded-full"></span>
                         MOVEMENT LEDGER (PHASE IV)
                     </h3>
+                    <div class="w-full md:w-auto">
+                        <x-search-bar :route="route('owner.logistics.index')" placeholder="Search operations, assets, or operators..." />
+                    </div>
                 </div>
                 
                 <div class="overflow-x-auto">
@@ -126,7 +129,7 @@
                         </thead>
                         <tbody class="divide-y divide-white/5">
                             @forelse($timeline as $b)
-                            <tr class="group hover:bg-white/[0.02] transition-colors">
+                            <tr class="group hover:bg-white/[0.02] transition-colors cursor-pointer" onclick="window.location='{{ route('owner.logistics.show', $b) }}'">
                                 <td class="px-10 py-8 text-xs font-black text-gray-200 uppercase tracking-tighter italic">#OP-{{ $b->id }}</td>
                                 <td class="px-10 py-8">
                                     <div class="flex flex-col">
@@ -152,7 +155,14 @@
                                         {{ \Carbon\Carbon::parse($b->start_date)->format('M d') }} - {{ \Carbon\Carbon::parse($b->end_date)->format('M d') }}
                                     </div>
                                 </td>
-                                <td class="px-10 py-8 text-right font-black text-white text-xs">৳{{ number_format($b->total_price) }}</td>
+                                <td class="px-10 py-8 text-right font-black text-white text-xs">
+                                     <div class="flex items-center justify-end gap-6">
+                                        ৳{{ number_format($b->total_price) }}
+                                        <div class="opacity-0 group-hover:opacity-100 transition-opacity">
+                                             <svg class="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             @empty
                             <tr>

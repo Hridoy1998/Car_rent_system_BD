@@ -4,25 +4,36 @@ namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\DamageReport;
+use Illuminate\Http\Request;
 
 class IntegrityController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
-        // 1. All breaches associated with owner's fleet
-        $breaches = DamageReport::whereHas('booking.car', fn ($q) => $q->where('user_id', $user->id))
-            ->with(['booking.customer', 'booking.car.images'])
-            ->latest()
-            ->paginate(10);
+        $query = DamageReport::whereHas('booking.car', fn ($q) => $q->where('user_id', $user->id))
+            ->with(['booking.customer', 'booking.car.images']);
 
-        // 2. Critical Breaches (Disputed or Pending)
-        $criticalBreaches = DamageReport::whereHas('booking.car', fn ($q) => $q->where('user_id', $user->id))
-            ->whereIn('status', ['pending', 'disputed'])
-            ->with(['booking.customer', 'booking.car'])
-            ->get();
+        if ($request->has('search')) {
+            $search = $request->get('search');
+            $query->where(function ($q) use ($search) {
+                $q->where('id', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhereHas('booking.car', fn ($c) => $c->where('brand', 'like', "%{$search}%"))
+                    ->orWhereHas('booking.customer', fn ($u) => $u->where('name', 'like', "%{$search}%"));
+            });
+        }
 
-        return view('owner.integrity.index', compact('breaches', 'criticalBreaches'));
+        $breaches = $query->latest()->paginate(10)->withQueryString();
+
+        return view('owner.integrity.index', compact('breaches'));
+    }
+
+    public function show(DamageReport $damageReport)
+    {
+        abort_if($damageReport->booking->car->user_id !== auth()->id(), 403);
+        $damageReport->load(['booking.customer', 'booking.car.images', 'booking.messages']);
+        return view('owner.integrity.show', compact('damageReport'));
     }
 }

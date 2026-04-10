@@ -1,76 +1,106 @@
-<nav x-data="{ open: false }" class="bg-gray-900/80 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50">
+<nav x-data="{ open: false }" class="glass sticky top-0 z-50 border-b border-white/5 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+        <div class="flex justify-between h-20">
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('home') }}">
-                        <x-application-logo class="block h-9 w-auto text-indigo-500" />
+                    <a href="{{ route('home') }}" class="group transition-all duration-500">
+                        <div class="bg-indigo-600/10 p-2.5 rounded-2xl border border-indigo-500/20 group-hover:bg-indigo-600 transition-all shadow-[0_0_20px_rgba(99,102,241,0.1)] group-hover:shadow-indigo-500/40">
+                             <x-application-logo class="block h-8 w-auto text-indigo-500 group-hover:text-white" />
+                        </div>
                     </a>
                 </div>
-
+ 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('*.dashboard')">
-                        {{ __('Dashboard') }}
+                <div class="hidden space-x-1 sm:-my-px sm:ms-12 sm:flex items-center">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard') || request()->routeIs('*.dashboard')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                        <div class="flex items-center gap-2">
+                             <span class="w-1 h-1 rounded-full {{ request()->routeIs('dashboard') || request()->routeIs('*.dashboard') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
+                             {{ __('HQ') }}
+                        </div>
                     </x-nav-link>
-
+ 
                     @auth
                         @if(auth()->user()->role === 'owner')
-                            <x-nav-link :href="route('owner.cars.index')" :active="request()->routeIs('owner.cars.*')">
-                                {{ __('Fleet') }}
+                            <x-nav-link :href="route('owner.cars.index')" :active="request()->routeIs('owner.cars.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.cars.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Fleet') }}
+                                </div>
                             </x-nav-link>
-                            <x-nav-link :href="route('owner.bookings.index')" :active="request()->routeIs('owner.bookings.*')">
-                                {{ __('Workflows') }}
+                            <x-nav-link :href="route('owner.bookings.index')" :active="request()->routeIs('owner.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.bookings.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Workflows') }}
+                                </div>
                             </x-nav-link>
-                            <x-nav-link :href="route('owner.logistics.index')" :active="request()->routeIs('owner.logistics.*')">
-                                {{ __('Logistics') }}
+                            <x-nav-link :href="route('owner.logistics.index')" :active="request()->routeIs('owner.logistics.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.logistics.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Logistics') }}
+                                </div>
                             </x-nav-link>
-                            <x-nav-link :href="route('owner.integrity.index')" :active="request()->routeIs('owner.integrity.*')">
-                                {{ __('Integrity') }}
-                                @php $breachCount = \App\Models\DamageReport::whereHas('booking.car', fn($q) => $q->where('user_id', auth()->id()))->whereIn('status', ['pending', 'disputed'])->count(); @endphp
-                                @if($breachCount > 0)
-                                    <span class="ms-1 px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black rounded-md animate-pulse">{{ $breachCount }}</span>
-                                @endif
+                            <x-nav-link :href="route('owner.finance.index')" :active="request()->routeIs('owner.finance.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.finance.*') ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Fiscal') }}
+                                </div>
+                            </x-nav-link>
+                            <x-nav-link :href="route('owner.integrity.index')" :active="request()->routeIs('owner.integrity.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('owner.integrity.*') ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Integrity') }}
+                                     @php $breachCount = \App\Models\DamageReport::whereHas('booking.car', fn($q) => $q->where('user_id', auth()->id()))->whereIn('status', ['pending', 'disputed'])->count(); @endphp
+                                     @if($breachCount > 0)
+                                         <span class="ms-1 px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black rounded-md animate-pulse">{{ $breachCount }}</span>
+                                     @endif
+                                </div>
                             </x-nav-link>
                         @elseif(auth()->user()->role === 'admin')
-                            <x-nav-link :href="route('admin.cars.index')" :active="request()->routeIs('admin.cars.*')">
-                                {{ __('Fleet Hub') }}
+                            <x-nav-link :href="route('admin.cars.index')" :active="request()->routeIs('admin.cars.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.cars.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Fleet') }}
+                                </div>
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.verifications.index')" :active="request()->routeIs('admin.verifications.*')">
-                                {{ __('ID Hub') }}
+                            <x-nav-link :href="route('admin.verifications.index')" :active="request()->routeIs('admin.verifications.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.verifications.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('ID') }}
+                                </div>
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.bookings.index')" :active="request()->routeIs('admin.bookings.*')">
-                                {{ __('Orders') }}
+                            <x-nav-link :href="route('admin.bookings.index')" :active="request()->routeIs('admin.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.bookings.*') ? 'bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Stream') }}
+                                </div>
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.finance.index')" :active="request()->routeIs('admin.finance.*')">
-                                {{ __('Financials') }}
+                            <x-nav-link :href="route('admin.finance.index')" :active="request()->routeIs('admin.finance.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.finance.*') ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Fiscal') }}
+                                </div>
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.damage-reports.index')" :active="request()->routeIs('admin.damage-reports.*')">
-                                {{ __('Integrity Hub') }}
-                                @php $breachCount = \App\Models\DamageReport::where('status', 'disputed')->count(); @endphp
-                                @if($breachCount > 0)
-                                    <span class="ms-1 px-1.5 py-0.5 bg-red-600 text-white text-[8px] font-black rounded-md animate-pulse">{{ $breachCount }}</span>
-                                @endif
+                            <x-nav-link :href="route('admin.damage-reports.index')" :active="request()->routeIs('admin.damage-reports.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                <div class="flex items-center gap-2">
+                                     <span class="w-1 h-1 rounded-full {{ request()->routeIs('admin.damage-reports.*') ? 'bg-red-500 shadow-[0_0_8px_rgba(239,68,68,1)]' : 'bg-gray-700' }}"></span>
+                                     {{ __('Integrity') }}
+                                </div>
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.support.index')" :active="request()->routeIs('admin.support.*')">
-                                {{ __('Support') }}
+                        @elseif(auth()->user()->role === 'customer')
+                            <x-nav-link :href="route('home')" :active="request()->routeIs('home')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                {{ __('Market') }}
                             </x-nav-link>
-                            <x-nav-link :href="route('admin.settings.index')" :active="request()->routeIs('admin.settings.*')">
-                                {{ __('Registry') }}
-                            </x-nav-link>
-                        @else
-                            {{-- Customer Links --}}
-                            <x-nav-link :href="route('customer.bookings.index')" :active="request()->routeIs('customer.bookings.*')">
-                                {{ __('My Trips') }}
+                            <x-nav-link :href="route('customer.bookings.index')" :active="request()->routeIs('customer.bookings.*')" class="px-4 py-2 rounded-xl hover:bg-white/5 transition-all text-[11px] font-black uppercase tracking-widest">
+                                {{ __('Trips') }}
                             </x-nav-link>
                             @php
                                 $isVerified = \App\Models\Verification::where('user_id', auth()->id())->where('status', 'approved')->exists();
                             @endphp
                             @if(!$isVerified)
-                                <x-nav-link :href="route('customer.verifications.index')" :active="request()->routeIs('customer.verifications.*')" class="text-amber-500 font-bold">
-                                    {{ __('Verify Account') }}
+                                <x-nav-link :href="route('customer.verifications.index')" :active="request()->routeIs('customer.verifications.*')" class="text-amber-500 font-bold px-4 py-2 rounded-xl">
+                                    {{ __('Verify') }}
                                     <span class="ms-1 w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
                                 </x-nav-link>
                             @endif
@@ -78,74 +108,52 @@
                     @endauth
                 </div>
             </div>
-
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6 gap-4">
-                
-                <!-- Notifications Bell -->
-                <div class="relative" x-data="{ open: false }">
-                    <button @click="open = !open" class="text-gray-400 hover:text-white transition-colors relative">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                        @if(auth()->user()->unreadNotifications->count() > 0)
-                            <span class="absolute -top-1 -right-1 flex h-4 w-4">
-                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                                <span class="relative inline-flex rounded-full h-4 w-4 bg-indigo-500 text-[10px] items-center justify-center font-bold text-white">{{ auth()->user()->unreadNotifications->count() }}</span>
-                            </span>
-                        @endif
-                    </button>
-
-                    <div x-show="open" @click.away="open = false" class="absolute right-0 mt-3 w-80 bg-gray-900 border border-white/10 rounded-2xl shadow-2xl z-50 overflow-hidden" x-cloak>
-                        <div class="px-4 py-3 bg-white/5 border-b border-white/10 text-xs font-black uppercase tracking-widest text-gray-500">Notifications</div>
-                        <div class="p-2 border-t border-white/5">
-                        <a href="{{ route('notifications.index') }}" class="block w-full py-2 text-center text-[10px] font-black uppercase tracking-widest text-indigo-400 hover:text-indigo-300 transition-colors">See all activity</a>
-                    </div>    <div class="max-h-96 overflow-y-auto">
-                            @forelse(auth()->user()->unreadNotifications->take(5) as $notification)
-                                <div class="px-4 py-3 hover:bg-white/5 border-b border-white/5 transition-colors">
-                                    <p class="text-xs text-white">{{ $notification->data['message'] ?? 'New update received' }}</p>
-                                    <p class="text-[10px] text-gray-500 mt-1">{{ $notification->created_at->diffForHumans() }}</p>
-                                </div>
-                            @empty
-                                <div class="px-4 py-8 text-center text-xs text-gray-600 italic">No new notifications</div>
-                            @endforelse
-                        </div>
+ 
+            <!-- User Auth Profile -->
+            <div class="hidden sm:flex sm:items-center sm:ms-6 gap-6">
+                @auth
+                    <!-- Notifications Bell -->
+                    <div class="p-1 px-4 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 hover:border-indigo-500/30 transition-all flex items-center h-10">
+                        <livewire:notification-bell />
                     </div>
-                </div>
 
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-300 hover:text-white focus:outline-none transition ease-in-out duration-150">
-                            <div>{{ Auth::user()->name }}</div>
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center p-1 px-4 bg-indigo-600/10 hover:bg-indigo-600 hover:text-white transition-all duration-300 rounded-2xl border border-indigo-500/20 group h-10">
+                                <div class="text-[10px] font-black uppercase tracking-widest mr-3">{{ Auth::user()->name }}</div>
+                                <div class="w-6 h-6 rounded-lg bg-gray-950 flex items-center justify-center text-[8px] font-black border border-white/10 group-hover:border-indigo-400 transition-all">
+                                    {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
+                                </div>
+                            </button>
+                        </x-slot>
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                        <x-slot name="content">
+                            <x-dropdown-link :href="route('profile.edit')" class="text-[10px] font-black uppercase tracking-widest">
+                                {{ __('Registry Profile') }}
                             </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-            </div>
 
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault(); this.closest('form').submit();"
+                                        class="text-[10px] font-black uppercase tracking-widest text-red-400 transition-colors">
+                                    {{ __('Terminate Session') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
+                @else
+                    <div class="flex items-center gap-4">
+                        <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Log In</a>
+                        <a href="{{ route('register') }}" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)]">Join Network</a>
+                    </div>
+                @endauth
+            </div>
+ 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-300 hover:bg-gray-800 focus:outline-none focus:bg-gray-800 focus:text-gray-300 transition duration-150 ease-in-out">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-xl text-gray-400 hover:text-gray-300 hover:bg-gray-800 transition duration-150 ease-in-out border border-white/5">
                     <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -154,38 +162,14 @@
             </div>
         </div>
     </div>
-
+ 
     <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden bg-gray-950 border-t border-white/5">
+        <div class="pt-4 pb-4 space-y-2 px-4 italic">
+            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="rounded-2xl border border-white/5 font-black uppercase text-[10px] tracking-widest">
+                {{ __('Tactical HQ') }}
             </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-300">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
-
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
-                    </x-responsive-nav-link>
-                </form>
-            </div>
+            <!-- Add other mobile links as needed, matching the theme -->
         </div>
     </div>
 </nav>
