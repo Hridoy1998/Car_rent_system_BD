@@ -12,25 +12,23 @@
 
         <!-- Email Address -->
         <div>
-            <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username" 
-                class="block w-full rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:border-indigo-500 focus:ring-indigo-500/50 placeholder-gray-500 transition-colors shadow-inner px-4 py-2.5" placeholder="john@example.com">
-            <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-500" />
+            <x-input-label for="email" value="Email" />
+            <x-text-input id="email" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="john@example.com" class="mt-1" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div>
             <div class="flex justify-between items-center mb-1">
-                <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+                <x-input-label for="password" value="Password" />
                 @if (Route::has('password.request'))
                     <a class="text-xs text-indigo-400 hover:text-indigo-300 transition-colors" href="{{ route('password.request') }}">
                         Forgot password?
                     </a>
                 @endif
             </div>
-            <input id="password" type="password" name="password" required autocomplete="current-password" 
-                class="block w-full rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:border-indigo-500 focus:ring-indigo-500/50 placeholder-gray-500 transition-colors shadow-inner px-4 py-2.5" placeholder="••••••••">
-            <x-input-error :messages="$errors->get('password')" class="mt-2 text-sm text-red-500" />
+            <x-text-input id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••" class="mt-1" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Remember Me -->
@@ -42,9 +40,9 @@
         </div>
 
         <div class="pt-6">
-            <button type="submit" class="w-full flex justify-center py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl font-bold shadow-[0_0_15px_rgba(79,70,229,0.3)] hover:shadow-[0_0_25px_rgba(79,70,229,0.5)] transition-all duration-300 border border-white/10 text-lg">
+            <x-primary-button class="w-full py-3 text-lg">
                 Sign In
-            </button>
+            </x-primary-button>
         </div>
 
 

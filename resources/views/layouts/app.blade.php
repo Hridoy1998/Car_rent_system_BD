@@ -42,17 +42,17 @@
             }
         </style>
     </head>
-    <body class="font-sans antialiased text-gray-100 bg-gray-950" x-data="{ sidebarOpen: false, sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true' }" x-init="$watch('sidebarCollapsed', value => localStorage.setItem('sidebarCollapsed', value))">
+    <body class="font-sans antialiased text-gray-100 bg-gray-950" x-data="{ sidebarOpen: false, sidebarCollapsed: localStorage.getItem('sidebarCollapsed') === 'true', sidebarHovered: false }" x-init="$watch('sidebarCollapsed', value => localStorage.setItem('sidebarCollapsed', value))">
         <div class="min-h-screen flex bg-gray-950 relative overflow-hidden">
             <!-- Neon background glows -->
             <div class="absolute top-[-10rem] left-[-10rem] w-[40rem] h-[40rem] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse-neon"></div>
             <div class="absolute bottom-[-10rem] right-[-10rem] w-[40rem] h-[40rem] bg-purple-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse-neon" style="animation-delay: 2s"></div>
 
-            <!-- Sidebar -->
+            <!-- Sidebar Station -->
             @include('layouts.sidebar')
 
             <!-- Main Content Area -->
-            <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <div class="flex-1 flex flex-col min-w-0 overflow-hidden lg:pl-20 transition-all duration-300" :class="{ 'lg:pl-64': !sidebarCollapsed && !sidebarHovered }">
                 @include('layouts.navigation')
                 <x-live-notifications />
 

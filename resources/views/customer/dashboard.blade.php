@@ -41,7 +41,7 @@
                     @foreach($actionQueue as $action)
                         <a href="{{ $action['link'] }}" class="flex items-center gap-6 p-6 bg-gray-950/60 border border-white/5 rounded-3xl hover:border-red-500/30 transition-all group/action shadow-xl">
                             <div class="w-14 h-14 rounded-2xl {{ $action['priority'] === 'critical' ? 'bg-red-500/20 text-red-500 border-red-500/20' : 'bg-amber-500/10 text-amber-500 border-amber-500/20' }} border flex items-center justify-center text-xl shadow-inner group-hover/action:scale-110 transition-transform">
-                                @if($action['type'] === 'PAYMENT') 💳 @else ⚠️ @endif
+                                @if($action['type'] === 'PAYMENT') 💳 @elseif($action['type'] === 'VERIFICATION') 🛡️ @else ⚠️ @endif
                             </div>
                             <div class="flex-1">
                                 <div class="text-[10px] font-black {{ $action['priority'] === 'critical' ? 'text-red-500' : 'text-amber-500' }} uppercase tracking-widest mb-1">{{ $action['title'] }}</div>
@@ -193,14 +193,26 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     @forelse($wishlist as $fav)
-                    <div class="group relative bg-gray-900/40 backdrop-blur-2xl border border-white/5 p-6 rounded-[2.5rem] shadow-2xl transition-all hover:scale-[1.02] hover:bg-gray-900/60 overflow-hidden">
+                    <div x-data="{ saving: false, removed: false }" x-show="!removed" x-transition.opacity.duration.500ms class="group relative bg-gray-900/40 backdrop-blur-2xl border border-white/5 p-6 rounded-[2.5rem] shadow-2xl transition-all hover:scale-[1.02] hover:bg-gray-900/60 overflow-hidden">
                         <div class="aspect-video rounded-3xl overflow-hidden border border-white/5 shadow-2xl relative mb-6">
                             <img src="{{ $fav->car->primary_image_url }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
                             <!-- Favorite Toggle (Remove) -->
-                             <form action="{{ route('customer.favorites.toggle', $fav->car) }}" method="POST" class="absolute top-4 right-4 z-20">
+                             <form @submit.prevent="
+                                saving = true;
+                                fetch('{{ route('customer.favorites.toggle', $fav->car) }}', {
+                                    method: 'POST',
+                                    headers: {
+                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                        'Accept': 'application/json'
+                                    }
+                                }).then(res => {
+                                    if(res.ok) removed = true;
+                                }).finally(() => saving = false)
+                             " class="absolute top-4 right-4 z-20">
                                 @csrf
-                                <button type="submit" class="p-2 bg-indigo-600 text-white rounded-xl shadow-xl transition-all hover:scale-110 active:scale-90 border border-indigo-400/50">
-                                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.657 0L10 6.343l1.172-1.171a4 4 0 115.657 5.657L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+                                <button type="submit" :disabled="saving" class="p-2 bg-indigo-600 hover:bg-gray-800 text-white hover:text-gray-400 rounded-xl shadow-xl transition-all hover:scale-110 active:scale-90 border border-indigo-400/50 hover:border-gray-600 disabled:opacity-50">
+                                    <svg x-show="!saving" class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.657 0L10 6.343l1.172-1.171a4 4 0 115.657 5.657L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"></path></svg>
+                                    <svg x-show="saving" class="w-4 h-4 animate-spin text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                                 </button>
                              </form>
                              <div class="absolute bottom-4 left-4">

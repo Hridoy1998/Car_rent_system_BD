@@ -9,40 +9,37 @@
 
         <!-- Name -->
         <div>
-            <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Full Name</label>
-            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" 
-                class="block w-full rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:border-indigo-500 focus:ring-indigo-500/50 placeholder-gray-500 transition-colors shadow-inner px-4 py-2.5" placeholder="John Doe">
-            <x-input-error :messages="$errors->get('name')" class="mt-2 text-sm text-red-500" />
+            <x-input-label for="name" value="Full Name" />
+            <x-text-input id="name" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="John Doe" class="mt-1" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
         <!-- Email Address -->
         <div>
-            <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" 
-                class="block w-full rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:border-indigo-500 focus:ring-indigo-500/50 placeholder-gray-500 transition-colors shadow-inner px-4 py-2.5" placeholder="john@example.com">
-            <x-input-error :messages="$errors->get('email')" class="mt-2 text-sm text-red-500" />
+            <x-input-label for="email" value="Email Address" />
+            <x-text-input id="email" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="john@example.com" class="mt-1" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Phone Number -->
         <div>
-            <label for="phone" class="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
-            <input id="phone" type="text" name="phone" value="{{ old('phone') }}" required autocomplete="tel" 
-                class="block w-full rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:border-indigo-500 focus:ring-indigo-500/50 placeholder-gray-500 transition-colors shadow-inner px-4 py-2.5" placeholder="+880 1712-345678">
-            <x-input-error :messages="$errors->get('phone')" class="mt-2 text-sm text-red-500" />
+            <x-input-label for="phone" value="Phone Number" />
+            <x-text-input id="phone" type="text" name="phone" :value="old('phone')" required autocomplete="tel" placeholder="+880 1712-345678" class="mt-1" />
+            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
         </div>
 
         <!-- Profile Photo -->
         <div>
-            <label for="profile_photo" class="block text-sm font-medium text-gray-300 mb-1">Profile Photo (Optional)</label>
+            <x-input-label for="profile_photo" value="Profile Photo (Optional)" />
             <input id="profile_photo" type="file" name="profile_photo" accept="image/*"
-                class="block w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-500/10 file:text-indigo-400 hover:file:bg-indigo-500/20 transition-colors border border-gray-700 rounded-xl bg-gray-900/50 cursor-pointer">
+                class="block w-full text-sm text-gray-400 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-semibold file:bg-indigo-500/10 file:text-indigo-400 hover:file:bg-indigo-500/20 transition-colors border border-gray-700 rounded-xl bg-gray-900/50 cursor-pointer mt-1">
             <p class="mt-1 text-xs text-gray-500">Max size 2MB (JPEG, PNG, JPG, GIF).</p>
-            <x-input-error :messages="$errors->get('profile_photo')" class="mt-2 text-sm text-red-500" />
+            <x-input-error :messages="$errors->get('profile_photo')" class="mt-2" />
         </div>
 
         <!-- Account Type (Role) -->
         <div class="pt-2">
-            <label class="block text-sm font-medium text-gray-300 mb-3">I want to register as a:</label>
+            <x-input-label value="I want to register as a:" class="mb-3" />
             <div class="grid grid-cols-2 gap-4">
                 <label class="relative flex flex-col items-center justify-center p-4 border border-gray-700 rounded-xl cursor-pointer hover:bg-gray-800/50 transition-colors group has-[:checked]:bg-indigo-500/10 has-[:checked]:border-indigo-500/50">
                     <input type="radio" name="role" value="customer" class="peer sr-only" checked>
@@ -68,23 +65,21 @@
                     </div>
                 </label>
             </div>
-            <x-input-error :messages="$errors->get('role')" class="mt-2 text-sm text-red-500" />
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <!-- Password -->
         <div class="pt-2">
-            <label for="password" class="block text-sm font-medium text-gray-300 mb-1">Password</label>
-            <input id="password" type="password" name="password" required autocomplete="new-password" 
-                class="block w-full rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:border-indigo-500 focus:ring-indigo-500/50 placeholder-gray-500 transition-colors shadow-inner px-4 py-2.5" placeholder="••••••••">
-            <x-input-error :messages="$errors->get('password')" class="mt-2 text-sm text-red-500" />
+            <x-input-label for="password" value="Password" />
+            <x-text-input id="password" type="password" name="password" required autocomplete="new-password" placeholder="••••••••" class="mt-1" />
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
         <!-- Confirm Password -->
         <div>
-            <label for="password_confirmation" class="block text-sm font-medium text-gray-300 mb-1">Confirm Password</label>
-            <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" 
-                class="block w-full rounded-xl bg-gray-900/50 border border-gray-700 text-white focus:border-indigo-500 focus:ring-indigo-500/50 placeholder-gray-500 transition-colors shadow-inner px-4 py-2.5" placeholder="••••••••">
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2 text-sm text-red-500" />
+            <x-input-label for="password_confirmation" value="Confirm Password" />
+            <x-text-input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" placeholder="••••••••" class="mt-1" />
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
         <div class="flex items-center justify-between pt-6">
@@ -92,9 +87,9 @@
                 Already registered?
             </a>
 
-            <button type="submit" class="px-6 py-2.5 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white rounded-xl font-semibold shadow-[0_0_15px_rgba(79,70,229,0.3)] hover:shadow-[0_0_25px_rgba(79,70,229,0.5)] transition-all duration-300 border border-white/10">
+            <x-primary-button>
                 Create Account
-            </button>
+            </x-primary-button>
         </div>
     </form>
 </x-guest-layout>

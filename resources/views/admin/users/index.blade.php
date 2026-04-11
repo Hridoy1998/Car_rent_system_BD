@@ -40,7 +40,7 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-white/5 text-[9px] font-black uppercase tracking-[0.3em] text-gray-600">
+                            <tr class="border-b border-white/5 text-[9px] font-black uppercase tracking-[0.3em] text-gray-600 whitespace-nowrap">
                                 <th class="py-6 pl-8">Operator Identity</th>
                                 <th class="py-6">Authorization & Verification</th>
                                 <th class="py-6">Platform Tenure</th>
@@ -50,7 +50,7 @@
                         <tbody class="divide-y divide-white/5">
                             @foreach ($users as $user)
                                 <tr class="group hover:bg-white/[0.03] transition-all duration-300">
-                                    <td class="py-5 pl-8">
+                                    <td class="py-5 pl-8 whitespace-nowrap">
                                         <div class="flex items-center gap-4">
                                             <div class="relative group/photo">
                                                 <div class="w-11 h-11 rounded-2xl bg-gray-800 border-2 border-white/5 flex items-center justify-center text-md font-black text-indigo-400 overflow-hidden shadow-2xl transition-all group-hover/photo:border-indigo-500/50">
@@ -72,7 +72,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-5">
+                                    <td class="py-5 whitespace-nowrap">
                                         <div class="flex flex-col gap-1.5">
                                             @if($user->role === 'admin')
                                                 <span class="w-fit px-2 py-0.5 bg-red-500/10 text-red-500 text-[8px] font-black uppercase tracking-widest rounded-md border border-red-500/20">Auth: Supreme Admin</span>
@@ -90,11 +90,11 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-5">
+                                    <td class="py-5 whitespace-nowrap">
                                         <div class="text-[10px] font-black text-gray-400 font-mono">{{ $user->created_at->format('Y-m-d') }}</div>
                                         <div class="text-[8px] text-gray-600 font-black uppercase tracking-widest mt-0.5">{{ $user->created_at->diffForHumans() }}</div>
                                     </td>
-                                    <td class="py-5 text-right pr-8">
+                                    <td class="py-5 text-right pr-8 whitespace-nowrap">
                                         <div class="flex items-center justify-end gap-2">
                                             <a href="{{ route('admin.users.show', $user) }}" class="p-2.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl border border-white/5 transition-all shadow-lg" title="Full Identity Audit">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>

@@ -36,10 +36,10 @@
             @endif
 
             <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 overflow-hidden shadow-2xl rounded-[2.5rem]">
-                <div class="p-8">
+                <div class="p-8 overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="border-b border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
+                            <tr class="border-b border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 whitespace-nowrap">
                                 <th class="pb-6 pl-4">Asset Identity</th>
                                 <th class="pb-6">Registrar (Owner)</th>
                                 <th class="pb-6">Revenue Potential</th>
@@ -49,7 +49,7 @@
                         <tbody class="divide-y divide-white/5">
                             @forelse ($cars as $car)
                                 <tr class="group hover:bg-white/[0.02] transition-colors">
-                                    <td class="py-6 pl-4">
+                                    <td class="py-6 pl-4 whitespace-nowrap">
                                         <div class="flex items-center gap-4">
                                             <div class="w-20 h-14 rounded-2xl overflow-hidden border border-white/10 flex-shrink-0 shadow-lg relative">
                                                 @if($car->images->count() > 0)
@@ -80,7 +80,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-6">
+                                    <td class="py-6 whitespace-nowrap">
                                         <a href="{{ route('profiles.show', $car->owner) }}" class="flex items-center gap-3 group/owner">
                                             <div class="w-9 h-9 rounded-xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-xs font-black text-indigo-400 group-hover/owner:bg-indigo-600 group-hover/owner:text-white transition-all">
                                                 {{ substr($car->owner->name, 0, 1) }}
@@ -95,7 +95,7 @@
                                         <div class="text-sm font-black text-white">৳{{ number_format($car->price_per_day) }}<span class="text-[10px] text-gray-500 font-bold uppercase ml-1">Daily</span></div>
                                         <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-0.5">৳{{ number_format($car->price_per_month) }} Monthly</div>
                                     </td>
-                                    <td class="py-6 text-right pr-4">
+                                    <td class="py-6 text-right pr-4 whitespace-nowrap">
                                         <div class="flex justify-end gap-2 items-center">
                                             <a href="{{ route('admin.cars.show', $car) }}" class="p-2.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl border border-white/5 transition-all shadow-lg" title="Audit Asset">
                                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>

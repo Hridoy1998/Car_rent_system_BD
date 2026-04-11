@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-public-layout>
     <div class="py-24 bg-gray-950 relative overflow-hidden">
         <div class="absolute top-0 left-0 w-[800px] h-[800px] bg-emerald-600/5 rounded-full blur-[150px] -z-10"></div>
         
@@ -74,4 +74,4 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-public-layout>

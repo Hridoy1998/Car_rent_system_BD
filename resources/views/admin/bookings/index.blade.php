@@ -40,8 +40,7 @@
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr
-                                class="border-b border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
+                            <tr class="border-b border-white/5 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500 whitespace-nowrap">
                                 <th class="py-8 pl-8">Lease Manifest (Asset)</th>
                                 <th class="py-8">Stakeholders (Host/Client)</th>
                                 <th class="py-8">Financials</th>
@@ -53,7 +52,7 @@
                             @foreach ($bookings as $booking)
                                 <tr class="group hover:bg-white/[0.02] transition-colors cursor-pointer"
                                     onclick="window.location='{{ route('admin.bookings.show', $booking) }}'">
-                                    <td class="py-8 pl-8">
+                                    <td class="py-8 pl-8 whitespace-nowrap">
                                         <div class="flex items-center gap-4">
                                             <div
                                                 class="w-16 h-12 rounded-xl overflow-hidden border border-white/10 shadow-lg relative bg-gray-800">
@@ -74,7 +73,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-8">
+                                    <td class="py-8 whitespace-nowrap">
                                         <div class="space-y-4" onclick="event.stopPropagation()">
                                             <div class="flex items-center gap-3">
                                                 <div
@@ -92,7 +91,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="py-8">
+                                    <td class="py-8 whitespace-nowrap">
                                         <div class="text-[11px] font-black text-white">৳
                                             {{ number_format($booking->total_price, 0) }}</div>
                                         <div class="flex items-center gap-1.5 mt-1">
@@ -105,7 +104,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td class="py-8">
+                                    <td class="py-8 whitespace-nowrap">
                                         @if($booking->status === 'pending')
                                             <span
                                                 class="px-2 py-0.5 bg-yellow-500/10 text-yellow-400 border border-yellow-500/20 rounded-md text-[8px] font-black uppercase tracking-widest">Pending</span>
@@ -123,7 +122,7 @@
                                             {{ \Carbon\Carbon::parse($booking->start_date)->format('M d') }} -
                                             {{ \Carbon\Carbon::parse($booking->end_date)->format('M d') }}</div>
                                     </td>
-                                    <td class="py-8 text-right pr-8">
+                                    <td class="py-8 text-right pr-8 whitespace-nowrap">
                                         <div class="flex items-center justify-end gap-6">
                                             <div class="flex justify-end gap-2" onclick="event.stopPropagation()">
                                                 <a href="{{ route('admin.bookings.show', $booking) }}"

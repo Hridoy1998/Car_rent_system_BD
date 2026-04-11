@@ -87,6 +87,25 @@ class DashboardController extends Controller
             ];
         }
 
+        // D. Identity Verification Protocol
+        if (!$verification || $verification->status === 'rejected') {
+            $actionQueue[] = [
+                'type' => 'VERIFICATION',
+                'title' => 'Identity Protocol Required',
+                'desc' => $verification ? 'Previous verification was rejected. Re-upload credentials for audit.' : 'Complete identity verification to unlock booking privileges.',
+                'link' => route('customer.verifications.index'),
+                'priority' => 'critical',
+            ];
+        } elseif ($verification->status === 'pending') {
+            $actionQueue[] = [
+                'type' => 'VERIFICATION',
+                'title' => 'Verification Pending',
+                'desc' => 'Admin is reviewing your credentials. Deployment access pending.',
+                'link' => route('customer.verifications.index'),
+                'priority' => 'medium',
+            ];
+        }
+
         // 4. Reputation Shield
         $reputation = [
             'avg_rating' => UserReview::where('reviewee_id', $user->id)->avg('rating') ?: 0,

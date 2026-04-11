@@ -262,11 +262,11 @@
 
                     <!-- Damage Reports Section -->
                     @if($booking->damageReports->count() > 0 || auth()->user()->role === 'owner')
-                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
+                    <div x-data="{ reportOpen: false }" class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
                         <div class="flex items-center justify-between mb-8">
                                 <h4 class="text-xl font-bold text-white">Incident Reports</h4>
                                 @if(auth()->user()->role === 'owner' && $booking->status === 'completed')
-                                    <button onclick="document.getElementById('report-panel').classList.toggle('hidden')" class="text-xs font-bold text-indigo-400 border border-indigo-400/20 px-3 py-1.5 rounded-lg hover:bg-indigo-400/10 transition-all">New Report</button>
+                                    <button @click="reportOpen = !reportOpen" class="text-xs font-bold text-indigo-400 border border-indigo-400/20 px-3 py-1.5 rounded-lg hover:bg-indigo-400/10 transition-all">New Report</button>
                                 @endif
                         </div>
 
@@ -331,7 +331,7 @@
                         </div>
 
                         <!-- Damage Report Form Panel -->
-                        <div id="report-panel" class="hidden mt-8 pt-8 border-t border-white/10">
+                        <div x-cloak x-show="reportOpen" x-transition class="mt-8 pt-8 border-t border-white/10">
                              <form action="{{ route('owner.bookings.damage-reports.store', $booking) }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
@@ -341,7 +341,7 @@
                                     </div>
                                     <div class="space-y-2">
                                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-1">Evidence Photo</label>
-                                        <input type="file" name="image" required class="w-full text-xs text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:bg-gray-800 file:text-indigo-400 hover:file:bg-gray-700">
+                                        <input type="file" name="image" required class="w-full text-xs text-gray-500 file:mr-4 file:py-3 file:px-4 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:bg-gray-800 file:text-indigo-400 hover:file:bg-gray-700 cursor-pointer">
                                     </div>
                                     <div class="md:col-span-2 space-y-2">
                                         <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-1">Description of damage</label>
@@ -350,7 +350,7 @@
                                 </div>
                                 <div class="flex gap-4">
                                     <button type="submit" class="flex-1 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-600/20 uppercase tracking-widest">Submit Report</button>
-                                    <button type="button" onclick="document.getElementById('report-panel').classList.add('hidden')" class="px-8 py-4 bg-gray-800 text-gray-400 font-black rounded-2xl hover:bg-gray-700 transition-all uppercase tracking-widest">Cancel</button>
+                                    <button type="button" @click="reportOpen = false" class="px-8 py-4 bg-gray-800 text-gray-400 font-black rounded-2xl hover:bg-gray-700 transition-all uppercase tracking-widest">Cancel</button>
                                 </div>
                              </form>
                         </div>
