@@ -55,6 +55,7 @@
             <div class="flex-1 flex flex-col min-w-0 overflow-hidden lg:pl-20 transition-all duration-300" :class="{ 'lg:pl-64': !sidebarCollapsed && !sidebarHovered }">
                 @include('layouts.navigation')
                 <x-live-notifications />
+                <x-flash-messages />
 
                 <div class="flex-1 overflow-y-auto custom-scrollbar">
                     <!-- Page Heading -->

@@ -17,7 +17,7 @@ class UpdateBookingRequest extends FormRequest
 
         // Owner: full operational lifecycle | Customer: cancel & return request
         $allowedStatuses = match ($user?->role) {
-            'owner' => 'in:approved,rejected,ongoing,returned,completed',
+            'owner' => 'in:approved,rejected,cancelled,ongoing,returned,completed',
             'customer' => 'in:cancelled,returning',
             'admin' => 'in:approved,rejected,completed,cancelled,ongoing,returned,returning',
             default => 'in:cancelled',
@@ -26,6 +26,8 @@ class UpdateBookingRequest extends FormRequest
         return [
             'status' => 'required|string|'.$allowedStatuses,
             'start_odo' => 'nullable|integer|min:0',
+            'start_fuel' => 'nullable|string|in:Empty,1/4,1/2,3/4,Full',
+            'handover_image' => 'nullable|image|max:5120',
             'renter_end_odo' => 'nullable|integer|min:0',
             'end_odo' => 'nullable|integer|min:0',
             'end_fuel' => 'nullable|string|in:Empty,1/4,1/2,3/4,Full',

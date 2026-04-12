@@ -110,6 +110,14 @@
                                             <button type="submit" class="w-full py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-black rounded-2xl shadow-xl shadow-emerald-600/20 transition-all uppercase tracking-widest">Confirm & Pay</button>
                                         </form>
                                     @endif
+
+                                    @if(in_array($booking->status, ['pending', 'approved']))
+                                        <form action="{{ route('customer.bookings.update', $booking) }}" method="POST">
+                                            @csrf @method('PUT')
+                                            <input type="hidden" name="status" value="cancelled">
+                                            <button type="submit" class="w-full py-3 bg-white/5 border border-white/10 text-gray-400 hover:bg-red-600 hover:text-white font-bold rounded-xl uppercase tracking-widest text-[10px] transition-all">Cancel Booking</button>
+                                        </form>
+                                    @endif
                                 @endif
 
                                 @if(auth()->user()->role === 'owner')

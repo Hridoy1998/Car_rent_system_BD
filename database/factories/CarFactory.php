@@ -26,9 +26,9 @@ class CarFactory extends Factory
             'Mitsubishi' => ['Pajero', 'Lancer', 'Outlander', 'ASX'],
         ];
 
-        $brand = fake()->randomElement(array_keys($brands));
-        $model = fake()->randomElement($brands[$brand]);
-        $year = fake()->numberBetween(2015, 2024);
+        $brand = $this->faker->randomElement(array_keys($brands));
+        $model = $this->faker->randomElement($brands[$brand]);
+        $year = $this->faker->numberBetween(2015, 2024);
 
         return [
             'user_id' => User::factory(),
@@ -36,17 +36,17 @@ class CarFactory extends Factory
             'brand' => $brand,
             'model' => $model,
             'year' => $year,
-            'type' => fake()->randomElement(['SUV', 'Sedan', 'Hatchback', 'Van', 'Other']),
-            'transmission' => fake()->randomElement(['Manual', 'Auto']),
-            'fuel_type' => fake()->randomElement(['Petrol', 'Octane', 'Hybrid', 'CNG']),
-            'license_plate' => strtoupper(fake()->bothify('???-####')),
-            'color' => fake()->safeColorName(),
-            'seats' => fake()->numberBetween(4, 7),
-            'price_per_day' => fake()->numberBetween(3000, 10000),
-            'price_per_month' => fake()->numberBetween(70000, 200000),
-            'location' => fake()->randomElement(['Gulshan, Dhaka', 'Banani, Dhaka', 'Uttara, Dhaka', 'Dhanmondi, Dhaka', 'Chattogram']),
-            'description' => fake()->paragraph(),
-            'status' => fake()->randomElement(['pending', 'approved', 'rejected']),
+            'type' => $this->faker->randomElement(['SUV', 'Sedan', 'Hatchback', 'Van', 'Other']),
+            'transmission' => $this->faker->randomElement(['Manual', 'Auto']),
+            'fuel_type' => $this->faker->randomElement(['Petrol', 'Octane', 'Hybrid', 'CNG']),
+            'license_plate' => strtoupper($this->faker->bothify('???-####')),
+            'color' => $this->faker->safeColorName(),
+            'seats' => $this->faker->numberBetween(4, 7),
+            'price_per_day' => $this->faker->numberBetween(3000, 10000),
+            'price_per_month' => $this->faker->numberBetween(70000, 200000),
+            'location' => $this->faker->randomElement(['Gulshan, Dhaka', 'Banani, Dhaka', 'Uttara, Dhaka', 'Dhanmondi, Dhaka', 'Chattogram']),
+            'description' => $this->faker->paragraph(),
+            'status' => $this->faker->randomElement(['pending', 'approved', 'rejected']),
         ];
     }
 }

@@ -58,7 +58,7 @@ class BookingController extends Controller
 
         // Sovereign Fleet Lifecycle: can only progress forward
         $allowed = [
-            'pending' => ['approved', 'rejected'],
+            'pending' => ['approved', 'rejected', 'cancelled'],
             'approved' => ['ongoing', 'cancelled'],
             'ongoing' => ['returning', 'returned'], // Owner can skip 'returning' if needed
             'returning' => ['returned'],            // Owner verifies renter's request
@@ -88,6 +88,12 @@ class BookingController extends Controller
                 $updateData['checked_in_at'] = now();
                 if (isset($validated['start_odo'])) {
                     $updateData['start_odo'] = $validated['start_odo'];
+                }
+                if (isset($validated['start_fuel'])) {
+                    $updateData['start_fuel'] = $validated['start_fuel'];
+                }
+                if ($request->hasFile('handover_image')) {
+                    $updateData['handover_image'] = $request->file('handover_image')->store('handovers', 'public');
                 }
             } elseif ($newStatus === 'returned') {
                 $updateData['returned_at'] = now();

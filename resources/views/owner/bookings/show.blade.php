@@ -141,6 +141,20 @@
                         </h4>
 
                         <div class="space-y-4">
+                            @if(session('error'))
+                                <div class="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl mb-4">
+                                    <p class="text-[9px] font-black text-red-400 uppercase tracking-widest leading-tight">{{ session('error') }}</p>
+                                </div>
+                            @endif
+                            
+                            @if($errors->any())
+                                <div class="p-4 bg-red-500/10 border border-red-500/20 rounded-2xl mb-4">
+                                    @foreach($errors->all() as $error)
+                                        <p class="text-[9px] font-black text-red-400 uppercase tracking-widest mb-1 last:mb-0">{{ $error }}</p>
+                                    @endforeach
+                                </div>
+                            @endif
+
                             @if($booking->status === 'pending')
                                 <form action="{{ route('owner.bookings.update', $booking) }}" method="POST">
                                     @csrf @method('PUT')
@@ -153,9 +167,20 @@
                                     <button class="w-full py-5 bg-white/5 border border-white/5 text-gray-500 hover:bg-red-600 hover:text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all">Abort Access</button>
                                 </form>
                             @elseif($booking->status === 'approved' && $booking->payment_status === 'paid')
-                                <button onclick="document.getElementById('handover-pnl').classList.toggle('hidden')" class="w-full py-5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-emerald-600/20 transition-all">Log Handover</button>
+                                <button onclick="togglePanel('handover-pnl')" class="w-full py-5 bg-emerald-600 hover:bg-emerald-500 text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl shadow-emerald-600/20 transition-all">Log Handover</button>
+                                <form action="{{ route('owner.bookings.update', $booking) }}" method="POST" class="mt-4">
+                                    @csrf @method('PUT')
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button class="w-full py-4 bg-white/5 border border-white/5 text-gray-500 hover:bg-red-600 hover:text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all">Abort Access</button>
+                                </form>
+                            @elseif($booking->status === 'approved')
+                                <form action="{{ route('owner.bookings.update', $booking) }}" method="POST">
+                                    @csrf @method('PUT')
+                                    <input type="hidden" name="status" value="cancelled">
+                                    <button class="w-full py-5 bg-white/5 border border-white/5 text-gray-500 hover:bg-red-600 hover:text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl transition-all">Abort Access</button>
+                                </form>
                             @elseif(in_array($booking->status, ['ongoing', 'returning']))
-                                <button onclick="document.getElementById('audit-pnl').classList.toggle('hidden')" class="w-full py-5 bg-white text-gray-950 hover:bg-purple-600 hover:text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl transition-all">Conduct Final Audit</button>
+                                <button onclick="togglePanel('audit-pnl')" class="w-full py-5 bg-white text-gray-950 hover:bg-purple-600 hover:text-white font-black text-xs uppercase tracking-[0.2em] rounded-2xl shadow-xl transition-all">Conduct Final Audit</button>
                             @elseif($booking->status === 'returned' && !$booking->isLocked())
                                 <form action="{{ route('owner.bookings.update', $booking) }}" method="POST">
                                     @csrf @method('PUT')
@@ -269,16 +294,36 @@
                     <span class="w-1.5 h-10 bg-emerald-500 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.5)]"></span>
                     LOG HANDOVER ARTIFACTS
                  </h3>
-                 <form action="{{ route('owner.bookings.update', $booking) }}" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                 <form action="{{ route('owner.bookings.update', $booking) }}" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-10">
                     @csrf @method('PUT')
                     <input type="hidden" name="status" value="ongoing">
-                    <div class="space-y-4">
-                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-6">Current Odometer Verification</label>
-                        <input type="number" name="start_odo" required placeholder="Verify KM exactly..." class="w-full bg-gray-950 border border-white/10 rounded-3xl p-6 text-white text-xl font-mono focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <div class="space-y-6">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-6">Current Odometer Verification</label>
+                            <input type="number" name="start_odo" required value="{{ $booking->start_odo }}" placeholder="Verify KM exactly..." class="w-full bg-gray-950 border border-white/10 rounded-3xl p-6 text-white text-xl font-mono focus:ring-2 focus:ring-emerald-500 outline-none transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-6">Starting Fuel Level</label>
+                            <select name="start_fuel" required class="w-full bg-gray-950 border border-white/10 rounded-3xl p-6 text-white text-xs font-black uppercase tracking-widest focus:ring-2 focus:ring-emerald-500 outline-none appearance-none">
+                                <option value="Full">Full (Nominal)</option>
+                                <option value="3/4">3/4 Level</option>
+                                <option value="1/2">1/2 Level</option>
+                                <option value="1/4">1/4 Level</option>
+                                <option value="Empty">Empty (Critical)</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="space-y-4 flex flex-col justify-end">
-                        <p class="text-[10px] text-emerald-400 font-bold italic mb-4">"Verify physical driver license and matching user bio-data before releasing the asset keys."</p>
-                        <button type="submit" class="w-full py-6 bg-emerald-600 hover:bg-emerald-500 font-black text-white uppercase tracking-widest rounded-3xl shadow-xl shadow-emerald-600/20 transition-all">Authorize Deployed State</button>
+                    <div class="space-y-6 flex flex-col justify-between">
+                        <div class="space-y-2">
+                            <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-6">Handover Condition Artifact</label>
+                            <input type="file" name="handover_image" class="w-full text-xs text-gray-500 file:mr-4 file:py-4 file:px-8 file:rounded-3xl file:border-0 file:text-[10px] file:font-black file:uppercase file:tracking-widest file:bg-emerald-500/10 file:text-emerald-400 hover:file:bg-emerald-500/20 transition-all border border-white/5 bg-gray-950 rounded-[2.5rem] p-4">
+                        </div>
+                        <div class="pt-4">
+                            <p class="text-[9px] text-emerald-400 font-bold italic mb-5 leading-relaxed bg-emerald-500/5 p-4 rounded-2xl border border-emerald-500/10">
+                                "Verify physical driver license and matching user bio-data before releasing the asset keys. Protocol enforcement required."
+                            </p>
+                            <button type="submit" class="w-full py-6 bg-emerald-600 hover:bg-emerald-500 font-black text-white uppercase tracking-widest rounded-3xl shadow-2xl shadow-emerald-600/30 transition-all hover:scale-[1.02]">Authorize Deployed State</button>
+                        </div>
                     </div>
                  </form>
             </div>
@@ -379,6 +424,27 @@
         window.onload = () => {
             const container = document.getElementById('messages-hub');
             if (container) container.scrollTop = container.scrollHeight;
+        }
+
+        function togglePanel(id) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            
+            // Close other panels
+            ['handover-pnl', 'audit-pnl', 'review-pnl'].forEach(pId => {
+                if (pId !== id) {
+                    const p = document.getElementById(pId);
+                    if (p) p.classList.add('hidden');
+                }
+            });
+
+            el.classList.toggle('hidden');
+            
+            if (!el.classList.contains('hidden')) {
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
         }
     </script>
 </x-app-layout>
