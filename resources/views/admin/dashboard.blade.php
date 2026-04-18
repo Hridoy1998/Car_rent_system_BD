@@ -213,11 +213,7 @@
                                     <td class="px-6 lg:px-10 py-10">
                                         <div class="flex items-center space-x-6 min-w-0">
                                             <div class="w-14 h-14 rounded-2xl bg-[#050B1A] border-2 border-white/10 flex items-center justify-center text-sm font-black text-white shadow-2xl overflow-hidden transition-transform duration-700 group-hover:scale-110 italic shrink-0">
-                                                @if($booking->customer->profile_photo)
-                                                    <img src="{{ Storage::url($booking->customer->profile_photo) }}" class="w-full h-full object-cover">
-                                                @else
-                                                    {{ strtoupper(substr($booking->customer->name, 0, 1)) }}
-                                                @endif
+                                                <img src="{{ $booking->customer->profile_photo_url }}" class="w-full h-full object-cover">
                                             </div>
                                             <div class="truncate">
                                                 <a href="{{ route('profiles.show', $booking->customer) }}" class="text-[13px] font-black text-[#050B1A] hover:text-orange-500 transition-colors block uppercase tracking-tight italic truncate">{{ $booking->customer->name }}</a>

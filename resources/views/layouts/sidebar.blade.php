@@ -124,8 +124,8 @@
     <div class="p-6 border-t border-white/5 bg-black/20 transition-all duration-300 overflow-hidden">
         @auth
             <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-[1rem] bg-orange-500 flex items-center justify-center text-sm font-black text-white shadow-2xl shadow-orange-500/20 shrink-0 italic">
-                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                <div class="w-10 h-10 rounded-[1rem] bg-orange-500 border border-white/10 shadow-2xl shadow-orange-500/20 shrink-0 overflow-hidden italic">
+                    <img src="{{ auth()->user()->profile_photo_url }}" class="w-full h-full object-cover">
                 </div>
                 <div x-show="!sidebarCollapsed || sidebarHovered || sidebarOpen" class="flex-1 min-w-0 transition-opacity duration-300">
                     <div class="text-[11px] font-black text-white truncate uppercase italic">{{ auth()->user()->name }}</div>

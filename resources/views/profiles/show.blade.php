@@ -12,11 +12,7 @@
                 <div class="relative group">
                     <div class="absolute -inset-10 bg-blue-500/10 blur-[80px] rounded-full group-hover:bg-blue-500/20 transition-all duration-1000"></div>
                     <div class="relative w-48 h-48 lg:w-72 lg:h-72 rounded-[4rem] bg-gray-900 border-8 border-white/5 shadow-2xl overflow-hidden flex items-center justify-center text-8xl font-black text-white italic transform transition-transform duration-700 group-hover:scale-105">
-                        @if($user->profile_photo)
-                            <img src="{{ Storage::url($user->profile_photo) }}" class="w-full h-full object-cover">
-                        @else
-                            {{ substr($user->name, 0, 1) }}
-                        @endif
+                        <img src="{{ $user->profile_photo_url }}" class="w-full h-full object-cover">
                     </div>
                     @if($user->is_verified)
                         <div class="absolute -bottom-4 -right-4 w-20 h-20 bg-emerald-500 rounded-[2rem] border-8 border-[#050B1A] flex items-center justify-center shadow-2xl" title="Identity Verified">

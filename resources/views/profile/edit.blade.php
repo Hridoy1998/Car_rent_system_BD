@@ -36,13 +36,7 @@
                     <div class="bg-white border border-gray-100 rounded-[2.5rem] p-8 lg:p-10 text-center shadow-[0_40px_100px_rgba(0,0,0,0.03)] sticky top-28 transition-all hover:translate-y-[-4px]">
                         <div class="relative inline-block group mb-8">
                             <div class="w-32 h-32 md:w-36 md:h-36 rounded-[2.5rem] overflow-hidden bg-gray-50 border-2 border-orange-500 shadow-xl mx-auto relative group-hover:shadow-orange-500/20 transition-all">
-                                @if(auth()->user()->profile_photo)
-                                    <img src="{{ Storage::url(auth()->user()->profile_photo) }}" class="w-full h-full object-cover" id="avatar-preview">
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-5xl font-black text-orange-500 bg-orange-500/5 italic" id="avatar-placeholder">
-                                        {{ substr(auth()->user()->name, 0, 1) }}
-                                    </div>
-                                @endif
+                                <img src="{{ auth()->user()->profile_photo_url }}" class="w-full h-full object-cover" id="avatar-preview">
                                 <label for="profile_photo" class="absolute inset-0 bg-[#050B1A]/80 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-[10px] font-black uppercase tracking-[0.3em] italic backdrop-blur-sm">
                                     Override Asset
                                 </label>

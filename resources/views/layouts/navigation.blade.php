@@ -50,8 +50,8 @@
                             <div class="text-[11px] font-black text-gray-900 uppercase tracking-tighter italic">{{ auth()->user()->name }}</div>
                             <div class="text-[9px] text-orange-500 font-black uppercase tracking-widest italic">{{ auth()->user()->role }}</div>
                         </div>
-                        <div class="w-12 h-12 rounded-2xl bg-[#050B1A] flex items-center justify-center text-[12px] font-black text-white border border-white/10 shadow-2xl transition-transform group-hover:scale-105 active:scale-95 italic">
-                             {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                        <div class="w-12 h-12 rounded-2xl bg-[#050B1A] border border-white/10 shadow-2xl overflow-hidden transition-transform group-hover:scale-105 active:scale-95 italic">
+                             <img src="{{ auth()->user()->profile_photo_url }}" class="w-full h-full object-cover">
                         </div>
                     </button>
                     </x-slot>
