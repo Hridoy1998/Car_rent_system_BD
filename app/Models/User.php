@@ -74,6 +74,15 @@ class User extends Authenticatable
         return $this->hasOne(Verification::class)->latestOfMany();
     }
 
+    public function getProfilePhotoUrlAttribute(): string
+    {
+        if ($this->profile_photo) {
+            return \Illuminate\Support\Facades\Storage::disk('public')->url($this->profile_photo);
+        }
+
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&background=050B1A&color=fff';
+    }
+
     public function isVerified(): bool
     {
         return $this->verifications()->where('status', 'approved')->exists();

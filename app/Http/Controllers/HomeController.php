@@ -20,9 +20,18 @@ class HomeController extends Controller
 
     public function show(Car $car)
     {
-        $car->load(['images', 'owner', 'reviews']);
+        $car->load(['images', 'owner', 'reviews.customer']);
 
-        return view('cars.show', compact('car'));
+        $relatedCars = Car::available()
+            ->where('id', '!=', $car->id)
+            ->where(function ($query) use ($car) {
+                $query->where('brand', $car->brand)
+                    ->orWhere('type', $car->type);
+            })
+            ->take(3)
+            ->get();
+
+        return view('cars.show', compact('car', 'relatedCars'));
     }
 
     public function search(Request $request)

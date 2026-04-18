@@ -138,7 +138,7 @@ class Car extends Model
         }
 
         if ($primary) {
-            return asset('storage/'.$primary->image_path);
+            return \Illuminate\Support\Facades\Storage::disk('public')->url($primary->image_path);
         }
 
         return 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?auto=format&fit=crop&q=80&w=800'; // Sleek dark car fallback

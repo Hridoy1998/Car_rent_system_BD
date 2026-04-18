@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,33 +14,34 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-['Inter'] text-slate-200 antialiased bg-gray-950 min-h-screen flex flex-col items-center pt-8 pb-16 relative overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+    <body class="font-['Inter'] text-gray-900 antialiased bg-gray-50 min-h-screen flex flex-col items-center pt-8 pb-16 relative overflow-x-hidden selection:bg-blue-900 selection:text-white">
         
-        <!-- Background Neon Glows -->
-        <div class="fixed top-[-20%] left-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-indigo-600/30 to-purple-600/30 blur-[120px] pointer-events-none"></div>
-        <div class="fixed bottom-[-20%] right-[-10%] w-[600px] h-[600px] rounded-full bg-gradient-to-br from-purple-600/20 to-pink-600/20 blur-[120px] pointer-events-none"></div>
+        <!-- Abstract Background Shapes (CRS BD Style) -->
+        <div class="fixed top-0 right-0 w-1/3 h-full bg-blue-900 rounded-bl-[100px] skew-x-[-5deg] translate-x-20 opacity-[0.03] pointer-events-none"></div>
+        <div class="fixed bottom-0 left-0 w-1/3 h-full bg-orange-500 rounded-tr-[100px] skew-x-[5deg] -translate-x-20 opacity-[0.03] pointer-events-none"></div>
  
         <div class="w-full sm:max-w-md mx-auto relative z-10 px-6 py-12">
             <!-- Logo Section -->
             <div class="flex flex-col items-center justify-center mb-10">
-                <a href="/" class="flex flex-col items-center gap-4 group">
-                    <x-application-logo class="w-20 h-20 shadow-2xl shadow-indigo-500/20" />
-                    <span class="text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-indigo-400 tracking-tighter italic uppercase">
-                        Car Rent System
-                    </span>
+                <a href="/" class="flex flex-col items-center gap-2 group">
+                    <div class="flex items-center">
+                        <span class="text-4xl font-black text-blue-900 tracking-tight italic">CRS</span>
+                        <span class="text-4xl font-black text-orange-500 tracking-tight italic ml-2">BD</span>
+                    </div>
+                    <span class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] mt-1 ml-1">Car Rent System Bangladesh</span>
                 </a>
             </div>
  
             <!-- Content Card -->
-            <div class="w-full px-8 py-8 bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl shadow-black/50 sm:rounded-3xl relative overflow-hidden">
-                <!-- Subtle inner top glow -->
-                <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent"></div>
+            <div class="w-full px-8 py-10 bg-white border border-gray-100 shadow-2xl shadow-blue-900/5 sm:rounded-3xl relative overflow-hidden">
+                <!-- Subtle indicator line -->
+                <div class="absolute top-0 left-0 right-0 h-1.5 bg-orange-500"></div>
                 
                 {{ $slot }}
             </div>
             
-            <p class="text-center text-gray-700 text-[10px] font-black uppercase tracking-widest mt-8">
-                &copy; {{ date('Y') }} Car Rent System • Premium Car Rental
+            <p class="text-center text-gray-600 text-[10px] font-bold uppercase tracking-widest mt-8">
+                &copy; {{ date('Y') }} <span class="text-blue-900">CRS BD</span> • Tactical Registry
             </p>
         </div>
     </body>

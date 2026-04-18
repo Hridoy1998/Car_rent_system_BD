@@ -1,80 +1,91 @@
-<nav class="h-20 bg-gray-950/50 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-6 shrink-0 z-40">
-    <!-- Sidebar Toggle & Brand Presence -->
-    <div class="flex items-center gap-6">
+<nav class="h-24 bg-white/40 backdrop-blur-xl border-b border-gray-100/50 flex items-center justify-between px-4 lg:px-8 shrink-0 z-40 sticky top-0 transition-all duration-500">
+    <!-- Sidebar Toggle & Strategic Brand Presence -->
+    <div class="flex items-center gap-4 lg:gap-8">
         <button 
             @click="sidebarOpen = !sidebarOpen" 
-            class="p-2.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl border border-white/5 transition-all lg:hidden"
+            class="p-2.5 bg-white/80 hover:bg-white text-gray-500 hover:text-orange-500 rounded-xl border border-gray-100 shadow-sm transition-all lg:hidden"
         >
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
 
         <button 
             @click="sidebarCollapsed = !sidebarCollapsed" 
-            class="hidden lg:flex p-2.5 bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white rounded-xl border border-white/5 transition-all"
-            :title="sidebarCollapsed ? 'Activate Static Expansion' : 'Enable Dynamic Hover Mode'"
+            class="hidden lg:flex p-3 bg-white/80 hover:bg-white text-gray-400 hover:text-orange-500 rounded-2xl border border-gray-100 shadow-sm transition-all group"
+            :title="sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'"
         >
-            <!-- Pin Icon (Locked/Static) -->
-            <svg x-show="!sidebarCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
-            <!-- Expand Icon (Dynamic/Hover) -->
-            <svg x-show="sidebarCollapsed" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"></path></svg>
+            <svg x-show="!sidebarCollapsed" class="w-5 h-5 transition-transform group-hover:-translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
+            <svg x-show="sidebarCollapsed" class="w-5 h-5 transition-transform group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 5l7 7-7 7M5 5l7 7-7 7"></path></svg>
         </button>
 
-        <div class="hidden sm:flex items-center gap-3">
-             <div class="w-1 h-6 bg-indigo-500 rounded-full"></div>
-             <h2 class="text-sm font-black text-white uppercase tracking-[0.2em] italic">Command Deck</h2>
+        <div class="hidden sm:flex items-center gap-4">
+             <div class="flex gap-1.5">
+                 <div class="w-1.5 h-6 bg-orange-500 rounded-full italic"></div>
+                 <div class="w-1.5 h-4 bg-orange-500/30 rounded-full mt-1"></div>
+             </div>
+             <div class="flex flex-col">
+                 <h2 class="text-[11px] font-black text-gray-900 uppercase tracking-[0.3em] italic leading-none">Operational Nexus</h2>
+                 <p class="text-[8px] text-gray-400 font-bold uppercase tracking-widest mt-1">CRS BD Central Command</p>
+             </div>
         </div>
     </div>
 
-    <!-- Global Actions Terminal -->
-    <div class="flex items-center gap-4">
+    <!-- Global Actions Terminal: High Fidelity Module -->
+    <div class="flex items-center gap-6">
         @auth
             <!-- Live Signal Terminal -->
+            <div class="hidden sm:flex items-center gap-3 px-4 py-2 bg-emerald-50 border border-emerald-100 rounded-xl">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="text-[9px] font-black text-emerald-700 uppercase tracking-widest">System Secure</span>
+            </div>
+
             <livewire:notification-bell />
 
             <!-- Identity Module -->
-            <div class="h-10 w-px bg-white/5 mx-2"></div>
+            <div class="h-10 w-px bg-gray-200/50 mx-2"></div>
             
             <x-dropdown align="right" width="64">
                 <x-slot name="trigger">
-                    <button class="flex items-center gap-3 px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-2xl border border-white/5 transition-all group">
-                        <div class="text-right hidden sm:block">
-                            <div class="text-[9px] font-black text-white uppercase tracking-tighter">{{ auth()->user()->name }}</div>
-                            <div class="text-[7px] text-gray-500 font-bold uppercase tracking-widest">{{ auth()->user()->role }}</div>
+                    <button class="flex items-center gap-4 group">
+                        <div class="text-right hidden md:block">
+                            <div class="text-[11px] font-black text-gray-900 uppercase tracking-tighter italic">{{ auth()->user()->name }}</div>
+                            <div class="text-[9px] text-orange-500 font-black uppercase tracking-widest italic">{{ auth()->user()->role }}</div>
                         </div>
-                        <div class="w-8 h-8 rounded-xl bg-gray-950 flex items-center justify-center text-[10px] font-black text-indigo-400 border border-white/10 group-hover:border-indigo-500">
+                        <div class="w-12 h-12 rounded-2xl bg-[#050B1A] flex items-center justify-center text-[12px] font-black text-white border border-white/10 shadow-2xl transition-transform group-hover:scale-105 active:scale-95 italic">
                              {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                         </div>
                     </button>
                     </x-slot>
 
                     <x-slot name="content">
-                        <div class="px-4 py-3 border-b border-white/5">
-                            <p class="text-[8px] font-black text-gray-500 uppercase tracking-widest mb-1">Authenticated Email</p>
-                            <p class="text-[10px] font-bold text-white truncate">{{ auth()->user()->email }}</p>
+                        <div class="px-5 py-4 border-b border-gray-100 bg-[#050B1A] rounded-t-[1.5rem]">
+                            <p class="text-[9px] font-black text-white/30 uppercase tracking-[0.2em] mb-1 italic">Administrative Identity</p>
+                            <p class="text-[11px] font-black text-white truncate italic">{{ auth()->user()->email }}</p>
                         </div>
 
-                        <x-dropdown-link :href="route('profile.edit')" class="text-[10px] font-black uppercase tracking-widest flex items-center gap-2 py-3">
-                            <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                            {{ __('Account Protocol') }}
-                        </x-dropdown-link>
+                        <div class="p-2">
+                             <x-dropdown-link :href="route('profile.edit')" class="text-[11px] font-black text-gray-700 uppercase tracking-widest flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-gray-50 hover:text-blue-900 transition-all italic">
+                                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                {{ __('Identity Profile') }}
+                            </x-dropdown-link>
+                        </div>
 
-                        <div class="border-t border-white/5">
+                        <div class="p-2 border-t border-gray-100">
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <x-dropdown-link :href="route('logout')"
                                         onclick="event.preventDefault(); this.closest('form').submit();"
-                                        class="text-[10px] font-black uppercase tracking-widest text-red-500 flex items-center gap-2 py-3">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                                    {{ __('Exit System') }}
+                                        class="text-[11px] font-black text-red-600 uppercase tracking-widest flex items-center gap-3 py-4 px-4 rounded-xl hover:bg-red-50 transition-all italic">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                    {{ __('Deauthorize Session') }}
                                 </x-dropdown-link>
                             </form>
                         </div>
                     </x-slot>
                 </x-dropdown>
         @else
-            <div class="flex items-center gap-4">
-                <a href="{{ route('login') }}" class="text-[10px] font-black uppercase tracking-widest text-gray-400 hover:text-white transition-colors">Login</a>
-                <a href="{{ route('register') }}" class="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-indigo-600/20">Register Access</a>
+            <div class="flex items-center gap-6">
+                <a href="{{ route('login') }}" class="text-[10px] font-black text-gray-600 hover:text-orange-500 transition-colors uppercase tracking-[0.3em] italic">Access Portal</a>
+                <a href="{{ route('register') }}" class="px-8 py-3.5 bg-orange-500 hover:bg-orange-600 text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all shadow-xl shadow-orange-500/20 italic">Register Gateway</a>
             </div>
         @endauth
     </div>

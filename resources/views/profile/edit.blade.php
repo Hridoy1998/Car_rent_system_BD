@@ -1,142 +1,172 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-bold text-2xl text-white leading-tight">
-            {{ __('Account Settings') }}
+        <h2 class="font-black text-2xl text-gray-900 leading-tight uppercase tracking-[0.2em] italic">
+            {{ __('Identity Registry') }}
         </h2>
     </x-slot>
 
-    <div class="py-12 bg-gray-950 min-h-screen relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[150px] -z-10"></div>
+    <!-- Institutional Hero: Identity Safeguard Banner -->
+    <div class="relative py-16 md:py-24 mb-8 md:mb-12 -mt-12 overflow-hidden rounded-b-[2rem] md:rounded-b-[4rem] group">
+        <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" style="background-image: url('{{ asset('images/assets/institutional_safety_banner.png') }}');"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-[#050B1A] via-[#050B1A]/80 to-transparent"></div>
         
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
+        <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="max-w-2xl" data-aos="fade-right">
+                <div class="inline-flex items-center gap-3 px-4 py-2 bg-orange-500/10 border border-orange-500/20 rounded-xl mb-6 backdrop-blur-md">
+                    <span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>
+                    <span class="text-[10px] font-black text-orange-500 uppercase tracking-[0.3em] italic">Identity Protocol Active</span>
+                </div>
+                <h1 class="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter italic leading-[0.9]">
+                    Identity <br> <span class="text-orange-500">Safeguard.</span>
+                </h1>
+                <p class="text-gray-300 font-bold text-xs uppercase tracking-[0.3em] mt-6 italic opacity-80 leading-relaxed max-w-md">
+                    Managing administrative credentials and persona integrity with institutional precision.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="pb-24 px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
             
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-12">
                 
-                <!-- Left: Profile Preview & Photo -->
-                <div class="lg:col-span-1 space-y-6">
-                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 text-center shadow-2xl sticky top-28">
-                        <div class="relative inline-block group mb-6">
-                            <div class="w-32 h-32 rounded-[2.5rem] overflow-hidden bg-gray-800 border-2 border-indigo-500 shadow-[0_0_30px_rgba(79,70,229,0.3)] mx-auto relative">
+                <!-- Left: Identity Pulse & Visual Identity -->
+                <div class="lg:col-span-1 space-y-8">
+                    <div class="bg-white border border-gray-100 rounded-[2.5rem] p-8 lg:p-10 text-center shadow-[0_40px_100px_rgba(0,0,0,0.03)] sticky top-28 transition-all hover:translate-y-[-4px]">
+                        <div class="relative inline-block group mb-8">
+                            <div class="w-32 h-32 md:w-36 md:h-36 rounded-[2.5rem] overflow-hidden bg-gray-50 border-2 border-orange-500 shadow-xl mx-auto relative group-hover:shadow-orange-500/20 transition-all">
                                 @if(auth()->user()->profile_photo)
                                     <img src="{{ Storage::url(auth()->user()->profile_photo) }}" class="w-full h-full object-cover" id="avatar-preview">
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center text-4xl font-black text-indigo-400 bg-indigo-500/10" id="avatar-placeholder">
+                                    <div class="w-full h-full flex items-center justify-center text-5xl font-black text-orange-500 bg-orange-500/5 italic" id="avatar-placeholder">
                                         {{ substr(auth()->user()->name, 0, 1) }}
                                     </div>
                                 @endif
-                                <label for="profile_photo" class="absolute inset-0 bg-black/60 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-[10px] font-black uppercase tracking-widest">
-                                    Change Photo
+                                <label for="profile_photo" class="absolute inset-0 bg-[#050B1A]/80 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-[10px] font-black uppercase tracking-[0.3em] italic backdrop-blur-sm">
+                                    Override Asset
                                 </label>
                             </div>
                         </div>
 
-                        <h3 class="text-xl font-bold text-white">{{ auth()->user()->name }}</h3>
-                        <p class="text-xs text-indigo-400 font-bold uppercase tracking-widest mt-1">{{ auth()->user()->role }}</p>
+                        <h3 class="text-2xl font-black text-[#050B1A] uppercase italic tracking-tighter leading-none">{{ auth()->user()->name }}</h3>
+                        <div class="inline-flex items-center gap-2 mt-3 px-3 py-1 bg-gray-50 border border-gray-100 rounded-lg">
+                            <span class="w-1.5 h-1.5 bg-orange-500 rounded-full"></span>
+                            <p class="text-[9px] text-gray-500 font-black uppercase tracking-[0.2em] italic">{{ auth()->user()->role }} Account</p>
+                        </div>
 
-                        <div class="mt-8 pt-8 border-t border-white/5 space-y-4">
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="text-gray-500 font-bold uppercase tracking-widest">Verification Status</span>
-                                <span class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-black uppercase text-[9px]">{{ auth()->user()->is_verified ? 'Verified' : 'Pending' }}</span>
+                        <div class="mt-10 pt-10 border-t border-gray-50 space-y-6">
+                            <div class="flex items-center justify-between">
+                                <span class="text-[9px] text-gray-400 font-black uppercase tracking-widest italic leading-none">Integrity Status</span>
+                                <span class="px-3 py-1 rounded-lg {{ auth()->user()->is_verified ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-orange-50 text-orange-600 border border-orange-100' }} font-black uppercase text-[8px] tracking-widest italic">
+                                    {{ auth()->user()->is_verified ? 'Verified Asset' : 'Pending Verification' }}
+                                </span>
                             </div>
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="text-gray-500 font-bold uppercase tracking-widest">Joined</span>
-                                <span class="text-gray-300 font-mono">{{ auth()->user()->created_at->format('M Y') }}</span>
+                            <div class="flex items-center justify-between">
+                                <span class="text-[9px] text-gray-400 font-black uppercase tracking-widest italic leading-none">Commissioned</span>
+                                <span class="text-[#050B1A] font-black text-[10px] uppercase tracking-tighter italic">{{ auth()->user()->created_at->format('d M Y') }}</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Detailed Forms -->
-                <div class="lg:col-span-2 space-y-8">
+                <!-- Right: Management Blueprints -->
+                <div class="lg:col-span-2 space-y-8 md:space-y-12">
                     
-                    <!-- Bio & Personal Info -->
-                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 shadow-2xl">
-                        <div class="flex items-center gap-4 mb-10">
-                            <div class="w-12 h-12 bg-indigo-500/10 rounded-2xl flex items-center justify-center text-indigo-400 border border-indigo-500/20">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                    <!-- Form Phase: Information Registry -->
+                    <div class="bg-white border border-gray-100 rounded-[2.5rem] p-8 md:p-14 shadow-[0_40px_100px_rgba(0,0,0,0.03)] transition-all hover:shadow-2xl">
+                        <div class="flex items-center gap-6 mb-12">
+                            <div class="w-14 h-14 bg-[#050B1A] rounded-2xl flex items-center justify-center text-white shadow-xl border border-white/10 italic font-black text-xl">
+                                ID
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-white">Personal Blueprint</h4>
-                                <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest">Update your identity and reachability</p>
+                                <h4 class="text-2xl font-black text-[#050B1A] uppercase italic tracking-tighter leading-none">Persona Blueprint</h4>
+                                <p class="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em] mt-2 italic items-center flex gap-3">
+                                    Operational ID Management
+                                    <span class="w-8 h-px bg-gray-100"></span>
+                                </p>
                             </div>
                         </div>
 
-                        <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="space-y-8">
+                        <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" class="space-y-10">
                             @csrf
                             @method('patch')
                             <input type="file" name="profile_photo" id="profile_photo" class="hidden" onchange="previewAvatar(event)">
 
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ms-2">Full Name</label>
-                                    <x-text-input id="name" name="name" type="text" class="w-full bg-gray-950 border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500" :value="old('name', $user->name)" required />
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-10">
+                                <div class="space-y-3">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] ml-1 italic leading-none">Full Legal Name</label>
+                                    <input id="name" name="name" type="text" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-5 text-[#050B1A] font-black text-xs uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all italic placeholder-gray-300" value="{{ old('name', $user->name) }}" required />
                                     <x-input-error class="mt-2" :messages="$errors->get('name')" />
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ms-2">Email Identity</label>
-                                    <x-text-input id="email" name="email" type="email" class="w-full bg-gray-950 border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500" :value="old('email', $user->email)" required />
+                                <div class="space-y-3">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] ml-1 italic leading-none">Neural Email Proxy</label>
+                                    <input id="email" name="email" type="email" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-5 text-[#050B1A] font-black text-xs uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all italic placeholder-gray-300" value="{{ old('email', $user->email) }}" required />
                                     <x-input-error class="mt-2" :messages="$errors->get('email')" />
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ms-2">Phone Contact</label>
-                                    <input id="phone" name="phone" type="text" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500 outline-none transition-all" value="{{ old('phone', $user->phone) }}" placeholder="+880 1XXX-XXXXXX" />
+                                <div class="space-y-3">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] ml-1 italic leading-none">Operational Phone</label>
+                                    <input id="phone" name="phone" type="text" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-5 text-[#050B1A] font-black text-xs uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all italic placeholder-gray-400" value="{{ old('phone', $user->phone) }}" placeholder="+880 1XXX-XXXXXX" />
                                     <x-input-error class="mt-2" :messages="$errors->get('phone')" />
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ms-2">Home Base (Address)</label>
-                                    <input id="address" name="address" type="text" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white focus:ring-indigo-500 outline-none transition-all" value="{{ old('address', $user->address) }}" placeholder="e.g. Dhaka, Bangladesh" />
+                                <div class="space-y-3">
+                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] ml-1 italic leading-none">Sector Base (Address)</label>
+                                    <input id="address" name="address" type="text" class="w-full bg-gray-50 border-2 border-gray-100 rounded-2xl p-5 text-[#050B1A] font-black text-xs uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all italic placeholder-gray-400" value="{{ old('address', $user->address) }}" placeholder="e.g. DHAKA HQ, BD" />
                                     <x-input-error class="mt-2" :messages="$errors->get('address')" />
                                 </div>
                             </div>
 
-                            <div class="space-y-2">
-                                <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] ms-2">Short Bio</label>
-                                <textarea id="bio" name="bio" rows="4" class="w-full bg-gray-950 border border-white/5 rounded-3xl p-5 text-white focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-sm leading-relaxed" placeholder="Tell the community about yourself...">{{ old('bio', $user->bio) }}</textarea>
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black text-gray-500 uppercase tracking-[0.4em] ml-1 italic leading-none">Professional Narrative</label>
+                                <textarea id="bio" name="bio" rows="4" class="w-full bg-gray-50 border-2 border-gray-100 rounded-[2rem] p-6 text-[#050B1A] font-black text-xs uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 transition-all italic placeholder-gray-400 leading-relaxed" placeholder="DEFINE YOUR ROLE IN THE ECOSYSTEM...">{{ old('bio', $user->bio) }}</textarea>
                                 <x-input-error class="mt-2" :messages="$errors->get('bio')" />
                             </div>
 
-                            <div class="flex items-center gap-4 pt-4">
-                                <button type="submit" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-black rounded-2xl transition-all shadow-xl shadow-indigo-600/20 uppercase tracking-widest text-xs">Save Changes</button>
+                            <div class="flex items-center gap-6 pt-4">
+                                <button type="submit" class="px-12 py-5 bg-orange-500 hover:bg-[#050B1A] text-white font-black rounded-2xl transition-all shadow-xl shadow-orange-500/20 hover:shadow-[#050B1A]/20 uppercase tracking-[0.3em] text-[10px] italic">Commit Identity Changes</button>
                                 
                                 @if (session('status') === 'profile-updated')
                                     <p
                                         x-data="{ show: true }"
                                         x-show="show"
                                         x-transition
-                                        x-init="setTimeout(() => show = false, 2000)"
-                                        class="text-sm text-emerald-400 font-bold"
-                                    >{{ __('Updated successfully.') }}</p>
+                                        x-init="setTimeout(() => show = false, 3000)"
+                                        class="text-[10px] text-emerald-500 font-black uppercase tracking-widest italic"
+                                    >// PROTOCOL UPDATED SUCCESSFULLY</p>
                                 @endif
                             </div>
                         </form>
                     </div>
 
-                    <!-- Security: Password -->
-                    <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-10 shadow-2xl">
-                         <div class="flex items-center gap-4 mb-10">
-                            <div class="w-12 h-12 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-500/20">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    <!-- Security Phase: Encrypted Core -->
+                    <div class="bg-white border border-gray-100 rounded-[2.5rem] p-8 md:p-14 shadow-[0_40px_100px_rgba(0,0,0,0.03)] transition-all hover:shadow-2xl">
+                        <div class="flex items-center gap-6 mb-12">
+                            <div class="w-14 h-14 bg-orange-500 rounded-2xl flex items-center justify-center text-white shadow-xl border border-white/10 italic font-black text-xl">
+                                🔐
                             </div>
                             <div>
-                                <h4 class="text-xl font-bold text-white">Encrypted Core</h4>
-                                <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest">Update your security credentials</p>
+                                <h4 class="text-2xl font-black text-[#050B1A] uppercase italic tracking-tighter leading-none">Security Encryption</h4>
+                                <p class="text-[10px] text-gray-400 font-black uppercase tracking-[0.3em] mt-2 italic items-center flex gap-3">
+                                    Credential Core Maintenance
+                                    <span class="w-8 h-px bg-gray-100"></span>
+                                </p>
                             </div>
                         </div>
                         @include('profile.partials.update-password-form')
                     </div>
 
-                    <!-- Danger Zone -->
-                    <div class="bg-red-500/5 border border-red-500/10 rounded-[2.5rem] p-10 shadow-2xl">
-                         <div class="flex items-center gap-4 mb-6">
-                            <div class="w-10 h-10 bg-red-500/10 rounded-xl flex items-center justify-center text-red-500 border border-red-500/20">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                    <!-- Termination Phase: Danger Zone -->
+                    <div class="bg-red-50 border border-red-100 rounded-[2.5rem] p-8 md:p-14 shadow-lg">
+                        <div class="flex items-center gap-6 mb-8">
+                            <div class="w-12 h-12 bg-red-500/10 rounded-2xl flex items-center justify-center text-red-600 border border-red-500/20 italic font-black text-lg">
+                                !
                             </div>
                             <div>
-                                <h4 class="text-lg font-bold text-red-400">Purge Memory</h4>
-                                <p class="text-[10px] text-gray-600 font-black uppercase tracking-widest">Destroy this account permanently</p>
+                                <h4 class="text-xl font-black text-red-600 uppercase italic tracking-tighter leading-none">Memory Termination</h4>
+                                <p class="text-[10px] text-red-400 font-black uppercase tracking-[0.3em] mt-2 italic">Destroy identity permanently</p>
                             </div>
                         </div>
                         @include('profile.partials.delete-user-form')

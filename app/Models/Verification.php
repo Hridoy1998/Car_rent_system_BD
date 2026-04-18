@@ -11,6 +11,11 @@ class Verification extends Model
 
     protected $fillable = ['user_id', 'document_type', 'id_number', 'document_file', 'status'];
 
+    public function getDocumentFileUrlAttribute(): string
+    {
+        return \Illuminate\Support\Facades\Storage::disk('public')->url($this->document_file);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

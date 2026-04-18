@@ -1,0 +1,1603 @@
+{
+    "manifest_version": "1.0.23",
+    "title": "Autovia - Car Rental Services",
+    "page_builder": "elementor",
+    "kit_version": "1.0.0",
+    "templates": [
+        {
+            "name": "Global Kit Styles",
+            "screenshot": "screenshots\/global-kit-styles.jpg",
+            "source": "templates\/global.json",
+            "preview_url": "https:\/\/kits.yumnatype.com",
+            "type": "section",
+            "category": "page",
+            "metadata": {
+                "template_type": "global-styles",
+                "include_in_zip": "1",
+                "elementor_pro_required": null,
+                "additional_template_information": [
+                    "These are the global theme styles configured through the Elementor Theme Styles area."
+                ]
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Contact Us",
+            "screenshot": "screenshots\/contact-us.png",
+            "source": "templates\/contact-us.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/contact-us\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "About Us",
+            "screenshot": "screenshots\/about-us.png",
+            "source": "templates\/about-us.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/about-us\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Footer-Error 404",
+            "screenshot": "screenshots\/footer-error-404.png",
+            "source": "templates\/footer-error-404.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/footer-error-404\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-footer",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Footer",
+            "screenshot": "screenshots\/footer.png",
+            "source": "templates\/footer.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/footer\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-footer",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Header",
+            "screenshot": "screenshots\/header.png",
+            "source": "templates\/header.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/header\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-header",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Single Post",
+            "screenshot": "screenshots\/single-post.png",
+            "source": "templates\/single-post.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/single-post\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Home",
+            "screenshot": "screenshots\/home.png",
+            "source": "templates\/home.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/home\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Error 404",
+            "screenshot": "screenshots\/error-404.png",
+            "source": "templates\/error-404.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/error-404\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Metform-Booking Form Full",
+            "screenshot": "screenshots\/metform-booking-form-full.png",
+            "source": "templates\/metform-booking-form-full.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/metform-booking-form-full\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-other",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "FAQ",
+            "screenshot": "screenshots\/faq.png",
+            "source": "templates\/faq.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/faq\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Blog",
+            "screenshot": "screenshots\/blog.png",
+            "source": "templates\/blog.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/blog\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Our Team",
+            "screenshot": "screenshots\/our-team.png",
+            "source": "templates\/our-team.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/our-team\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Services",
+            "screenshot": "screenshots\/services.png",
+            "source": "templates\/services.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/services\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Service Details",
+            "screenshot": "screenshots\/service-details.png",
+            "source": "templates\/service-details.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/service-details\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Car Booking",
+            "screenshot": "screenshots\/car-booking.png",
+            "source": "templates\/car-booking.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/car-booking\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Car Details",
+            "screenshot": "screenshots\/car-details.png",
+            "source": "templates\/car-details.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/car-details\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Car Collection",
+            "screenshot": "screenshots\/car-collection.png",
+            "source": "templates\/car-collection.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/car-collection\/",
+            "type": "page",
+            "category": "page",
+            "metadata": {
+                "template_type": "single-page",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        },
+        {
+            "name": "Metform-Booking Form",
+            "screenshot": "screenshots\/metform-booking-form.png",
+            "source": "templates\/metform-booking-form.json",
+            "preview_url": "https:\/\/kits.yumnatype.com\/autovia\/template-kit\/metform-booking-form\/",
+            "type": "section",
+            "category": "section",
+            "metadata": {
+                "template_type": "section-other",
+                "include_in_zip": "1",
+                "elementor_pro_required": null
+            },
+            "elementor_pro_required": false
+        }
+    ],
+    "required_plugins": [
+        {
+            "name": "Jeg Elementor Kit",
+            "version": "2.6.13",
+            "file": "jeg-elementor-kit\/jeg-elementor-kit.php",
+            "author": "Jegtheme"
+        },
+        {
+            "name": "Elementor",
+            "version": "3.28.4",
+            "file": "elementor\/elementor.php",
+            "author": "Elementor.com"
+        },
+        {
+            "name": "Gum Elementor Addon",
+            "version": "1.3.13",
+            "file": "gum-elementor-addon\/gum-elementor-addon.php",
+            "author": "TemeGUM"
+        },
+        {
+            "name": "MetForm",
+            "version": "4.0.0",
+            "file": "metform\/metform.php",
+            "author": "Wpmet"
+        },
+        {
+            "name": "Ultimate Addons for Elementor Lite",
+            "version": "2.3.1",
+            "file": "header-footer-elementor\/header-footer-elementor.php",
+            "author": "Brainstorm Force"
+        },
+        {
+            "name": "ElementsKit Lite",
+            "version": "3.5.1",
+            "file": "elementskit-lite\/elementskit-lite.php",
+            "author": "Wpmet"
+        }
+    ],
+    "images": [
+        {
+            "filename": "4wd-car-parked-in-lupine-flower-blooming-on-highla-2025-03-25-15-24-43-utc-Copy-2-1-1.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/08\/4wd-car-parked-in-lupine-flower-blooming-on-highla-2025-03-25-15-24-43-utc-Copy-2-1-1-800x367.jpg",
+            "templates": [
+                {
+                    "source": "templates\/contact-us.json",
+                    "name": "Contact Us"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/single-post.json",
+                    "name": "Single Post"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/service-details.json",
+                    "name": "Service Details"
+                },
+                {
+                    "source": "templates\/car-booking.json",
+                    "name": "Car Booking"
+                },
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 199284,
+            "dimensions": [
+                1766,
+                811
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/4wd-car-parked-in-lupine-flower-blooming-on-highla-Q7G9AVG"
+        },
+        {
+            "filename": "Hero-Bg-Ornament-1.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/Hero-Bg-Ornament-1-800x287.png",
+            "templates": [
+                {
+                    "source": "templates\/contact-us.json",
+                    "name": "Contact Us"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/single-post.json",
+                    "name": "Single Post"
+                },
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/service-details.json",
+                    "name": "Service Details"
+                },
+                {
+                    "source": "templates\/car-booking.json",
+                    "name": "Car Booking"
+                },
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 90617,
+            "dimensions": [
+                1440,
+                516
+            ],
+            "image_source": "self_created",
+            "image_urls": "#"
+        },
+        {
+            "filename": "bg-ornament.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/08\/bg-ornament-800x581.png",
+            "templates": [
+                {
+                    "source": "templates\/contact-us.json",
+                    "name": "Contact Us"
+                },
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/car-booking.json",
+                    "name": "Car Booking"
+                }
+            ],
+            "filesize": 74776,
+            "dimensions": [
+                1440,
+                1045
+            ],
+            "image_source": "self_created",
+            "image_urls": "#"
+        },
+        {
+            "filename": "white-mid-size-crossover-suv-car-isolated-on-white-2025-02-16-04-14-03-utc.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/white-mid-size-crossover-suv-car-isolated-on-white-2025-02-16-04-14-03-utc-800x470.png",
+            "templates": [
+                {
+                    "source": "templates\/contact-us.json",
+                    "name": "Contact Us"
+                },
+                {
+                    "source": "templates\/services.json",
+                    "name": "Services"
+                },
+                {
+                    "source": "templates\/car-booking.json",
+                    "name": "Car Booking"
+                }
+            ],
+            "filesize": 95286,
+            "dimensions": [
+                900,
+                529
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/white-mid-size-crossover-suv-car-isolated-on-white-8GBDMB2"
+        },
+        {
+            "filename": "beautiful-modern-cars-at-luxury-dealership-salon-2025-03-18-18-18-38-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/beautiful-modern-cars-at-luxury-dealership-salon-2025-03-18-18-18-38-utc-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 150011,
+            "dimensions": [
+                2000,
+                1333
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/beautiful-modern-cars-at-luxury-dealership-salon-YWV5K5J"
+        },
+        {
+            "filename": "businessman-holding-car-keys-after-buying-automobi-2025-01-09-15-13-11-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/businessman-holding-car-keys-after-buying-automobi-2025-01-09-15-13-11-utc-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                },
+                {
+                    "source": "templates\/service-details.json",
+                    "name": "Service Details"
+                }
+            ],
+            "filesize": 120246,
+            "dimensions": [
+                2000,
+                1334
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/businessman-holding-car-keys-after-buying-automobi-CLGWXZU"
+        },
+        {
+            "filename": "logoipsum-6.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-6-800x145.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 47301,
+            "dimensions": [
+                1540,
+                280
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-7.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-7-800x176.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 33447,
+            "dimensions": [
+                1302,
+                287
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-9.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-9.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 41689,
+            "dimensions": [
+                735,
+                280
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-3.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-3-800x158.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 32289,
+            "dimensions": [
+                1414,
+                280
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-1.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-1-800x189.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 33642,
+            "dimensions": [
+                1183,
+                280
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-4.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-4-800x150.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 23906,
+            "dimensions": [
+                1120,
+                210
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-2.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-2-800x183.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 52027,
+            "dimensions": [
+                1225,
+                280
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-5.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-5-800x182.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 28347,
+            "dimensions": [
+                1232,
+                280
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "logoipsum-8.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logoipsum-8-800x179.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                }
+            ],
+            "filesize": 41024,
+            "dimensions": [
+                1218,
+                273
+            ],
+            "image_source": "cc0",
+            "image_urls": "https:\/\/logoipsum.com\/"
+        },
+        {
+            "filename": "concept-and-gift-idea-flat-lay-smart-car-key-with-2024-11-27-20-28-47-utc.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/concept-and-gift-idea-flat-lay-smart-car-key-with-2024-11-27-20-28-47-utc.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                },
+                {
+                    "source": "templates\/service-details.json",
+                    "name": "Service Details"
+                }
+            ],
+            "filesize": 104539,
+            "dimensions": [
+                512,
+                837
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/concept-and-gift-idea-flat-lay-smart-car-key-with--ZKQ4B2F"
+        },
+        {
+            "filename": "asian-mechanic-checking-and-opening-the-car-hood-i-2024-10-18-09-28-44-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/asian-mechanic-checking-and-opening-the-car-hood-i-2024-10-18-09-28-44-utc-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                },
+                {
+                    "source": "templates\/service-details.json",
+                    "name": "Service Details"
+                }
+            ],
+            "filesize": 162181,
+            "dimensions": [
+                2000,
+                1333
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/asian-mechanic-checking-and-opening-the-car-hood-i-6SY8EP6"
+        },
+        {
+            "filename": "man-s-hand-in-a-work-glove-holds-a-spanners-2025-01-08-03-00-28-utc.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/man-s-hand-in-a-work-glove-holds-a-spanners-2025-01-08-03-00-28-utc.png",
+            "templates": [
+                {
+                    "source": "templates\/about-us.json",
+                    "name": "About Us"
+                },
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/faq.json",
+                    "name": "FAQ"
+                },
+                {
+                    "source": "templates\/blog.json",
+                    "name": "Blog"
+                },
+                {
+                    "source": "templates\/service-details.json",
+                    "name": "Service Details"
+                }
+            ],
+            "filesize": 172565,
+            "dimensions": [
+                512,
+                919
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/mans-hand-in-a-work-glove-holds-a-spanners-UYEPSD5"
+        },
+        {
+            "filename": "logo-dark.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logo-dark.png",
+            "templates": [
+                {
+                    "source": "templates\/footer-error-404.json",
+                    "name": "Footer-Error 404"
+                },
+                {
+                    "source": "templates\/footer.json",
+                    "name": "Footer"
+                }
+            ],
+            "filesize": 6692,
+            "dimensions": [
+                512,
+                148
+            ],
+            "image_source": "self_created",
+            "image_urls": "#"
+        },
+        {
+            "filename": "Logo.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/Logo.png",
+            "templates": [
+                {
+                    "source": "templates\/header.json",
+                    "name": "Header"
+                }
+            ],
+            "filesize": 7965,
+            "dimensions": [
+                512,
+                147
+            ],
+            "image_source": "self_created",
+            "image_urls": "#"
+        },
+        {
+            "filename": "handsome-businessman-buying-new-car-at-auto-showro-2025-03-24-11-13-10-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/handsome-businessman-buying-new-car-at-auto-showro-2025-03-24-11-13-10-utc-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/single-post.json",
+                    "name": "Single Post"
+                }
+            ],
+            "filesize": 135798,
+            "dimensions": [
+                2000,
+                1333
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/handsome-businessman-buying-new-car-at-auto-showro-9Z3F4HT"
+        },
+        {
+            "filename": "first-aid-kit-concept-medicine-equipment-set-in-a-2025-01-08-03-04-02-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/first-aid-kit-concept-medicine-equipment-set-in-a-2025-01-08-03-04-02-utc-800x512.jpg",
+            "templates": [
+                {
+                    "source": "templates\/single-post.json",
+                    "name": "Single Post"
+                }
+            ],
+            "filesize": 138987,
+            "dimensions": [
+                2000,
+                1281
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/first-aid-kit-concept-medicine-equipment-set-in-a--6SG4XNP"
+        },
+        {
+            "filename": "highway-in-inner-mongolia-china-2024-10-11-20-53-44-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/highway-in-inner-mongolia-china-2024-10-11-20-53-44-utc-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                }
+            ],
+            "filesize": 229641,
+            "dimensions": [
+                1500,
+                1002
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/highway-in-inner-mongolia-china-J3LX38X"
+        },
+        {
+            "filename": "hero-car-shadow.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/08\/hero-car-shadow-800x369.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                }
+            ],
+            "filesize": 145071,
+            "dimensions": [
+                1500,
+                691
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/contemporary-shiny-luxury-transportation-performan-PSL4AKA"
+        },
+        {
+            "filename": "ferarri.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/ferarri-800x440.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 94965,
+            "dimensions": [
+                1000,
+                550
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/red-sport-car-PM6W9GJ"
+        },
+        {
+            "filename": "sport-black-car.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/sport-black-car-800x439.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 93238,
+            "dimensions": [
+                1000,
+                549
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/illustration-of-transportation-technology-car-perf-PEMWQFW"
+        },
+        {
+            "filename": "bmw.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/bmw-800x439.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 215490,
+            "dimensions": [
+                1000,
+                549
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/white-smart-car-PTBYAUA"
+        },
+        {
+            "filename": "subaru.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/subaru-800x440.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 90413,
+            "dimensions": [
+                1000,
+                550
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/three-dimensional-shape-blue-sedan-studio-shot-PQXKC6V"
+        },
+        {
+            "filename": "silver-suv.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/silver-suv-800x439.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 217188,
+            "dimensions": [
+                1000,
+                549
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/studio-shot-of-three-dimensional-white-sedan-famil-P8XAJC2"
+        },
+        {
+            "filename": "black-suv.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/black-suv-800x439.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 97476,
+            "dimensions": [
+                1000,
+                549
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/three-dimensional-shape-black-sedan-studio-shot-PR4MMLU"
+        },
+        {
+            "filename": "choosing-new-auto-at-dealership-businessman-have-2025-03-18-17-16-07-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/choosing-new-auto-at-dealership-businessman-have-2025-03-18-17-16-07-utc-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 118582,
+            "dimensions": [
+                2000,
+                1333
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/choosing-new-auto-at-dealership-businessman-have-a-X76RB6X"
+        },
+        {
+            "filename": "shiny-dark-green-compact-car-studio-shot-2025-02-10-00-42-31-utc.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/08\/shiny-dark-green-compact-car-studio-shot-2025-02-10-00-42-31-utc-800x553.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 127383,
+            "dimensions": [
+                934,
+                646
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/shiny-dark-green-compact-car-studio-shot-PK67DTQ"
+        },
+        {
+            "filename": "logo-full-white-1.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/logo-full-white-1.png",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                },
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 8938,
+            "dimensions": [
+                217,
+                753
+            ],
+            "image_source": "self_created",
+            "image_urls": "#"
+        },
+        {
+            "filename": "caucasian-young-salesman-handling-keys-to-young-af-2024-12-13-02-43-58-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/caucasian-young-salesman-handling-keys-to-young-af-2024-12-13-02-43-58-utc-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/home.json",
+                    "name": "Home"
+                }
+            ],
+            "filesize": 177100,
+            "dimensions": [
+                2000,
+                1333
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/caucasian-young-salesman-handling-keys-to-young-af-WVBR9CL"
+        },
+        {
+            "filename": "4wd-car-parked-in-lupine-flower-blooming-on-highla-2025-03-25-15-24-43-utc-1-e1754382753401.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/4wd-car-parked-in-lupine-flower-blooming-on-highla-2025-03-25-15-24-43-utc-1-e1754382753401-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/error-404.json",
+                    "name": "Error 404"
+                }
+            ],
+            "filesize": 125998,
+            "dimensions": [
+                1500,
+                1000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/4wd-car-parked-in-lupine-flower-blooming-on-highla-Q7G9AVG"
+        },
+        {
+            "filename": "Tire.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/Tire.png",
+            "templates": [
+                {
+                    "source": "templates\/error-404.json",
+                    "name": "Error 404"
+                }
+            ],
+            "filesize": 99210,
+            "dimensions": [
+                500,
+                500
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/realistic-car-tire-vehicle-sport-car-automotive-V5KH8DW"
+        },
+        {
+            "filename": "portrait-of-a-young-businessman-standing-in-an-off-2025-04-06-11-39-37-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/portrait-of-a-young-businessman-standing-in-an-off-2025-04-06-11-39-37-utc-800x1067.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 124603,
+            "dimensions": [
+                1500,
+                2000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/portrait-of-a-young-businessman-standing-in-an-off-ZZXF6DW"
+        },
+        {
+            "filename": "man-customer-male-buyer-client-chooses-auto-wants-2025-04-28-15-43-57-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/man-customer-male-buyer-client-chooses-auto-wants-2025-04-28-15-43-57-utc-800x1067.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 113121,
+            "dimensions": [
+                1500,
+                2000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/man-customer-male-buyer-client-chooses-auto-wants--GEVM82H"
+        },
+        {
+            "filename": "happy-buyer-holding-keys-near-the-car-in-front-of-2025-03-13-04-57-05-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/happy-buyer-holding-keys-near-the-car-in-front-of-2025-03-13-04-57-05-utc-800x1067.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 113350,
+            "dimensions": [
+                1500,
+                2000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/happy-buyer-holding-keys-near-the-car-in-front-of--S6UF67S"
+        },
+        {
+            "filename": "man-holding-car-keys-at-dealership-2025-03-18-17-47-13-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/man-holding-car-keys-at-dealership-2025-03-18-17-47-13-utc-800x1067.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 167204,
+            "dimensions": [
+                1500,
+                2000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/man-holding-car-keys-at-dealership-MEAM3B7"
+        },
+        {
+            "filename": "mechanic-inspects-and-maintains-the-engine-for-the-2025-03-09-20-39-51-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/mechanic-inspects-and-maintains-the-engine-for-the-2025-03-09-20-39-51-utc-800x1067.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 164355,
+            "dimensions": [
+                1500,
+                2000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/mechanic-inspects-and-maintains-the-engine-for-the-EVTXJR4"
+        },
+        {
+            "filename": "portrait-of-man-auto-mechanic-working-at-car-repai-2024-07-09-00-54-04-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/portrait-of-man-auto-mechanic-working-at-car-repai-2024-07-09-00-54-04-utc-800x1067.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 187755,
+            "dimensions": [
+                1500,
+                2000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/portrait-of-man-auto-mechanic-working-at-car-repai-55CM9QT"
+        },
+        {
+            "filename": "vietnamese-mechanic-2025-02-25-00-43-03-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/vietnamese-mechanic-2025-02-25-00-43-03-utc-800x1067.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 164657,
+            "dimensions": [
+                1500,
+                2000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/vietnamese-mechanic-XF8ETLD"
+        },
+        {
+            "filename": "car-mechanic-standing-in-arms-crossed-looking-at-c-2025-03-05-10-06-15-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/car-mechanic-standing-in-arms-crossed-looking-at-c-2025-03-05-10-06-15-utc-800x1067.jpg",
+            "templates": [
+                {
+                    "source": "templates\/our-team.json",
+                    "name": "Our Team"
+                }
+            ],
+            "filesize": 151239,
+            "dimensions": [
+                1500,
+                2000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/car-mechanic-standing-in-arms-crossed-looking-at-c-T4V625E"
+        },
+        {
+            "filename": "portrait-of-fashionable-well-dressed-man-with-bear-2024-10-13-15-32-27-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/portrait-of-fashionable-well-dressed-man-with-bear-2024-10-13-15-32-27-utc-800x560.jpg",
+            "templates": [
+                {
+                    "source": "templates\/service-details.json",
+                    "name": "Service Details"
+                }
+            ],
+            "filesize": 169498,
+            "dimensions": [
+                2000,
+                1401
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/portrait-of-fashionable-well-dressed-man-with-bear-N9JS33Q"
+        },
+        {
+            "filename": "keep-an-eye-out-for-options-2025-04-06-04-55-45-utc.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/keep-an-eye-out-for-options-2025-04-06-04-55-45-utc.png",
+            "templates": [
+                {
+                    "source": "templates\/service-details.json",
+                    "name": "Service Details"
+                }
+            ],
+            "filesize": 249620,
+            "dimensions": [
+                794,
+                881
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/keep-an-eye-out-for-options-FQFBJGV"
+        },
+        {
+            "filename": "Thumbnail-Preview-1.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/Thumbnail-Preview-1.png",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 153578,
+            "dimensions": [
+                704,
+                488
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/red-sport-car-PM6W9GJ"
+        },
+        {
+            "filename": "Thumbnail-Preview-2.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/Thumbnail-Preview-2.png",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 129985,
+            "dimensions": [
+                704,
+                488
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/red-sport-car-P3MFC5A"
+        },
+        {
+            "filename": "Thumbnail-Preview-3.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/Thumbnail-Preview-3.png",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 100070,
+            "dimensions": [
+                704,
+                488
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/sport-car-PY3XB7G"
+        },
+        {
+            "filename": "Thumbnail-Preview-4.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/Thumbnail-Preview-4.png",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 154727,
+            "dimensions": [
+                704,
+                488
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/red-sport-car-PM6W9GJ"
+        },
+        {
+            "filename": "brand-new-car-inside-dealership-showroom-2025-03-31-07-33-04-utc.jpeg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/brand-new-car-inside-dealership-showroom-2025-03-31-07-33-04-utc-800x533.jpeg",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 179445,
+            "dimensions": [
+                1500,
+                1000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/brand-new-car-inside-dealership-showroom-A3J4NL3"
+        },
+        {
+            "filename": "modern-car-interior-2025-01-10-13-39-40-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/modern-car-interior-2025-01-10-13-39-40-utc-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 224312,
+            "dimensions": [
+                1500,
+                1001
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/modern-car-interior-Q7GXCJD"
+        },
+        {
+            "filename": "closeup-view-of-fastening-seat-belt-2025-02-19-15-48-04-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/closeup-view-of-fastening-seat-belt-2025-02-19-15-48-04-utc-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 201291,
+            "dimensions": [
+                1500,
+                1001
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/closeup-view-of-fastening-seat-belt-D6LZU89"
+        },
+        {
+            "filename": "modern-sport-car-interior-2025-01-10-18-26-57-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/modern-sport-car-interior-2025-01-10-18-26-57-utc-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 195065,
+            "dimensions": [
+                1500,
+                1001
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/modern-sport-car-interior-PKHUFM9"
+        },
+        {
+            "filename": "sporty-car-dashboard-instruments-2025-03-18-15-04-32-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/sporty-car-dashboard-instruments-2025-03-18-15-04-32-utc-800x533.jpg",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 93894,
+            "dimensions": [
+                1500,
+                1000
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/sporty-car-dashboard-instruments-PLK9GHS"
+        },
+        {
+            "filename": "modern-car-interior-details-2025-01-10-13-37-47-utc-e1754022200625.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/08\/modern-car-interior-details-2025-01-10-13-37-47-utc-e1754022200625-800x529.jpg",
+            "templates": [
+                {
+                    "source": "templates\/car-details.json",
+                    "name": "Car Details"
+                }
+            ],
+            "filesize": 169087,
+            "dimensions": [
+                1238,
+                819
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/modern-car-interior-details-P92NNF5"
+        },
+        {
+            "filename": "green-car.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/green-car-800x440.png",
+            "templates": [
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 96443,
+            "dimensions": [
+                1000,
+                550
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/three-dimensional-shape-green-sedan-studio-shot-PA9UARD"
+        },
+        {
+            "filename": "blue-car.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/blue-car-800x440.png",
+            "templates": [
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 83673,
+            "dimensions": [
+                1000,
+                550
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/three-dimensional-image-of-a-blue-car-PQ7BZUN"
+        },
+        {
+            "filename": "pink-car.png",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/pink-car-800x440.png",
+            "templates": [
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 89340,
+            "dimensions": [
+                1000,
+                550
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/contemporary-shiny-luxury-transportation-performan-PBSS4N4"
+        },
+        {
+            "filename": "man-with-salesperson-in-the-showroom-2025-03-13-03-12-15-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/man-with-salesperson-in-the-showroom-2025-03-13-03-12-15-utc-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 186263,
+            "dimensions": [
+                2000,
+                1335
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/man-with-salesperson-in-the-showroom-QA9LSBD"
+        },
+        {
+            "filename": "mechanic-writing-to-the-clipboard-at-workshop-ware-2025-01-10-22-32-13-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/mechanic-writing-to-the-clipboard-at-workshop-ware-2025-01-10-22-32-13-utc-800x534.jpg",
+            "templates": [
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 130487,
+            "dimensions": [
+                2000,
+                1335
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/mechanic-writing-to-the-clipboard-at-workshop-ware-6Z5UNP4"
+        },
+        {
+            "filename": "woman-in-showroom-giving-dollars-money-and-taking-2024-11-26-04-02-47-utc.jpg",
+            "thumbnail_url": "https:\/\/kits.yumnatype.com\/autovia\/wp-content\/uploads\/sites\/36\/2025\/07\/woman-in-showroom-giving-dollars-money-and-taking-2024-11-26-04-02-47-utc-800x538.jpg",
+            "templates": [
+                {
+                    "source": "templates\/car-collection.json",
+                    "name": "Car Collection"
+                }
+            ],
+            "filesize": 135366,
+            "dimensions": [
+                2000,
+                1345
+            ],
+            "image_source": "envato_elements",
+            "image_urls": "https:\/\/elements.envato.com\/woman-in-showroom-giving-dollars-money-and-taking--69JTN66"
+        }
+    ]
+}

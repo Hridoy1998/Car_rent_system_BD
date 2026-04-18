@@ -7,7 +7,7 @@
         body { font-family: 'Helvetica Neue', 'Helvetica', sans-serif; color: #333; margin: 0; padding: 20px; }
         .invoice-box { max-width: 800px; margin: auto; padding: 30px; border: 1px solid #eee; font-size: 16px; line-height: 24px; }
         .header { text-align: center; margin-bottom: 40px; }
-        .header h1 { margin: 0; color: #4f46e5; }
+        .header h1 { margin: 0; color: #1e3a8a; } /* Blue-900 */
         .details-table { width: 100%; margin-bottom: 40px; }
         .details-table td { padding: 5px; vertical-align: top; }
         .title-row td { padding-bottom: 20px; border-bottom: 2px solid #eee; }
@@ -21,7 +21,7 @@
 <body>
     <div class="invoice-box">
         <div class="header">
-            <h1>Car Rent System</h1>
+            <h1>CRS BD</h1>
             <p>Premium Car Rental Invoice</p>
         </div>
         
@@ -75,7 +75,7 @@
         </table>
         
         <div style="margin-top: 50px; text-align: center; color: #777; font-size: 12px;">
-            <p>Thank you for choosing Car Rent System. For support or disputes, please visit the Mediation Hub.</p>
+            <p>Thank you for choosing CRS BD. For support or disputes, please visit the Mediation Hub.</p>
         </div>
     </div>
 </body>
