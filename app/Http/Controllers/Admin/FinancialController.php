@@ -6,10 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\Earning;
 use App\Models\Setting;
+use App\Services\EarningService;
 use Illuminate\Http\Request;
 
 class FinancialController extends Controller
 {
+    public function __construct(protected EarningService $earningService) {}
     public function index(Request $request)
     {
         $commissionPercent = Setting::where('key', 'platform_commission')->first()->value ?? 10;
@@ -61,5 +63,21 @@ class FinancialController extends Controller
         $hostEarning = $booking->total_price - $platformFee;
 
         return view('admin.finance.show', compact('booking', 'platformFee', 'hostEarning', 'commissionPercent'));
+    }
+
+    public function adjust(Request $request, Booking $booking)
+    {
+        $request->validate([
+            'total_price' => 'required|numeric|min:0',
+        ]);
+
+        $booking->update([
+            'total_price' => $request->total_price,
+        ]);
+
+        // Synchronize earnings if settled
+        $this->earningService->settleOrUpdate($booking->load('car'));
+
+        return back()->with('success', "Financial artifacts adjusted successfully for #TX-{$booking->id}.");
     }
 }

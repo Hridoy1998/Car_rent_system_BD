@@ -10,7 +10,7 @@
                name="search" 
                value="{{ $value }}" 
                placeholder="{{ $placeholder }}" 
-               class="w-full md:w-96 bg-gray-50 border border-gray-100 rounded-2xl py-4 pl-12 pr-4 text-[10px] text-blue-900 font-black uppercase tracking-[0.2em] focus:ring-4 focus:ring-blue-900/5 focus:border-blue-900 transition-all outline-none placeholder:text-gray-300 italic group-hover:border-gray-200 shadow-xl shadow-blue-900/[0.02]">
+               class="w-full md:w-96 bg-white border-2 border-gray-300 rounded-2xl py-4 pl-12 pr-4 text-[10px] text-[#050B1A] font-black uppercase tracking-[0.2em] focus:ring-8 focus:ring-[#050B1A]/5 focus:border-[#050B1A] transition-all duration-300 outline-none placeholder:text-gray-500 italic group-hover:border-[#050B1A]/50 shadow-[0_15px_45px_rgba(0,0,0,0.04)] group-hover:shadow-[0_20px_60px_rgba(0,0,0,0.05)]">
         
         <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-blue-900 transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

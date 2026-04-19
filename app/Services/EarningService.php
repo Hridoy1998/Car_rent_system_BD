@@ -9,11 +9,11 @@ use App\Models\Setting;
 class EarningService
 {
     /**
-     * Settle earnings for an owner upon booking completion.
+     * Settle or update earnings for an owner.
      */
-    public function settleBooking(Booking $booking): void
+    public function settleOrUpdate(Booking $booking): void
     {
-        if ($booking->status !== 'completed' || $booking->payment_status !== 'paid') {
+        if ($booking->payment_status !== 'paid') {
             return;
         }
 
@@ -22,8 +22,7 @@ class EarningService
         $platformCut = ($booking->total_price * $commissionPercent) / 100;
         $hostEarning = $booking->total_price - $platformCut;
 
-        // Prevent duplicate earnings for the same booking
-        Earning::firstOrCreate(
+        Earning::updateOrCreate(
             ['booking_id' => $booking->id],
             [
                 'owner_id' => $booking->car->user_id,

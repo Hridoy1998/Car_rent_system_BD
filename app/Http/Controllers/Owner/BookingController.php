@@ -140,7 +140,7 @@ class BookingController extends Controller
 
             // Settle earnings on completion
             if ($newStatus === 'completed') {
-                $this->earningService->settleBooking($booking->load('car'));
+                $this->earningService->settleOrUpdate($booking->load('car'));
             }
         });
 

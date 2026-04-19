@@ -1,4 +1,4 @@
-<nav class="h-24 bg-white/40 backdrop-blur-xl border-b border-gray-100/50 flex items-center justify-between px-4 lg:px-8 shrink-0 z-40 sticky top-0 transition-all duration-500">
+<nav class="h-24 bg-white border-b border-gray-100 flex items-center justify-between px-4 lg:px-8 shrink-0 z-40 sticky top-0 transition-all duration-500">
     <!-- Sidebar Toggle & Strategic Brand Presence -->
     <div class="flex items-center gap-4 lg:gap-8">
         <button 

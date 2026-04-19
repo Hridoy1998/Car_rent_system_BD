@@ -1,196 +1,317 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col md:flex-row justify-between md:items-center gap-8">
             <div>
-                <h2 class="font-black text-3xl text-white tracking-tighter uppercase italic">
-                    {{ __('Asset Modification') }}
+                <h2 class="font-black text-4xl text-[#050B1A] tracking-tight uppercase italic leading-[1.1]">
+                    Asset <span class="text-orange-500">Modification</span>
                 </h2>
-                <p class="text-[10px] text-indigo-400 font-bold uppercase tracking-[0.3em] mt-1 italic">Optimizing Parameters for: {{ $car->brand }} {{ $car->model }}</p>
+                <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mt-3 italic leading-none">
+                    CRS BD Strategic Fleet Recalibration Console
+                </p>
             </div>
-             <a href="{{ route('owner.cars.index') }}" class="text-[10px] font-black text-gray-500 hover:text-white transition-colors uppercase tracking-widest bg-white/5 px-6 py-3 rounded-2xl border border-white/5 flex items-center gap-3 group">
-                <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M11 19l-7-7 7-7"></path></svg>
-                Abort Protocol
-            </a>
+            <div class="flex items-center gap-8">
+                <div class="flex flex-col items-end">
+                    <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest italic leading-none mb-1">Asset Reference</span>
+                    <span class="text-[#050B1A] text-xs font-black uppercase tracking-widest italic">
+                        REF-{{ str_pad($car->id, 6, '0', STR_PAD_LEFT) }}
+                    </span>
+                </div>
+                <div class="h-10 w-px bg-gray-200"></div>
+                <div class="bg-[#050B1A] px-6 py-3 rounded-2xl border border-white/10 shadow-xl">
+                    <span class="text-white text-[10px] font-black uppercase tracking-[0.2em] italic">Calibration active</span>
+                </div>
+            </div>
         </div>
     </x-slot>
 
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-    <div class="py-12 bg-gray-950 min-h-screen text-slate-200">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="bg-gray-50 min-h-screen relative overflow-hidden pb-24 font-outfit">
+        <!-- Institutional Grid Decoration -->
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#050B1A 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+        <!-- Institutional Hero: Asset Calibration Banner -->
+        <div class="relative py-24 md:py-32 mb-12 md:mb-16 -mt-12 overflow-hidden rounded-b-[3rem] md:rounded-b-[5rem] group">
+            <div class="absolute inset-0 bg-cover bg-center transition-transform duration-1000 group-hover:scale-110" style="background-image: url('{{ asset('images/assets/asset_calibration_banner.png') }}');"></div>
+            <div class="absolute inset-0 bg-gradient-to-r from-[#050B1A] via-[#050B1A]/80 to-transparent"></div>
+            
+            <div class="relative max-w-7xl mx-auto px-6 lg:px-8">
+                <div class="max-w-3xl">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 bg-orange-500/10 border border-orange-500/20 rounded-xl mb-6 backdrop-blur-md">
+                        <span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>
+                        <span class="text-[10px] font-black text-orange-500 uppercase tracking-widest italic">Strategic Parameter Alignment</span>
+                    </div>
+                    <h1 class="text-5xl md:text-8xl font-black text-white uppercase tracking-tight italic leading-[1.1] mb-8">
+                        Calibrate <br> <span class="text-orange-500">{{ $car->brand }} {{ $car->model }}.</span>
+                    </h1>
+                    <p class="text-gray-300 font-bold text-xs uppercase tracking-widest mt-6 italic opacity-80 leading-relaxed max-w-xl">
+                        Optimizing fleet performance artifacts through precise tactile calibration and authoritative parameter management.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
             
             @if ($errors->any())
-                <div class="mb-8 bg-red-500/10 border border-red-500/50 text-red-500 p-8 rounded-[2.5rem] shadow-2xl">
-                    <h4 class="text-[10px] font-black uppercase tracking-widest mb-4 flex items-center gap-2">
-                        <span class="w-2 h-2 bg-red-500 rounded-full animate-ping"></span>
-                        Configuration Blocked
-                    </h4>
-                    <ul class="space-y-1">
+                <div class="mb-12 bg-white border border-red-100 p-8 rounded-[3rem] shadow-[0_40px_100px_rgba(239,68,68,0.05)] border-l-8 border-l-red-500">
+                    <div class="flex items-center gap-6 mb-6">
+                        <div class="w-12 h-12 bg-red-50 rounded-2xl flex items-center justify-center text-red-500 shadow-sm border border-red-100">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-black text-[#050B1A] uppercase italic tracking-tighter leading-none">Parameter Fault Detected</h4>
+                            <p class="text-[9px] text-gray-400 font-black uppercase tracking-[0.3em] mt-2 italic">Configuration deployment blocked by validation engine</p>
+                        </div>
+                    </div>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-3 ps-4">
                         @foreach ($errors->all() as $error)
-                            <li class="text-[10px] font-bold uppercase tracking-tight">• {{ $error }}</li>
+                            <li class="text-[10px] font-black text-red-600 uppercase tracking-widest italic flex items-center gap-3">
+                                <span class="w-1 h-1 bg-red-500 rounded-full"></span>
+                                {{ $error }}
+                            </li>
                         @endforeach
                     </ul>
                 </div>
             @endif
 
-            <form action="{{ route('owner.cars.update', $car) }}" method="POST" enctype="multipart/form-data" class="space-y-12">
+            <form action="{{ route('owner.cars.update', $car) }}" method="POST" enctype="multipart/form-data" class="space-y-16">
                 @csrf
                 @method('PUT')
 
-                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
                     
-                    <!-- Left Column: Basics & Specs -->
-                    <div class="space-y-12">
+                    <!-- Left Context: Strategic Modules -->
+                    <div class="lg:col-span-2 space-y-12">
                         
-                        <!-- Core Identity -->
-                        <div class="bg-gray-900/50 backdrop-blur-3xl border border-white/10 p-10 rounded-[3.5rem] shadow-2xl">
-                            <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3 italic">
-                                <span class="w-1.5 h-6 bg-indigo-500 rounded-full"></span>
-                                Identity Profile
-                            </h3>
+                        <!-- Module: Asset Blueprint -->
+                        <div class="bg-white border border-gray-100 p-10 md:p-14 rounded-[4rem] shadow-[0_40px_100px_rgba(0,0,0,0.02)] transition-all hover:shadow-2xl group">
+                            <div class="flex items-center gap-6 mb-12">
+                                <div class="w-16 h-16 bg-[#050B1A] rounded-2xl flex items-center justify-center text-white shadow-xl border border-white/10 italic font-black text-2xl group-hover:scale-110 transition-transform">
+                                    BP
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-3xl font-black text-[#050B1A] uppercase italic tracking-tight leading-none">Asset Blueprint</h3>
+                                    <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mt-3 italic flex items-center gap-4 leading-none">
+                                        Identity & Structural Parameters
+                                        <span class="h-px flex-1 bg-gray-50"></span>
+                                    </p>
+                                </div>
+                            </div>
                             
-                            <div class="space-y-6">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Listing Headline</label>
-                                    <input type="text" name="title" required value="{{ old('title', $car->title) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all" placeholder="e.g. 2023 Tesla Model 3 Performance">
+                            <div class="space-y-10">
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Market Headline</label>
+                                    <input type="text" name="title" required value="{{ old('title', $car->title) }}" class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-sm uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic placeholder-gray-400 outline-none" placeholder="e.g. 2024 PORSCHE 911 GT3 RS">
                                 </div>
 
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div class="space-y-2">
-                                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Manufacturer</label>
-                                        <input type="text" name="brand" required value="{{ old('brand', $car->brand) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                    <div class="space-y-4">
+                                        <label class="text-[11px] font-black text-gray-500 uppercase tracking-widest ms-6 italic leading-none">Manufacturer</label>
+                                        <input type="text" name="brand" required value="{{ old('brand', $car->brand) }}" class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-sm uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic outline-none">
                                     </div>
-                                    <div class="space-y-2">
-                                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Model Variant</label>
-                                        <input type="text" name="model" required value="{{ old('model', $car->model) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                                    <div class="space-y-4">
+                                        <label class="text-[11px] font-black text-gray-500 uppercase tracking-widest ms-6 italic leading-none">Model Variant</label>
+                                        <input type="text" name="model" required value="{{ old('model', $car->model) }}" class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-sm uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic outline-none">
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-2 gap-6">
-                                    <div class="space-y-2">
-                                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Year</label>
-                                        <input type="number" name="year" required value="{{ old('year', $car->year) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-mono focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                    <div class="space-y-4">
+                                        <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Release Cycle (Year)</label>
+                                        <input type="number" name="year" required value="{{ old('year', $car->year) }}" class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-xl tracking-tighter focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic font-outfit outline-none">
                                     </div>
-                                    <div class="space-y-2">
-                                        <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Chassis Style</label>
-                                        <select name="type" required class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-black uppercase tracking-widest text-[10px] focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
-                                            @foreach(['Sedan', 'SUV', 'Hatchback', 'Van', 'Luxury'] as $t)
-                                                <option value="{{ $t }}" {{ $car->type === $t ? 'selected' : '' }}>{{ $t }} Chassis</option>
-                                            @endforeach
+                                    <div class="space-y-4">
+                                        <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Structural Chassis</label>
+                                        <div class="relative group">
+                                            <select name="type" required class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-[11px] uppercase tracking-[0.2em] focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic appearance-none cursor-pointer outline-none">
+                                                @foreach(['Sedan', 'SUV', 'Hatchback', 'Van', 'Luxury'] as $t)
+                                                    <option value="{{ $t }}" {{ $car->type === $t ? 'selected' : '' }}>Institutional {{ $t }}</option>
+                                                @endforeach
+                                            </select>
+                                            <div class="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Module: Technical Matrix -->
+                        <div class="bg-white border border-gray-100 p-10 md:p-14 rounded-[4rem] shadow-[0_40px_100px_rgba(0,0,0,0.02)] transition-all hover:shadow-2xl group">
+                            <div class="flex items-center gap-6 mb-12">
+                                <div class="w-16 h-16 bg-orange-500 rounded-2xl flex items-center justify-center text-white shadow-xl border border-white/10 italic font-black text-2xl group-hover:scale-110 transition-transform">
+                                    TM
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-3xl font-black text-[#050B1A] uppercase italic tracking-tight leading-none">Technical Matrix</h3>
+                                    <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mt-3 italic flex items-center gap-4 leading-none">
+                                        Core Operational Specs
+                                        <span class="h-px flex-1 bg-gray-50"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Transmission Protocol</label>
+                                    <div class="relative">
+                                        <select name="transmission" required class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-[11px] uppercase tracking-[0.2em] focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic appearance-none cursor-pointer outline-none">
+                                            <option value="Auto" {{ $car->transmission === 'Auto' ? 'selected' : '' }}>Automatic Intelligence</option>
+                                            <option value="Manual" {{ $car->transmission === 'Manual' ? 'selected' : '' }}>Manual Control Override</option>
                                         </select>
+                                        <div class="absolute right-8 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
+                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Fuelsystem Paradigm</label>
+                                    <input type="text" name="fuel_type" required value="{{ old('fuel_type', $car->fuel_type) }}" class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-sm uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic outline-none" placeholder="Petrol / Electric / Hybrid">
+                                </div>
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Displacement Vector</label>
+                                    <input type="text" name="engine_capacity" required value="{{ old('engine_capacity', $car->engine_capacity) }}" class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-sm uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic placeholder:text-gray-400 font-outfit outline-none" placeholder="e.g. 1500cc">
+                                </div>
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Personnel Capacity</label>
+                                    <input type="number" name="seats" required value="{{ old('seats', $car->seats) }}" class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-[2rem] p-6 text-[#050B1A] font-black text-xl tracking-tighter focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic font-outfit outline-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Module: Yield Protocol -->
+                        <div class="bg-[#050B1A] p-10 md:p-14 rounded-[4rem] shadow-2xl relative overflow-hidden group">
+                            <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/5 rounded-full blur-[100px] group-hover:bg-white/10 transition-all duration-700"></div>
+                            
+                            <div class="flex items-center gap-6 mb-12 relative z-10">
+                                <div class="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[#050B1A] shadow-xl border border-white/10 italic font-black text-2xl group-hover:rotate-12 transition-transform">
+                                    YP
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-3xl font-black text-white uppercase italic tracking-tight leading-none">Yield Protocol</h3>
+                                    <p class="text-[10px] text-gray-500 font-black uppercase tracking-widest mt-3 italic flex items-center gap-4 leading-none">
+                                        Strategic Compensation Parameters
+                                        <span class="h-px flex-1 bg-white/5"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 relative z-10">
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Tactical Daily Fare (৳)</label>
+                                    <div class="relative group/input">
+                                        <span class="absolute left-8 top-1/2 -translate-y-1/2 text-orange-500 font-black text-2xl group-focus-within/input:scale-110 transition-transform">৳</span>
+                                        <input type="number" name="price_per_day" required value="{{ old('price_per_day', (int)$car->price_per_day) }}" class="w-full bg-white/5 border-2 border-white/20 rounded-[2.5rem] py-8 ps-16 pe-8 text-white font-black text-4xl tracking-tighter focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500/50 transition-all italic font-outfit outline-none">
+                                    </div>
+                                </div>
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Monthly Portfolio Yield (৳)</label>
+                                    <div class="relative group/input">
+                                        <span class="absolute left-8 top-1/2 -translate-y-1/2 text-emerald-500 font-black text-2xl group-focus-within/input:scale-110 transition-transform">৳</span>
+                                        <input type="number" name="price_per_month" required value="{{ old('price_per_month', (int)$car->price_per_month) }}" class="w-full bg-white/5 border-2 border-white/20 rounded-[2.5rem] py-8 ps-16 pe-8 text-white font-black text-4xl tracking-tighter focus:ring-4 focus:ring-emerald-500/20 focus:border-emerald-500/50 transition-all italic font-outfit outline-none">
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- Technical Matrix -->
-                        <div class="bg-gray-900/50 backdrop-blur-3xl border border-white/10 p-10 rounded-[3.5rem] shadow-2xl">
-                             <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3 italic">
-                                <span class="w-1.5 h-6 bg-purple-500 rounded-full"></span>
-                                Technical Parameters
-                            </h3>
-
-                            <div class="grid grid-cols-2 gap-6">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Transmission</label>
-                                    <select name="transmission" required class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-black uppercase tracking-widest text-[10px] focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
-                                        <option value="Auto" {{ $car->transmission === 'Auto' ? 'selected' : '' }}>Automatic</option>
-                                        <option value="Manual" {{ $car->transmission === 'Manual' ? 'selected' : '' }}>Manual</option>
-                                    </select>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 relative z-10">
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Fuel Strategy Policy</label>
+                                    <input type="text" name="fuel_policy" value="{{ old('fuel_policy', $car->fuel_policy) }}" class="w-full bg-white/5 border-2 border-white/20 rounded-[2rem] p-6 text-white font-black text-xs uppercase tracking-[0.2em] focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500/50 transition-all italic outline-none">
                                 </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Propulsion System</label>
-                                    <input type="text" name="fuel_type" required value="{{ old('fuel_type', $car->fuel_type) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all" placeholder="Petrol / Electric / Hybrid">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Displacement</label>
-                                    <input type="text" name="engine_capacity" required value="{{ old('engine_capacity', $car->engine_capacity) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-mono focus:ring-2 focus:ring-indigo-500 outline-none transition-all" placeholder="e.g. 1500cc">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Occupancy Limits</label>
-                                    <input type="number" name="seats" required value="{{ old('seats', $car->seats) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-mono focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Financials & Policy -->
-                         <div class="bg-gray-900/50 backdrop-blur-3xl border border-white/10 p-10 rounded-[3.5rem] shadow-2xl">
-                             <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3 italic">
-                                <span class="w-1.5 h-6 bg-emerald-500 rounded-full"></span>
-                                Yield Protocol
-                            </h3>
-                            <div class="grid grid-cols-2 gap-6 mb-8">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4 text-emerald-400">Daily Fare (৳)</label>
-                                    <input type="number" name="price_per_day" required value="{{ old('price_per_day', (int)$car->price_per_day) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-5 text-emerald-400 text-xl font-black focus:ring-2 focus:ring-emerald-500 outline-none transition-all">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4 text-emerald-400">Monthly Yield (৳)</label>
-                                    <input type="number" name="price_per_month" required value="{{ old('price_per_month', (int)$car->price_per_month) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-5 text-emerald-400 text-xl font-black focus:ring-2 focus:ring-emerald-500 outline-none transition-all">
-                                </div>
-                            </div>
-                            <div class="space-y-6">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Fuel Strategy</label>
-                                    <input type="text" name="fuel_policy" value="{{ old('fuel_policy', $car->fuel_policy) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
-                                </div>
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Insurance Manifest</label>
-                                    <input type="text" name="insurance_info" value="{{ old('insurance_info', $car->insurance_info) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all">
+                                <div class="space-y-4">
+                                    <label class="text-[11px] font-black text-gray-500 uppercase tracking-[0.4em] ms-6 italic leading-none">Insurance Registry Manifest</label>
+                                    <input type="text" name="insurance_info" value="{{ old('insurance_info', $car->insurance_info) }}" class="w-full bg-white/5 border-2 border-white/20 rounded-[2rem] p-6 text-white font-black text-xs uppercase tracking-[0.2em] focus:ring-4 focus:ring-orange-500/20 focus:border-orange-500/50 transition-all italic outline-none">
                                 </div>
                             </div>
                         </div>
 
                     </div>
 
-                    <!-- Right Column: Location (Map) & Photos -->
+                    <!-- Right Context: Geospatial & Visuals -->
                     <div class="space-y-12">
                         
-                        <!-- Geospatial Deployment -->
-                        <div class="bg-gray-900/50 backdrop-blur-3xl border border-white/10 p-10 rounded-[3.5rem] shadow-2xl">
-                             <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3 italic">
-                                <span class="w-1.5 h-6 bg-pink-500 rounded-full"></span>
-                                Geospatial Parameters
-                            </h3>
+                        <!-- Module: Geospatial Deployment -->
+                        <div class="bg-white border border-gray-100 p-10 md:p-12 rounded-[4rem] shadow-[0_40px_100px_rgba(0,0,0,0.02)] transition-all hover:shadow-2xl group">
+                            <div class="flex items-center gap-6 mb-10">
+                                <div class="w-14 h-14 bg-[#050B1A] rounded-2xl flex items-center justify-center text-white shadow-xl border border-white/10 italic font-black text-xl group-hover:rotate-12 transition-transform">
+                                    GS
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-2xl font-black text-[#050B1A] uppercase italic tracking-tighter leading-none">Geospatial</h3>
+                                    <p class="text-[9px] text-gray-400 font-black uppercase tracking-[0.4em] mt-2 italic leading-none">Operational Deployment Node</p>
+                                </div>
+                            </div>
                             
-                            <div class="space-y-6">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Deployment Node (Area/City)</label>
-                                    <input type="text" name="location" id="location_input" required value="{{ old('location', $car->location) }}" class="w-full bg-gray-950 border border-white/5 rounded-2xl p-4 text-white font-bold focus:ring-2 focus:ring-indigo-500 outline-none transition-all" placeholder="e.g. Bashundhara R/A, Dhaka">
+                            <div class="space-y-8">
+                                <div class="space-y-4">
+                                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-[0.4em] ms-4 italic leading-none">Sector/City Node</label>
+                                    <input type="text" name="location" id="location_input" required value="{{ old('location', $car->location) }}" class="w-full bg-gray-100/50 border-2 border-gray-200 rounded-2xl p-5 text-[#050B1A] font-black text-xs uppercase tracking-widest focus:ring-4 focus:ring-orange-500/10 focus:border-orange-500 focus:bg-white transition-all italic placeholder-gray-400 outline-none" placeholder="e.g. DHAKA HQ, BD">
                                 </div>
 
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Coordinate Calibration</label>
-                                    <div id="map-picker" class="w-full h-[400px] rounded-[2.5rem] border border-white/10 overflow-hidden shadow-2xl z-0"></div>
+                                <div class="space-y-4">
+                                    <label class="text-[10px] font-black text-gray-600 uppercase tracking-[0.4em] ms-4 italic leading-none">Coordinate Calibration (Target Pin)</label>
+                                    <div id="map-picker" class="w-full h-[400px] rounded-[2.5rem] border-4 border-gray-100 overflow-hidden shadow-inner group-hover:border-orange-500/20 transition-all z-0"></div>
                                     <input type="hidden" name="latitude" id="lat_field" value="{{ old('latitude', $car->latitude ?: 23.8103) }}">
                                     <input type="hidden" name="longitude" id="lng_field" value="{{ old('longitude', $car->longitude ?: 90.4125) }}">
+                                </div>
+                                <div class="flex justify-between items-center px-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] font-black text-gray-400 uppercase tracking-widest italic">Lat Coordinate</span>
+                                        <span id="lat_display" class="text-[10px] font-black text-[#050B1A] italic">{{ $car->latitude ?: '23.8103' }}</span>
+                                    </div>
+                                    <div class="h-8 w-px bg-gray-100"></div>
+                                    <div class="flex flex-col text-right">
+                                        <span class="text-[8px] font-black text-gray-400 uppercase tracking-widest italic">Lng Coordinate</span>
+                                        <span id="lng_display" class="text-[10px] font-black text-[#050B1A] italic">{{ $car->longitude ?: '90.4125' }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Visual Artifacts -->
-                        <div class="bg-gray-900/50 backdrop-blur-3xl border border-white/10 p-10 rounded-[3.5rem] shadow-2xl overflow-hidden relative group">
-                            <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3 italic">
-                                <span class="w-1.5 h-6 bg-orange-500 rounded-full"></span>
-                                Visual Evidence Suite
-                            </h3>
+                        <!-- Module: Visual Evidence Suite -->
+                        <div class="bg-white border-2 border-gray-100 p-10 md:p-12 rounded-[4rem] shadow-[0_45px_110px_rgba(0,0,0,0.03)] transition-all hover:shadow-2xl group overflow-hidden relative">
+                            <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-orange-500/5 rounded-full blur-[80px] group-hover:bg-orange-500/10 transition-all duration-700"></div>
                             
-                            <div class="space-y-8">
-                                <div class="border-2 border-dashed border-white/10 rounded-[2.5rem] p-12 hover:border-indigo-500/50 transition-all cursor-pointer bg-black/20 group/upload" onclick="document.getElementById('images').click()">
-                                    <div class="flex flex-col items-center">
-                                        <svg class="w-12 h-12 text-gray-600 group-hover/upload:text-indigo-400 transition-colors mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                                        <p class="text-[10px] text-gray-400 font-black uppercase tracking-widest">Ingest Additional Visual Artifacts</p>
+                            <div class="flex items-center gap-6 mb-12">
+                                <div class="w-16 h-16 bg-[#050B1A] rounded-2xl flex items-center justify-center text-white shadow-xl border border-white/10 italic font-black text-2xl group-hover:rotate-12 transition-transform">
+                                    VE
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-3xl font-black text-[#050B1A] uppercase italic tracking-tighter leading-none">Evidence Suite</h3>
+                                    <p class="text-[10px] text-gray-400 font-black uppercase tracking-[0.4em] mt-3 italic flex items-center gap-4">
+                                        Media Ingestion Terminal
+                                        <span class="h-px flex-1 bg-gray-50"></span>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="space-y-10 relative z-10">
+                                <div class="relative group/upload cursor-pointer" onclick="document.getElementById('images').click()">
+                                    <div class="bg-gray-50/80 border-4 border-dashed border-gray-200 rounded-[3rem] p-16 text-center group-hover/upload:border-orange-500 group-hover/upload:bg-orange-50/20 transition-all duration-700 relative overflow-hidden">
+                                        <div class="absolute inset-0 bg-white opacity-0 group-hover/upload:opacity-100 transition-opacity"></div>
+                                        <div class="relative z-10">
+                                            <div class="w-20 h-20 bg-orange-500 rounded-[2rem] flex items-center justify-center text-white mx-auto mb-8 shadow-2xl group-hover/upload:scale-110 group-hover/upload:rotate-12 transition-all duration-500">
+                                                <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 4v16m8-8H4"></path></svg>
+                                            </div>
+                                            <p class="text-base font-black text-[#050B1A] uppercase tracking-tighter italic leading-none mb-4">Ingest Strategic Artifacts</p>
+                                            <p class="text-[9px] text-gray-500 font-black uppercase tracking-[0.3em] italic">Multi-Vector Media Capture Supported</p>
+                                        </div>
                                     </div>
                                     <input type="file" name="images[]" id="images" multiple class="hidden" accept="image/*" onchange="previewImages(event)">
                                 </div>
 
-                                <div id="image-previews" class="grid grid-cols-4 gap-4">
+                                <div id="image-previews" class="grid grid-cols-2 gap-6 px-2">
                                     @foreach($car->images as $img)
-                                        <div class="aspect-square rounded-2xl overflow-hidden border border-white/10 relative group/img">
-                                            <img src="{{ Storage::url($img->image_path) }}" class="w-full h-full object-cover">
-                                            <div class="absolute inset-0 bg-red-600/80 opacity-0 group-hover/img:opacity-100 flex items-center justify-center transition-all backdrop-blur-[2px] text-center">
-                                                <span class="text-[8px] font-black uppercase text-white leading-tight">Delete via<br>Inventory Hub</span>
+                                        <div class="aspect-video rounded-[2rem] overflow-hidden border-2 border-gray-100 relative group/img shadow-sm hover:shadow-2xl transition-all">
+                                            <img src="{{ Storage::url($img->image_path) }}" class="w-full h-full object-cover transition-transform duration-1000 group-hover/img:scale-125">
+                                            <div class="absolute inset-0 bg-[#050B1A]/80 flex flex-col items-center justify-center opacity-0 group-hover/img:opacity-100 transition-all backdrop-blur-sm cursor-help">
+                                                <div class="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white mb-3 shadow-xl transform -translate-y-4 group-hover/img:translate-y-0 transition-transform duration-500">
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                </div>
+                                                <span class="text-[9px] font-black text-white uppercase tracking-[0.3em] italic text-center leading-relaxed">Modify via<br>Inventory Hub</span>
                                             </div>
                                         </div>
                                     @endforeach
@@ -198,39 +319,63 @@
                             </div>
                         </div>
 
-                        <!-- Strategic Audit Trail -->
-                        <div class="bg-gray-900/50 backdrop-blur-3xl border border-white/10 p-10 rounded-[3.5rem] shadow-2xl relative overflow-hidden group">
-                             <div class="absolute -right-10 -top-10 w-48 h-48 bg-amber-500/5 rounded-full blur-[80px] group-hover:bg-amber-500/10 transition-all"></div>
-                             <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3 italic">
-                                <span class="w-1.5 h-6 bg-amber-500 rounded-full"></span>
-                                Change Intelligence
-                            </h3>
-                            <div class="space-y-6">
-                                <div class="space-y-2">
-                                    <label class="text-[10px] font-black text-gray-500 uppercase tracking-widest ms-4">Modification Rationale (Required)</label>
-                                    <textarea name="edit_reason" required class="w-full bg-gray-950 border border-white/5 rounded-[2rem] p-6 text-white text-sm focus:ring-2 focus:ring-amber-500 outline-none transition-all italic leading-relaxed" placeholder="Briefly describe the parameters modified and the operational rationale..."></textarea>
+                        <!-- Module: Audit Intelligence -->
+                        <div class="bg-white border-2 border-amber-100 rounded-[4rem] shadow-[0_45px_110px_rgba(251,191,36,0.05)] transition-all hover:shadow-2xl group relative overflow-hidden">
+                            <div class="absolute -right-20 -top-20 w-64 h-64 bg-amber-500/5 rounded-full blur-[100px] group-hover:bg-amber-500/10 transition-all duration-700"></div>
+                            
+                            <div class="bg-[#050B1A] p-10 md:p-12 mb-10 flex items-center gap-6 relative z-10">
+                                <div class="w-16 h-16 bg-amber-500 rounded-2xl flex items-center justify-center text-white shadow-xl border border-white/10 italic font-black text-2xl group-hover:scale-110 transition-transform">
+                                    AS
                                 </div>
+                                <div class="flex-1">
+                                    <h3 class="text-3xl font-black text-white uppercase italic tracking-tighter leading-none">Audit Signal</h3>
+                                    <p class="text-[10px] text-gray-500 font-black uppercase tracking-[0.4em] mt-3 italic flex items-center gap-4">
+                                        Protocol Authorization Ledger
+                                        <span class="h-px flex-1 bg-white/5"></span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="px-10 pb-12 overflow-hidden relative z-10">
+                                <div class="space-y-6">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <label class="text-[11px] font-black text-amber-950 uppercase tracking-[0.4em] ms-6 italic leading-none">Change Logic Statement</label>
+                                        <div class="px-4 py-1.5 bg-amber-500 text-white text-[8px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-amber-500/20 italic animate-pulse">
+                                            Required Protocol
+                                        </div>
+                                    </div>
+                                    <textarea name="edit_reason" required class="w-full bg-amber-50/50 border-2 border-amber-200 rounded-[2.5rem] p-10 text-amber-950 font-black text-sm uppercase tracking-widest focus:ring-8 focus:ring-amber-500/10 focus:border-amber-500 focus:bg-white transition-all italic placeholder-amber-900/40 outline-none leading-relaxed min-h-[180px]" placeholder="Authoritatively define the tactical parameter modifications..."></textarea>
+                                </div>
+
                                 @if($car->last_edit_reason)
-                                    <div class="p-6 bg-white/5 border border-white/5 rounded-2xl">
-                                        <p class="text-[8px] font-black text-gray-600 uppercase tracking-widest mb-2 italic">Previous Audit Statement:</p>
-                                        <p class="text-xs text-gray-400 font-medium italic leading-relaxed">"{{ $car->last_edit_reason }}"</p>
+                                    <div class="mt-10 p-8 bg-amber-50/80 border-2 border-amber-100 rounded-[2.5rem] relative group/last">
+                                        <div class="absolute -left-2 top-8 w-2 h-12 bg-amber-600 rounded-full shadow-[0_0_20px_rgba(217,119,6,0.6)]"></div>
+                                        <p class="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-4 italic leading-none flex items-center gap-3">
+                                            <span class="w-2 h-2 bg-amber-500 rounded-full"></span>
+                                            Authoritative Audit Archive
+                                        </p>
+                                        <p class="text-xs text-amber-950 font-black italic opacity-70 group-hover/last:opacity-100 transition-opacity whitespace-pre-line leading-relaxed">"{{ $car->last_edit_reason }}"</p>
                                     </div>
                                 @endif
                             </div>
                         </div>
 
-                        <!-- Final Deployment -->
-                        <div class="pt-12 text-center flex flex-col items-center gap-8">
-                            <button type="submit" class="w-full py-8 bg-white text-gray-950 font-black rounded-[2.5rem] shadow-2xl hover:bg-indigo-600 hover:text-white transition-all uppercase tracking-[0.6em] text-xs group relative overflow-hidden">
-                                <span class="relative z-10">Commit Strategic Update</span>
-                                <div class="absolute inset-0 bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <!-- Strategic Authorization -->
+                        <div class="pt-8 space-y-8">
+                            <button type="submit" class="w-full py-10 bg-[#050B1A] hover:bg-orange-500 text-white font-black rounded-[2.5rem] shadow-2xl hover:shadow-orange-500/20 transition-all group relative overflow-hidden">
+                                <span class="relative z-10 uppercase tracking-[0.6em] text-[13px] italic">Commit Strategic Calibration</span>
+                                <div class="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-400 opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
                             </button>
-                            <p class="text-[8px] text-gray-500 font-black uppercase tracking-[0.3em] italic animate-pulse">Asset status remains 'Pending' until platform audit</p>
                             
-                            <a href="{{ route('owner.cars.index') }}" class="text-[9px] font-black text-gray-600 hover:text-white uppercase tracking-widest transition-colors flex items-center gap-2 group">
-                                <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7 7-7"></path></svg>
-                                Abort Calibration
-                            </a>
+                            <div class="flex flex-col items-center gap-6">
+                                <p class="text-[9px] text-gray-400 font-black uppercase tracking-widest italic text-center leading-relaxed">
+                                    <span class="text-[#050B1A] animate-pulse">NOTE:</span> Asset status remains <span class="text-orange-500">'Pending Audit'</span><br>until administrative verification is complete.
+                                </p>
+                                <a href="{{ route('owner.cars.index') }}" class="inline-flex items-center gap-4 text-[10px] font-black text-gray-400 hover:text-[#050B1A] uppercase tracking-[0.3em] transition-all group italic">
+                                    <svg class="w-5 h-5 group-hover:-translate-x-2 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M10 19l-7-7 7-7"></path></svg>
+                                    Abort Calibration Protocol
+                                </a>
+                            </div>
                         </div>
 
                     </div>
@@ -244,35 +389,58 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Map Initialization
+        // Institutional Map Calibration
         const defaultLat = document.getElementById('lat_field').value;
         const defaultLng = document.getElementById('lng_field').value;
         
         const map = L.map('map-picker', {
             center: [defaultLat, defaultLng],
-            zoom: 13,
-            zoomControl: false
+            zoom: 14,
+            zoomControl: false,
+            className: 'institutional-map'
         });
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap'
         }).addTo(map);
 
-        const marker = L.marker([defaultLat, defaultLng], { draggable: true }).addTo(map);
+        const institutionalIcon = L.divIcon({
+            className: 'custom-pin',
+            html: `
+                <div class="relative w-12 h-12">
+                    <div class="absolute inset-0 bg-orange-500/20 rounded-full animate-ping"></div>
+                    <div class="absolute inset-2 bg-orange-500 rounded-full border-4 border-white shadow-2xl flex items-center justify-center">
+                        <div class="w-2 h-2 bg-white rounded-full"></div>
+                    </div>
+                </div>
+            `,
+            iconSize: [48, 48],
+            iconAnchor: [24, 24]
+        });
+
+        const marker = L.marker([defaultLat, defaultLng], { 
+            draggable: true,
+            icon: institutionalIcon 
+        }).addTo(map);
 
         marker.on('dragend', function(e) {
             const pos = marker.getLatLng();
-            document.getElementById('lat_field').value = pos.lat;
-            document.getElementById('lng_field').value = pos.lng;
+            updateGeospatialArtifacts(pos.lat, pos.lng);
         });
 
         map.on('click', function(e) {
             marker.setLatLng(e.latlng);
-            document.getElementById('lat_field').value = e.latlng.lat;
-            document.getElementById('lng_field').value = e.latlng.lng;
+            updateGeospatialArtifacts(e.latlng.lat, e.latlng.lng);
         });
 
-        // Image Preview
+        function updateGeospatialArtifacts(lat, lng) {
+            document.getElementById('lat_field').value = lat;
+            document.getElementById('lng_field').value = lng;
+            document.getElementById('lat_display').textContent = parseFloat(lat).toFixed(6);
+            document.getElementById('lng_display').textContent = parseFloat(lng).toFixed(6);
+        }
+
+        // Logic Visual Ingestion (Image Preview)
         function previewImages(event) {
             const container = document.getElementById('image-previews');
             const files = event.target.files;
@@ -281,12 +449,22 @@
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const div = document.createElement('div');
-                    div.className = 'aspect-square rounded-2xl overflow-hidden border border-indigo-500/50 shadow-[0_0_20px_rgba(79,70,229,0.2)] animate-pulse';
-                    div.innerHTML = `<img src="${e.target.result}" class="w-full h-full object-cover">`;
+                    div.className = 'aspect-video rounded-2xl overflow-hidden border-2 border-orange-500 shadow-xl animate-in zoom-in-50 duration-500 relative group/new';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" class="w-full h-full object-cover">
+                        <div class="absolute top-2 right-2 bg-orange-500 text-white text-[8px] font-black px-3 py-1 rounded-full uppercase tracking-widest italic">New Ingestion</div>
+                    `;
                     container.appendChild(div);
                 }
                 reader.readAsDataURL(files[i]);
             }
         }
     </script>
+
+    <style>
+        .institutional-map { filter: grayscale(1) contrast(1.2) brightness(1.05); transition: filter 0.5s ease; }
+        .institutional-map:hover { filter: grayscale(0.2) contrast(1); }
+        .leaflet-container { font-family: 'Outfit', sans-serif !important; }
+        option { font-family: 'Outfit', sans-serif; font-weight: 900; background: #fff; color: #050B1A; }
+    </style>
 </x-app-layout>

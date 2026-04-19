@@ -60,7 +60,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     Route::resource('cars', CarController::class);
     Route::resource('users', UserController::class);
     Route::resource('verifications', VerificationController::class)->only(['index', 'show', 'update']);
-    Route::resource('bookings', BookingController::class)->only(['index', 'show', 'update']);
+    Route::resource('bookings', BookingController::class)->only(['index', 'show', 'update', 'destroy']);
     Route::resource('settings', SettingController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::get('/damage-reports', [AdminDamageReportController::class, 'index'])->name('damage-reports.index');
     Route::get('/damage-reports/{damageReport}', [AdminDamageReportController::class, 'show'])->name('damage-reports.show');
@@ -69,6 +69,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->prefix('admin')->name('ad
     // New Power Modules
     Route::get('/finance', [FinancialController::class, 'index'])->name('finance.index');
     Route::get('/finance/{booking}', [FinancialController::class, 'show'])->name('finance.show');
+    Route::patch('/finance/{booking}/adjust', [FinancialController::class, 'adjust'])->name('finance.adjust');
     Route::get('/support', [SupportController::class, 'index'])->name('support.index');
     Route::get('/support/{booking}', [SupportController::class, 'show'])->name('support.show');
     Route::resource('settings', SettingController::class)->only(['index', 'store', 'update', 'destroy']);

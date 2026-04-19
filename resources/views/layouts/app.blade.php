@@ -51,7 +51,7 @@
                 <div class="flex-1 overflow-y-auto custom-scrollbar relative">
                     <!-- Page Heading -->
                     @isset($header)
-                        <header class="bg-white/40 backdrop-blur-xl border-b border-gray-100/50 sticky top-0 z-30">
+                        <header class="bg-white border-b border-gray-100 shadow-sm sticky top-0 z-30">
                             <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
                                 {{ $header }}
                             </div>
@@ -59,7 +59,7 @@
                     @endisset
 
                     <!-- Page Content -->
-                    <main class="p-6 sm:p-8 lg:p-12 relative z-10">
+                    <main class="p-6 sm:p-8 lg:p-12">
                         <div class="max-w-7xl mx-auto">
                             {{ $slot }}
                         </div>

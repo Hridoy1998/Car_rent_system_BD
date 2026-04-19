@@ -59,4 +59,11 @@ class BookingController extends Controller
 
         return back()->with('success', "Booking #{$booking->id} status changed to {$request->status}.");
     }
+
+    public function destroy(Booking $booking)
+    {
+        $booking->delete();
+
+        return redirect()->route('admin.bookings.index')->with('success', "Booking #{$booking->id} has been purged from the registry.");
+    }
 }

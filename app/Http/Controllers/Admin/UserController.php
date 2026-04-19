@@ -35,16 +35,12 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        $user->load([
-            'cars.images', 
-            'bookings.car', 
-            'receivedBookings.car', 
-            'receivedBookings.customer', 
-            'verifications', 
-            'reviews'
-        ]);
+        $cars = $user->cars()->with('images')->latest()->paginate(5, ['*'], 'cars_page');
+        $receivedBookings = $user->receivedBookings()->with(['car', 'customer'])->latest()->paginate(5, ['*'], 'received_bookings_page');
+        $bookings = $user->bookings()->with('car')->latest()->paginate(5, ['*'], 'bookings_page');
+        $user->load(['verifications', 'reviews']);
 
-        return view('admin.users.show', compact('user'));
+        return view('admin.users.show', compact('user', 'cars', 'receivedBookings', 'bookings'));
     }
 
     public function edit(User $user)

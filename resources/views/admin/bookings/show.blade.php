@@ -1,231 +1,248 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center justify-between">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-8 px-4 sm:px-0">
             <div>
-                <h2 class="font-black text-2xl leading-tight text-white">
-                    {{ __('Booking Command Center') }}
+                <h2 class="font-black text-4xl md:text-5xl text-[#050B1A] tracking-tighter uppercase italic leading-none">
+                    Mission <span class="text-indigo-500">Control</span>
                 </h2>
-                <p class="text-[10px] text-gray-500 font-bold uppercase tracking-[0.2em] mt-1">Audit Trail #B-{{ str_pad($booking->id, 6, '0', STR_PAD_LEFT) }}</p>
+                <div class="flex items-center gap-4 mt-3">
+                    <span class="w-12 h-px bg-indigo-500/30"></span>
+                    <p class="text-[9px] md:text-[10px] text-gray-600 font-black uppercase tracking-[0.4em] italic leading-none">
+                        AUDIT TRAIL #OP-{{ str_pad($booking->id, 6, '0', STR_PAD_LEFT) }}
+                    </p>
+                </div>
             </div>
-            <div class="flex gap-3">
-                <span class="px-4 py-2 bg-gray-900 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-indigo-400">
-                    {{ ucfirst($booking->status) }}
+            <div class="flex items-center gap-4 bg-white border-2 border-gray-200 p-2 rounded-2xl shadow-xl shadow-gray-200/50">
+                <span class="px-6 py-2.5 bg-[#050B1A] text-white rounded-xl text-[10px] font-black uppercase tracking-widest italic shadow-xl shadow-[#050B1A]/20">
+                    {{ $booking->status }}
                 </span>
-                 <span class="px-4 py-2 bg-gray-900 border border-white/10 rounded-xl text-[10px] font-black uppercase tracking-widest text-emerald-400">
-                    {{ $booking->payment_status === 'paid' ? 'Settled' : 'Payment Pend.' }}
+                <span class="px-6 py-2.5 border-2 border-gray-100 bg-gray-50 text-gray-500 rounded-xl text-[10px] font-black uppercase tracking-widest italic">
+                    {{ $booking->payment_status === 'paid' ? 'Settled' : 'Payment Pending' }}
                 </span>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-12 bg-gray-950 min-h-screen relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[150px] -z-10"></div>
+    <div class="py-12 bg-gray-50 min-h-screen relative overflow-hidden text-[#050B1A]">
+        <!-- Institutional Decoration -->
+        <div class="absolute inset-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#050B1A 1px, transparent 1px); background-size: 50px 50px;"></div>
         
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-10 relative z-10">
             
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
                 
-                <!-- Quad 1: The Renter (Customer) -->
-                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl">
-                    <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
-                        <span class="w-1 h-6 bg-indigo-500 rounded-full"></span>
-                        Customer Identity
+                <!-- Operator Identity (Customer) -->
+                <div class="bg-white border-2 border-gray-100 p-10 rounded-[3.5rem] shadow-[0_45px_100px_rgba(0,0,0,0.02)] relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-indigo-50 rounded-full blur-3xl opacity-50"></div>
+                    <h3 class="text-xs font-black text-[#050B1A] mb-10 uppercase tracking-[0.4em] italic flex items-center gap-3">
+                        <span class="w-1.5 h-6 bg-indigo-500 rounded-full"></span>
+                        Operator Identity
                     </h3>
-                    <div class="flex items-center gap-6 mb-8">
-                        <div class="w-20 h-20 rounded-3xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-3xl font-black text-indigo-400 shadow-xl overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-center gap-8 mb-10">
+                        <div class="w-24 h-24 rounded-[2rem] bg-gray-50 border-4 border-white flex items-center justify-center text-4xl font-black text-[#050B1A] shadow-2xl overflow-hidden italic shrink-0">
                             @if($booking->customer->profile_photo)
                                 <img src="{{ Storage::url($booking->customer->profile_photo) }}" class="w-full h-full object-cover">
                             @else
                                 {{ substr($booking->customer->name, 0, 1) }}
                             @endif
                         </div>
-                        <div>
-                            <a href="{{ route('admin.users.show', $booking->customer) }}" class="group/name">
-                                <h4 class="text-2xl font-black text-white group-hover/name:text-indigo-400 transition-colors">{{ $booking->customer->name }}</h4>
+                        <div class="text-center md:text-left">
+                            <a href="{{ route('admin.users.show', $booking->customer) }}" class="block group">
+                                <h4 class="text-3xl font-black text-[#050B1A] group-hover:text-indigo-600 transition-colors uppercase italic tracking-tighter leading-none">{{ $booking->customer->name }}</h4>
                             </a>
-                            <p class="text-gray-500 font-bold text-sm">{{ $booking->customer->email }}</p>
-                            <div class="flex gap-2 mt-2">
+                            <p class="text-gray-400 font-bold text-xs mt-2 italic tracking-tighter">{{ $booking->customer->email }}</p>
+                            <div class="flex flex-wrap justify-center md:justify-start gap-2 mt-4">
                                 @if($booking->customer->is_verified)
-                                    <span class="px-2 py-0.5 bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest">Identity Verified</span>
+                                    <span class="px-3 py-1 bg-emerald-50 text-emerald-600 border-2 border-emerald-100 rounded-xl text-[8px] font-black uppercase tracking-widest italic">Identity Verified</span>
                                 @else
-                                    <span class="px-2 py-0.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest">Unverified</span>
+                                    <span class="px-3 py-1 bg-red-50 text-red-600 border-2 border-red-100 rounded-xl text-[8px] font-black uppercase tracking-widest italic">Unverified</span>
                                 @endif
-                                <span class="px-2 py-0.5 bg-white/5 text-gray-500 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest">User #{{ $booking->customer->id }}</span>
-                                <a href="{{ route('admin.users.show', $booking->customer) }}" class="px-2 py-0.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-indigo-500 hover:text-white transition-all">Audit Identity →</a>
+                                <span class="px-3 py-1 bg-gray-50 text-gray-500 border-2 border-white rounded-xl text-[8px] font-black uppercase tracking-widest italic">User #ID: {{ $booking->customer->id }}</span>
+                                <a href="{{ route('admin.users.show', $booking->customer) }}" class="px-3 py-1 bg-[#050B1A] text-white rounded-xl text-[8px] font-black uppercase tracking-widest hover:bg-indigo-600 transition-all italic shadow-lg shadow-[#050B1A]/10">Audit ID →</a>
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 bg-gray-950 border border-white/5 rounded-2xl">
-                            <p class="text-[9px] text-gray-600 font-bold uppercase mb-1">Total Trips taken</p>
-                            <p class="text-white font-black">{{ $booking->customer->bookings()->count() }}</p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="p-6 bg-gray-50/50 border-2 border-white rounded-3xl shadow-sm">
+                            <p class="text-[9px] text-gray-400 font-black uppercase mb-1 italic tracking-widest">Operation Counter</p>
+                            <p class="text-xl font-black text-[#050B1A] italic tracking-tighter">{{ $booking->customer->bookings()->count() }} Missions</p>
                         </div>
-                        <div class="p-4 bg-gray-950 border border-white/5 rounded-2xl">
-                            <p class="text-[9px] text-gray-600 font-bold uppercase mb-1">Joined</p>
-                            <p class="text-white font-black">{{ $booking->customer->created_at->format('M Y') }}</p>
+                        <div class="p-6 bg-gray-50/50 border-2 border-white rounded-3xl shadow-sm">
+                            <p class="text-[9px] text-gray-400 font-black uppercase mb-1 italic tracking-widest">Registry Age</p>
+                            <p class="text-xl font-black text-[#050B1A] italic tracking-tighter">{{ $booking->customer->created_at->format('M Y') }} Hub</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Quad 2: The Host (Owner) -->
-                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl">
-                    <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
-                        <span class="w-1 h-6 bg-pink-500 rounded-full"></span>
+                <!-- Host Authority (Owner) -->
+                <div class="bg-white border-2 border-gray-100 p-10 rounded-[3.5rem] shadow-[0_45px_100px_rgba(0,0,0,0.02)] relative overflow-hidden group">
+                    <div class="absolute -right-4 -top-4 w-32 h-32 bg-pink-50 rounded-full blur-3xl opacity-50"></div>
+                    <h3 class="text-xs font-black text-[#050B1A] mb-10 uppercase tracking-[0.4em] italic flex items-center gap-3">
+                        <span class="w-1.5 h-6 bg-pink-500 rounded-full"></span>
                         Host Authority
                     </h3>
-                    <div class="flex items-center gap-6 mb-8">
-                        <div class="w-20 h-20 rounded-3xl bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-3xl font-black text-pink-400 shadow-xl overflow-hidden">
+                    <div class="flex flex-col md:flex-row items-center gap-8 mb-10">
+                        <div class="w-24 h-24 rounded-[2rem] bg-gray-50 border-4 border-white flex items-center justify-center text-4xl font-black text-[#050B1A] shadow-2xl overflow-hidden italic shrink-0">
                              @if($booking->car->owner->profile_photo)
                                 <img src="{{ Storage::url($booking->car->owner->profile_photo) }}" class="w-full h-full object-cover">
                             @else
                                 {{ substr($booking->car->owner->name, 0, 1) }}
                             @endif
                         </div>
-                        <div>
-                            <a href="{{ route('admin.users.show', $booking->car->owner) }}" class="group/name">
-                                <h4 class="text-2xl font-black text-white group-hover/name:text-pink-400 transition-colors">{{ $booking->car->owner->name }}</h4>
+                        <div class="text-center md:text-left">
+                            <a href="{{ route('admin.users.show', $booking->car->owner) }}" class="block group">
+                                <h4 class="text-3xl font-black text-[#050B1A] group-hover:text-pink-600 transition-colors uppercase italic tracking-tighter leading-none">{{ $booking->car->owner->name }}</h4>
                             </a>
-                            <p class="text-gray-500 font-bold text-sm">{{ $booking->car->owner->email }}</p>
-                            <div class="flex gap-2 mt-2">
-                                <span class="px-2 py-0.5 bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest">Professional Host</span>
-                                <span class="px-2 py-0.5 bg-white/5 text-gray-500 border border-white/10 rounded-lg text-[8px] font-black uppercase tracking-widest">Fleet Size: {{ $booking->car->owner->cars()->count() }}</span>
-                                <a href="{{ route('admin.users.show', $booking->car->owner) }}" class="px-2 py-0.5 bg-pink-500/10 text-pink-400 border border-pink-500/20 rounded-lg text-[8px] font-black uppercase tracking-widest hover:bg-pink-500 hover:text-white transition-all">Audit Authority →</a>
+                            <p class="text-gray-400 font-bold text-xs mt-2 italic tracking-tighter">{{ $booking->car->owner->email }}</p>
+                            <div class="flex flex-wrap justify-center md:justify-start gap-2 mt-4">
+                                <span class="px-3 py-1 bg-indigo-50 text-indigo-600 border-2 border-indigo-100 rounded-xl text-[8px] font-black uppercase tracking-widest italic">Institutional Host</span>
+                                <span class="px-3 py-1 bg-gray-50 text-gray-500 border-2 border-white rounded-xl text-[8px] font-black uppercase tracking-widest italic">Fleet Oversight: {{ $booking->car->owner->cars()->count() }}</span>
+                                <a href="{{ route('admin.users.show', $booking->car->owner) }}" class="px-3 py-1 bg-[#050B1A] text-white rounded-xl text-[8px] font-black uppercase tracking-widest hover:bg-pink-600 transition-all italic shadow-lg shadow-[#050B1A]/10">Audit Host →</a>
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="p-4 bg-gray-950 border border-white/5 rounded-2xl">
-                            <p class="text-[9px] text-gray-600 font-bold uppercase mb-1">Lifetime Earnings</p>
-                            <p class="text-white font-black">৳ {{ number_format($booking->car->owner->earnings()->sum('amount'), 0) }}</p>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="p-6 bg-gray-50/50 border-2 border-white rounded-3xl shadow-sm">
+                            <p class="text-[9px] text-gray-400 font-black uppercase mb-1 italic tracking-widest">Lifetime Yield</p>
+                            <p class="text-xl font-black text-[#050B1A] italic tracking-tighter">৳{{ number_format($booking->car->owner->earnings()->sum('amount'), 0) }}</p>
                         </div>
-                        <div class="p-4 bg-gray-950 border border-white/5 rounded-2xl">
-                            <p class="text-[9px] text-gray-600 font-bold uppercase mb-1">Host Rating</p>
-                            <p class="text-white font-black">4.9 / 5.0</p>
+                        <div class="p-6 bg-gray-50/50 border-2 border-white rounded-3xl shadow-sm">
+                            <p class="text-[9px] text-gray-400 font-black uppercase mb-1 italic tracking-widest">Host Sentiment</p>
+                            <p class="text-xl font-black text-[#050B1A] italic tracking-widest">0.99 SIGNAL</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Quad 3: The Asset (Car) -->
-                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl lg:col-span-2">
-                     <div class="flex justify-between items-start mb-8">
-                        <h3 class="text-xl font-bold text-white flex items-center gap-3">
-                            <span class="w-1 h-6 bg-emerald-500 rounded-full"></span>
-                            Registered Platform Asset
+                <!-- Registered Platform Asset (Car) -->
+                <div class="bg-white border-2 border-gray-100 p-10 rounded-[3.5rem] md:rounded-[4.5rem] shadow-[0_45px_100px_rgba(0,0,0,0.02)] lg:col-span-2 relative overflow-hidden group">
+                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-6">
+                        <h3 class="text-2xl font-black text-[#050B1A] flex items-center gap-4 uppercase italic tracking-tighter">
+                            <span class="w-5 h-5 bg-[#050B1A] rounded-md text-white flex items-center justify-center text-[10px]">A</span>
+                            Asset Briefing
                         </h3>
-                        <a href="{{ route('cars.show', $booking->car) }}" class="text-[10px] font-black text-indigo-400 uppercase tracking-widest hover:text-white transition-colors">View Public Listing →</a>
+                        <a href="{{ route('cars.show', $booking->car) }}" class="px-6 py-2 border-2 border-gray-100 bg-gray-50 text-[10px] font-black text-indigo-500 uppercase tracking-widest hover:bg-indigo-600 hover:text-white transition-all rounded-xl italic leading-none">View Platform Artifact →</a>
                     </div>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
                         <div class="md:col-span-1">
-                            <div class="aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl">
+                            <div class="aspect-video rounded-[2.5rem] overflow-hidden border-4 border-gray-50 shadow-2xl bg-gray-100">
                                  @if($booking->car->images->count() > 0)
                                     <img src="{{ Storage::url($booking->car->images->first()->image_path) }}" class="w-full h-full object-cover">
                                 @endif
                             </div>
-                            <div class="mt-4 grid grid-cols-3 gap-2">
+                            <div class="mt-4 grid grid-cols-3 gap-3">
                                 @foreach($booking->car->images->slice(1, 3) as $img)
-                                    <div class="aspect-square rounded-xl overflow-hidden border border-white/5">
+                                    <div class="aspect-square rounded-2xl overflow-hidden border-2 border-gray-50 group-hover:border-indigo-500/30 transition-all shadow-sm">
                                         <img src="{{ Storage::url($img->image_path) }}" class="w-full h-full object-cover">
                                     </div>
                                 @endforeach
                             </div>
                         </div>
                         <div class="md:col-span-2">
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                                <div class="p-4 bg-gray-950 border border-white/5 rounded-2xl">
-                                    <p class="text-[9px] text-gray-600 font-bold uppercase mb-1">Brand/Model</p>
-                                    <p class="text-sm font-black text-white">{{ $booking->car->brand }} {{ $booking->car->model }}</p>
+                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10">
+                                <div class="p-6 bg-gray-50/50 border-2 border-white rounded-[1.8rem] shadow-sm">
+                                    <p class="text-[8px] text-gray-400 font-black uppercase mb-2 italic tracking-widest">Brand/Model</p>
+                                    <p class="text-[11px] font-black text-[#050B1A] uppercase italic leading-none tracking-tight">{{ $booking->car->brand }} {{ $booking->car->model }}</p>
                                 </div>
-                                <div class="p-4 bg-gray-950 border border-white/5 rounded-2xl">
-                                    <p class="text-[9px] text-gray-600 font-bold uppercase mb-1">License Plate</p>
-                                    <p class="text-sm font-black text-white">{{ $booking->car->license_plate }}</p>
+                                <div class="p-6 bg-gray-50/50 border-2 border-white rounded-[1.8rem] shadow-sm">
+                                    <p class="text-[8px] text-gray-400 font-black uppercase mb-2 italic tracking-widest">License Plate</p>
+                                    <p class="text-[11px] font-black text-emerald-600 uppercase italic leading-none">{{ $booking->car->license_plate }}</p>
                                 </div>
-                                <div class="p-4 bg-gray-950 border border-white/5 rounded-2xl">
-                                    <p class="text-[9px] text-gray-600 font-bold uppercase mb-1">Gearbox</p>
-                                    <p class="text-sm font-black text-white">{{ $booking->car->transmission }}</p>
+                                <div class="p-6 bg-gray-50/50 border-2 border-white rounded-[1.8rem] shadow-sm">
+                                    <p class="text-[8px] text-gray-400 font-black uppercase mb-2 italic tracking-widest">Gear System</p>
+                                    <p class="text-[11px] font-black text-[#050B1A] uppercase italic leading-none tracking-tight">{{ $booking->car->transmission }}</p>
                                 </div>
-                                <div class="p-4 bg-gray-950 border border-white/5 rounded-2xl">
-                                    <p class="text-[9px] text-gray-600 font-bold uppercase mb-1">Deployment</p>
-                                    <p class="text-sm font-black text-white">{{ $booking->car->location }}</p>
+                                <div class="p-6 bg-gray-50/50 border-2 border-white rounded-[1.8rem] shadow-sm">
+                                    <p class="text-[8px] text-gray-400 font-black uppercase mb-2 italic tracking-widest">Deployment</p>
+                                    <p class="text-[11px] font-black text-[#050B1A] uppercase italic leading-none tracking-tight">{{ $booking->car->location }}</p>
                                 </div>
                             </div>
-                            <div class="bg-emerald-500/5 border border-emerald-500/10 p-6 rounded-3xl">
-                                <h4 class="text-[10px] font-black text-emerald-400 uppercase tracking-widest mb-3">Admin Notes / Inspection</h4>
-                                <p class="text-xs text-gray-500 leading-relaxed italic">Technical parameters verified on registration. Asset exhibits standard performance metrics for its class. Insurance coverage active through platform provider.</p>
+                            <div class="bg-indigo-50/50 border-2 border-white p-8 rounded-[2.5rem] shadow-sm prose prose-sm max-w-none">
+                                <h4 class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mb-4 italic flex items-center gap-2">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                    Institutional Inspection Override
+                                </h4>
+                                <p class="text-[11px] text-gray-600 leading-relaxed italic font-bold">"Technical parameters verified on registration epoch. Asset exhibits standard performance metrics for its class. Insurance coverage active through platform institutional provider. Asset integrity confirmed by Host Authority."</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Quad 4: The Transaction (Booking) -->
-                <div class="bg-gray-900/50 backdrop-blur-xl border border-white/10 p-8 rounded-[2.5rem] shadow-2xl lg:col-span-2">
-                    <h3 class="text-xl font-bold text-white mb-8 flex items-center gap-3">
-                        <span class="w-1 h-6 bg-orange-500 rounded-full"></span>
-                        Command Protocol (Lifecycle)
+                <!-- Command Protocol (Lifecycle Manifest) -->
+                <div class="bg-white border-2 border-gray-100 p-10 rounded-[3.5rem] md:rounded-[4.5rem] shadow-[0_45px_100px_rgba(0,0,0,0.02)] lg:col-span-2">
+                    <h3 class="text-2xl font-black text-[#050B1A] mb-12 flex items-center gap-4 uppercase italic tracking-tighter">
+                        <span class="w-5 h-5 bg-orange-500 rounded-md text-white flex items-center justify-center text-[10px]">P</span>
+                        Command Protocol
                     </h3>
 
-                    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                        <div class="md:col-span-1 space-y-4">
-                            <div class="p-6 bg-gray-950 border border-white/5 rounded-3xl text-center">
-                                <p class="text-[10px] text-gray-600 font-black uppercase mb-2">Total Revenue (৳)</p>
-                                <p class="text-3xl font-black text-white">৳ {{ number_format($booking->total_price, 0) }}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                        <div class="md:col-span-1 space-y-6">
+                            <div class="p-8 bg-[#050B1A] rounded-[2.5rem] text-center shadow-2xl shadow-[#050B1A]/20">
+                                <p class="text-[10px] text-gray-400 font-black uppercase mb-3 italic tracking-widest">Final Yield (৳)</p>
+                                <p class="text-3xl font-black text-white italic tracking-tighter leading-none">৳{{ number_format($booking->total_price, 0) }}</p>
                             </div>
-                            <div class="p-6 bg-gray-950 border border-white/5 rounded-3xl">
-                                <p class="text-[10px] text-gray-600 font-black uppercase mb-3">Timeframe</p>
-                                <div class="space-y-2">
-                                    <div class="flex justify-between items-center text-xs">
-                                        <span class="text-gray-500">START:</span>
-                                        <span class="text-white font-bold">{{ \Carbon\Carbon::parse($booking->start_date)->format('M d, Y') }}</span>
+                            <div class="p-8 bg-gray-50 border-2 border-white rounded-[2.5rem] shadow-sm">
+                                <p class="text-[10px] text-gray-400 font-black uppercase mb-4 italic tracking-widest">Target Window</p>
+                                <div class="space-y-4">
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] text-gray-400 font-black uppercase italic tracking-widest mb-1">Mission Start:</span>
+                                        <span class="text-[11px] text-[#050B1A] font-black uppercase italic leading-none tracking-tight">{{ \Carbon\Carbon::parse($booking->start_date)->format('M d, Y') }}</span>
                                     </div>
-                                    <div class="flex justify-between items-center text-xs">
-                                        <span class="text-gray-500">END:</span>
-                                        <span class="text-white font-bold">{{ \Carbon\Carbon::parse($booking->end_date)->format('M d, Y') }}</span>
+                                    <div class="flex flex-col">
+                                        <span class="text-[8px] text-gray-400 font-black uppercase italic tracking-widest mb-1">Mission End:</span>
+                                        <span class="text-[11px] text-[#050B1A] font-black uppercase italic leading-none tracking-tight">{{ \Carbon\Carbon::parse($booking->end_date)->format('M d, Y') }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="md:col-span-3 space-y-8">
-                            {{-- Asset Integrity Mediation Hub (IN-CONTEXT) --}}
+                        <div class="md:col-span-3 space-y-12">
+                            {{-- Asset Integrity Mediation Hub --}}
                             @if($booking->damageReports->count() > 0)
-                            <div class="bg-red-950/20 border-2 border-red-500/30 p-8 rounded-[2.5rem] shadow-[0_0_30px_rgba(239,68,68,0.1)]">
-                                <h4 class="text-[10px] font-black text-red-400 uppercase tracking-[0.3em] mb-6 flex items-center gap-2">
-                                    <span class="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping"></span>
+                            <div class="bg-red-50/50 border-4 border-white p-10 rounded-[3.5rem] shadow-xl shadow-red-500/5">
+                                <h4 class="text-xs font-black text-red-600 uppercase tracking-[0.4em] mb-10 flex items-center gap-4 italic">
+                                    <span class="w-3 h-3 bg-red-500 rounded-full animate-pulse shadow-[0_0_15px_rgba(239,68,68,0.5)]"></span>
                                     Security Breach Mediation
                                 </h4>
                                 
-                                <div class="space-y-6">
+                                <div class="space-y-8">
                                     @foreach($booking->damageReports as $report)
-                                    <div class="p-6 bg-gray-950 border border-white/5 rounded-3xl group">
-                                         <div class="flex flex-col md:flex-row gap-6">
+                                    <div class="p-8 bg-white border-2 border-gray-50 rounded-[2.5rem] shadow-sm group">
+                                         <div class="flex flex-col md:flex-row gap-8">
                                             <div class="flex-1">
-                                                <div class="flex justify-between items-start mb-4">
-                                                    <span class="px-3 py-1 bg-white/5 rounded-lg text-[8px] font-black text-gray-500 uppercase tracking-widest border border-white/5">#BR-{{ $report->id }}</span>
-                                                    <span class="px-3 py-1 {{ $report->status === 'disputed' ? 'bg-red-500/10 text-red-500 animate-pulse' : 'bg-blue-500/10 text-blue-400' }} rounded-lg text-[8px] font-black uppercase tracking-widest border border-white/5">{{ $report->status }}</span>
+                                                <div class="flex justify-between items-start mb-6">
+                                                    <span class="px-4 py-2 bg-gray-50 rounded-xl text-[9px] font-black text-gray-400 uppercase tracking-widest border-2 border-white italic">Artifact #BR-{{ $report->id }}</span>
+                                                    <span class="px-4 py-2 {{ $report->status === 'disputed' ? 'bg-red-500 text-white shadow-lg shadow-red-500/20 animate-pulse' : 'bg-indigo-600 text-white shadow-lg shadow-indigo-500/10' }} rounded-xl text-[9px] font-black uppercase tracking-widest italic border-2 border-white">{{ $report->status }}</span>
                                                 </div>
-                                                <p class="text-[10px] text-gray-400 italic mb-4">"{{ $report->description }}"</p>
+                                                <p class="text-[11px] text-[#050B1A] italic mb-6 font-bold leading-relaxed">"{{ $report->description }}"</p>
                                                 @if($report->status === 'disputed')
-                                                    <div class="p-4 bg-red-500/5 rounded-2xl border border-red-500/10">
-                                                        <span class="text-[8px] text-red-400 font-black uppercase mb-1 block italic">Operator Testimony</span>
-                                                        <p class="text-[10px] text-red-300 font-bold">"{{ $report->customer_notes ?? 'No testimony provided.' }}"</p>
+                                                    <div class="p-6 bg-red-50 border-2 border-white rounded-[2rem] shadow-inner">
+                                                        <span class="text-[8px] text-red-600 font-black uppercase mb-2 block italic tracking-widest">Operator Testimony artifact</span>
+                                                        <p class="text-[10px] text-red-800 font-bold leading-relaxed italic">"{{ $report->customer_notes ?? 'No testimony provided.' }}"</p>
                                                     </div>
                                                 @endif
                                             </div>
                                             
                                             @if($report->status === 'disputed')
-                                            <div class="w-full md:w-64">
-                                                <form action="{{ route('admin.damage-reports.resolve', $report) }}" method="POST" class="space-y-4">
+                                            <div class="w-full md:w-72">
+                                                <form action="{{ route('admin.damage-reports.resolve', $report) }}" method="POST" class="space-y-5">
                                                     @csrf @method('PUT')
-                                                    <input type="number" name="resolution_cost" required class="w-full bg-gray-950 border-white/5 rounded-xl text-center text-white text-xs font-black shadow-inner" placeholder="Verdict Amount (৳)">
-                                                    <textarea name="admin_notes" required rows="2" class="w-full bg-gray-950 border-white/5 rounded-xl text-[9px] text-gray-500" placeholder="Official Decree..."></textarea>
-                                                    <button type="submit" class="w-full py-2.5 bg-red-600 hover:bg-red-500 text-white text-[8px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg">Issue Resolution</button>
+                                                    <div class="space-y-2">
+                                                        <label class="text-[8px] font-black text-gray-400 uppercase tracking-widest italic ms-4">Verdict Amount (৳)</label>
+                                                        <input type="number" name="resolution_cost" required class="w-full bg-gray-50 border-2 border-white rounded-2xl p-4 text-center text-[#050B1A] text-sm font-black focus:ring-8 focus:ring-red-500/5 focus:border-red-500 outline-none transition-all italic shadow-inner" placeholder="0.00">
+                                                    </div>
+                                                    <div class="space-y-2">
+                                                        <label class="text-[8px] font-black text-gray-400 uppercase tracking-widest italic ms-4">Official Decree</label>
+                                                        <textarea name="admin_notes" required rows="2" class="w-full bg-gray-50 border-2 border-white rounded-2xl p-5 text-[11px] text-gray-600 font-bold focus:ring-8 focus:ring-red-500/5 focus:border-red-500 outline-none transition-all italic leading-relaxed shadow-inner" placeholder="Enter resolution intelligence..."></textarea>
+                                                    </div>
+                                                    <button type="submit" class="w-full py-4 bg-red-600 hover:bg-red-500 text-white text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-red-500/20 italic active:scale-95 leading-none">Issue Resolution</button>
                                                 </form>
                                             </div>
                                             @elseif($report->status === 'resolved')
-                                            <div class="w-full md:w-64 p-4 bg-blue-500/10 border border-blue-500/20 rounded-2xl text-center">
-                                                <div class="text-[8px] text-blue-400 font-black uppercase mb-1">Administrative Verdict</div>
-                                                <div class="text-lg font-black text-white mb-2">৳ {{ number_format($report->resolution_cost) }}</div>
-                                                <p class="text-[9px] text-gray-500 italic leading-tight">"{{ $report->admin_notes }}"</p>
+                                            <div class="w-full md:w-72 p-8 bg-indigo-50/50 border-2 border-white rounded-[2.5rem] text-center shadow-inner">
+                                                <div class="text-[9px] text-indigo-500 font-black uppercase mb-2 italic tracking-widest">Administrative Verdict</div>
+                                                <div class="text-3xl font-black text-[#050B1A] mb-4 italic tracking-tighter leading-none">৳{{ number_format($report->resolution_cost) }}</div>
+                                                <div class="text-[10px] text-gray-500 font-bold italic leading-relaxed">"{{ $report->admin_notes }}"</div>
                                             </div>
                                             @endif
                                          </div>
@@ -235,45 +252,47 @@
                             </div>
                             @endif
 
-                            <div class="bg-gray-950/50 border border-white/10 p-8 rounded-[2.5rem]">
-                                <h4 class="text-[10px] font-black text-gray-500 uppercase tracking-widest mb-6">Authorization Overrides</h4>
+                            <div class="bg-gray-50 border-2 border-white p-10 rounded-[3.5rem] shadow-sm">
+                                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-8 italic">Institutional Authorization Overrides</h4>
                                 <div class="flex flex-wrap gap-4">
                                      @if(!in_array($booking->status, ['completed', 'cancelled', 'rejected']))
                                         <form action="{{ route('admin.bookings.update', $booking) }}" method="POST">
                                             @csrf @method('PUT')
                                             <input type="hidden" name="status" value="approved">
-                                            <button type="submit" class="px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-emerald-600/20">Force Approve</button>
+                                            <button type="submit" class="px-10 py-4 bg-emerald-500 hover:bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-emerald-500/20 italic active:scale-95 leading-none">Force Approve</button>
                                         </form>
                                         <form action="{{ route('admin.bookings.update', $booking) }}" method="POST">
                                             @csrf @method('PUT')
                                             <input type="hidden" name="status" value="completed">
-                                            <button type="submit" class="px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-indigo-600/20">Mark Completed</button>
+                                            <button type="submit" class="px-10 py-4 bg-indigo-600 hover:bg-indigo-500 text-white text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all shadow-xl shadow-indigo-600/20 italic active:scale-95 leading-none">Mark Completed</button>
                                         </form>
                                         <form action="{{ route('admin.bookings.update', $booking) }}" method="POST">
                                             @csrf @method('PUT')
                                             <input type="hidden" name="status" value="cancelled">
-                                            <button type="submit" class="px-8 py-4 bg-red-600/10 border border-red-600/30 hover:bg-red-600 hover:text-white text-red-500 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all">Cancel Booking</button>
+                                            <button type="submit" class="px-10 py-4 bg-white border-2 border-red-100 hover:bg-red-600 hover:border-red-600 hover:text-white text-red-600 text-[10px] font-black uppercase tracking-widest rounded-2xl transition-all italic active:scale-95 leading-none shadow-sm">Cancel Booking</button>
                                         </form>
                                      @else
-                                        <div class="flex items-center gap-4 text-gray-600 italic text-[10px] font-black uppercase tracking-[0.2em] py-4">
-                                            <svg class="w-5 h-5 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                                            Command Override Locked (Target status reached)
+                                        <div class="flex items-center gap-6 text-gray-400 italic text-[11px] font-black uppercase tracking-[0.3em] py-4">
+                                            <div class="w-12 h-12 bg-white rounded-2xl border-2 border-gray-100 flex items-center justify-center shadow-sm">
+                                                <svg class="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                            </div>
+                                            Command Override Locked<br><span class="text-[8px] tracking-widest font-bold">Target lifecycle state reached</span>
                                         </div>
                                      @endif
                                 </div>
-                                <div class="mt-8 pt-8 border-t border-white/5 flex items-center justify-between">
-                                    <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500">
-                                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div class="mt-12 pt-10 border-t-2 border-white flex flex-col md:flex-row items-center justify-between gap-8">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-14 h-14 rounded-2xl bg-emerald-50 border-2 border-white flex items-center justify-center text-emerald-500 shadow-sm">
+                                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         </div>
                                         <div>
-                                            <p class="text-[10px] text-gray-500 font-bold uppercase">Payment Status</p>
-                                            <p class="text-sm font-black text-white">{{ strtoupper($booking->payment_status) }}</p>
+                                            <p class="text-[9px] text-gray-400 font-black uppercase italic tracking-widest mb-1">Payment Registry State</p>
+                                            <p class="text-[13px] font-black text-[#050B1A] uppercase italic leading-none">{{ strtoupper($booking->payment_status) }}</p>
                                         </div>
                                     </div>
-                                    <div class="text-right">
-                                         <p class="text-[10px] text-gray-500 font-bold uppercase">Booking Requested</p>
-                                         <p class="text-sm font-black text-white">{{ $booking->created_at->format('M d, Y H:i') }}</p>
+                                    <div class="text-center md:text-right">
+                                         <p class="text-[9px] text-gray-400 font-black uppercase italic tracking-widest mb-1">Operational Request Logged</p>
+                                         <p class="text-[13px] font-black text-[#050B1A] uppercase italic leading-none">{{ $booking->created_at->format('M d, Y H:i') }}</p>
                                     </div>
                                 </div>
                             </div>
